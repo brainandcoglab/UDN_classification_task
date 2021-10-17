@@ -154,7 +154,7 @@ async function experimentInit() {
     win : psychoJS.window,
     name : 'image', units : undefined, 
     image : 'data/bg.png', mask : undefined,
-    ori : 0.0, pos : [0.015, 0], size : [1.25, 0.9],
+    ori : 0.0, pos : [(- 0.09), 0], size : [1.25, 0.9],
     color : new util.Color([1, 1, 1]), opacity : undefined,
     flipHoriz : false, flipVert : false,
     texRes : 128.0, interpolate : true, depth : 0.0 
@@ -167,7 +167,7 @@ async function experimentInit() {
     text: '<insert lookup text here>\n\n<Friend frequencies>\n\n<Foe frequencies>\n\n0123456789',
     font: '"Lucida Console"',
     units: undefined, 
-    pos: [0.65, 0.0], height: 0.025,  wrapWidth: undefined, ori: 0.0,
+    pos: [0.55, 0.0], height: 0.025,  wrapWidth: undefined, ori: 0.0,
     color: new util.Color('green'),  opacity: undefined,
     depth: -2.0 
   });
@@ -180,7 +180,7 @@ async function experimentInit() {
   bands = [
       new band.Band(
           psychoJS.window,
-          [0.0, 0.24], // pos
+          [-0.1, 0.24], // pos
           [para.WIDTH, 0.2], // size
           para.VESSEL_SIGNATURES[0][0],
           jl.repeat(1, para.N_LINES),
@@ -188,7 +188,7 @@ async function experimentInit() {
       ),
       new band.Band(
           psychoJS.window,
-          [0.0, -0.17], // pos
+          [-0.1, -0.17], // pos
           [para.WIDTH, 0.2], // size
           para.VESSEL_SIGNATURES[0][1],
           jl.repeat(1, para.N_LINES),
