@@ -33,6 +33,8 @@ A little more stable on chrome.
 * [x] No feedback in test phase
 * [x] Ensure no-webgl fallback works correctly (it does, no noise or anything though)
 * [x] Make sure that lookup table is visible for all resolutions?
+* [ ] Trial timeout
+* [ ] Enforce full-screen for final release
 * [ ] Should output warning if unsupported resolution (also if webgl unavailable)
 * [ ] Set minimum distance of lines from other lines
 * [ ] Better instructions
