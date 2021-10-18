@@ -19,8 +19,15 @@ export const P_CATCH = 0.1; // Proportion of catch trials
 export const N_PRACTICE_TRIALS = 10; // How many trials total of friend + foe
 export const N_TRIALS = 30; // How many trials total of high/lowlight (not including catch trials)
 
-export const PRACTICE_SIGNATURES = gen.signatures(N_LINES);
-export const VESSEL_SIGNATURES = gen.signatures(N_LINES);
+export const MIN_DISTANCE = 0.1/3; // Minimum distance between lines
+
+let practice_sort_sig = gen.signatures(N_LINES, MIN_DISTANCE);
+export const PRACTICE_SIGNATURES = practice_sort_sig[1];
+let practice_sorted_lines = practice_sort_sig[0];  // sorted list of all lines (practice)
+
+let sort_sig = gen.signatures(N_LINES, MIN_DISTANCE);
+export const VESSEL_SIGNATURES = sort_sig[1];
+let sorted_lines = sort_sig[0]; // sorted list of all lines
 
 // Which keypress should respond to which vessel
 export const VESSEL_MAP = {
@@ -41,10 +48,10 @@ export const PHASES = [
 ];
 
 export const RUN_ORDER = [
-    gen.run_order(N_PRACTICE_TRIALS, P_CATCH, N_NOISE, PRACTICE_SIGNATURES, HIGHLIGHT),
-    gen.run_order(N_TRIALS, P_CATCH, N_NOISE, VESSEL_SIGNATURES, HIGHLIGHT),
-    gen.run_order(N_TRIALS, P_CATCH, N_NOISE, VESSEL_SIGNATURES, HIGHLIGHT),
-    gen.run_order(N_TRIALS, P_CATCH, N_NOISE, VESSEL_SIGNATURES, HIGHLIGHT),
+    gen.run_order(N_PRACTICE_TRIALS, P_CATCH, N_NOISE, PRACTICE_SIGNATURES, practice_sorted_lines, MIN_DISTANCE, HIGHLIGHT),
+    gen.run_order(N_TRIALS, P_CATCH, N_NOISE, VESSEL_SIGNATURES, sorted_lines, MIN_DISTANCE, HIGHLIGHT),
+    gen.run_order(N_TRIALS, P_CATCH, N_NOISE, VESSEL_SIGNATURES, sorted_lines, MIN_DISTANCE, HIGHLIGHT),
+    gen.run_order(N_TRIALS, P_CATCH, N_NOISE, VESSEL_SIGNATURES, sorted_lines, MIN_DISTANCE, HIGHLIGHT),
 ];
 
 // Set apparent range on bands
