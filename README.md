@@ -35,7 +35,7 @@ A little more stable on chrome.
 * [x] Make sure that lookup table is visible for all resolutions?
 * [x] Set minimum distance of lines from other lines
 * [ ] Have friend / foe trials bias towards left or right, with noise appearing on the opposite side
-* [ ] Change keypress to A/L and keep instructions on screen
+* [ ] Change keypress to A/L and keep instructions on screen (also split lookup left and right)
 * [ ] Better instructions
 * [ ] Trial timeout
 * [ ] Enforce full-screen for final release
