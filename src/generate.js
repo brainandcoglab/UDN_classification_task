@@ -128,6 +128,8 @@ let run_order = function(n_ff_trials, p_catch, n_noise, signatures, sorted, mind
         run_order[i]['lines'] = lines_trial[0];
         run_order[i]['is_signal'] = lines_trial[1];
     }
+    // Shuffle again (could change loop option in psychopy but easier doing this)
+    run_order = util.shuffle(run_order);
     return run_order;
 };
 
