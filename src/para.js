@@ -14,7 +14,7 @@ import * as band from "./band.js"
 // Friend = 0, Foe = 1, Neither = -1
 
 export const N_LINES = 4; // How many lines/band define a ship
-export const N_NOISE = 2; // How many lines/band will be random noise on normal trials
+export const N_NOISE = 1; // How many lines/band will be random noise on normal trials
 export const P_CATCH = 0.1; // Proportion of catch trials
 export const N_PRACTICE_TRIALS = 10; // How many trials total of friend + foe
 export const N_TRIALS = 30; // How many trials total of high/lowlight (not including catch trials)
