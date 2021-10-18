@@ -33,11 +33,13 @@ A little more stable on chrome.
 * [x] No feedback in test phase
 * [x] Ensure no-webgl fallback works correctly (it does, no noise or anything though)
 * [x] Make sure that lookup table is visible for all resolutions?
+* [x] Set minimum distance of lines from other lines
+* [ ] Have friend / foe trials bias towards left or right, with noise appearing on the opposite side
+* [ ] Change keypress to A/L and keep instructions on screen
+* [ ] Better instructions
 * [ ] Trial timeout
 * [ ] Enforce full-screen for final release
 * [ ] Should output warning if unsupported resolution (also if webgl unavailable)
-* [ ] Set minimum distance of lines from other lines
-* [ ] Better instructions
 
 ## Desired
 
@@ -46,4 +48,4 @@ A little more stable on chrome.
 * [ ] Seedable RNG?
 * [ ] Prettier "Off" condition
 * [ ] Waterfall plot style updates?
-* [ ] Other randm lines in background?
+* [ ] Other random lines in background?
