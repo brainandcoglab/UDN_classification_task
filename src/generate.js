@@ -124,6 +124,12 @@ let run_order = function(n_ff_trials, p_catch, n_noise, signatures, sorted, mind
         let active_band = (startBand+i) % 2;
         run_order[i]['active_band'] = active_band;
         let vessel = run_order[i]['vessel'];
+        if (vessel < 0) { // catch trial
+            vessel = Math.round(Math.random()); // Choose vessel at random
+            run_order[i]['vessel'] = vessel; // Replace it in the run order
+            run_order[i]['catch_trial'] = true; // indicate explicitly this is a catch trial
+            var lines_trial = trial_lines(vessel, active_band, signatures, 0, sorted, distfn); // Do it with no noise
+        }
         var lines_trial = trial_lines(vessel, active_band, signatures, n_noise, sorted, distfn);
         run_order[i]['lines'] = lines_trial[0];
         run_order[i]['is_signal'] = lines_trial[1];
