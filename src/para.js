@@ -32,8 +32,8 @@ let sorted_lines = sort_sig[0]; // sorted list of all lines
 // Which keypress should respond to which vessel
 export const VESSEL_MAP = {
     '0': 'a', // Friend
-    '1': 'd', // Foe
-   '-1': 's'  // Neither
+    '1': 'l', // Foe
+   '-1': 'space'  // Neither
 };
 
 // Decide which will be highlight / lowlight

@@ -82,7 +82,7 @@
         <Param name="units" updates="None" val="from exp settings" valType="str"/>
       </ImageComponent>
       <KeyboardComponent name="key_resp">
-        <Param name="allowedKeys" updates="constant" val="'a','s','d'" valType="list"/>
+        <Param name="allowedKeys" updates="constant" val="'a','space','l'" valType="list"/>
         <Param name="correctAns" updates="constant" val="$para.VESSEL_MAP[vessel]" valType="str"/>
         <Param name="disabled" updates="None" val="False" valType="bool"/>
         <Param name="discard previous" updates="constant" val="True" valType="bool"/>
