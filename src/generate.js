@@ -30,7 +30,12 @@ let trial_lines = function(vessel, band, signatures, n_noise, sorted, distfn) {
     }
     for (var i = 0; i < n_lines; i++) {
 
+        let canary = 0; // allow this to fail after too many attempts
         while(true) {
+            canary++;
+            if (canary > 10000) {
+                return false;
+            }
             let val = (i * spacing) + (Math.random() * spacing);
             // run binary search
             let bs = jl.binary_search(sorted_clone, val, distfn);
@@ -133,6 +138,9 @@ let run_order = function(n_ff_trials, p_catch, n_noise, signatures, sorted, mind
         var lines_trial = trial_lines(vessel, active_band, signatures, n_noise, sorted, distfn);
         run_order[i]['lines'] = lines_trial[0];
         run_order[i]['is_signal'] = lines_trial[1];
+    }
+    if (!lines_trial) {
+        return false; // pass failure through
     }
     // Shuffle again (could change loop option in psychopy but easier doing this)
     run_order = util.shuffle(run_order);

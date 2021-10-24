@@ -39,19 +39,44 @@ export const PHASES = [
     {phase: 3}  // Test
 ];
 
-let practice_sort_sig = gen.signatures(N_LINES, MIN_DISTANCE);
-export const PRACTICE_SIGNATURES = practice_sort_sig[1];
-let practice_sorted_lines = practice_sort_sig[0];  // sorted list of all lines (practice)
+const errstring = 'Experiment run order generation failed, please contact experimenter!';
+let practice_signatures;
+let practice_run_order = false;
+for (var canary = 0; !practice_run_order; canary++) {
+    if (canary > 1000) {
+        alert(errstring)
+        throw errstring;
+    }
+    let practice_sort_sig = gen.signatures(N_LINES, MIN_DISTANCE);
+    practice_signatures = practice_sort_sig[1];
+    let practice_sorted_lines = practice_sort_sig[0];  // sorted list of all lines (practice)
+    practice_run_order = gen.run_order(N_PRACTICE_TRIALS, P_CATCH, N_NOISE, practice_signatures, practice_sorted_lines, MIN_DISTANCE, HIGHLIGHT);
+}
+export const PRACTICE_SIGNATURES = practice_signatures;
 
-let sort_sig = gen.signatures(N_LINES, MIN_DISTANCE);
-export const VESSEL_SIGNATURES = sort_sig[1];
-let sorted_lines = sort_sig[0]; // sorted list of all lines
+let signatures;
+let baseline_run_order = false;
+let training_run_order = false;
+let test_run_order = false;
+for (var canary = 0; !baseline_run_order && !training_run_order && !test_run_order; canary++) {
+    console.log(canary)
+    if (canary > 1000) {
+        throw errstring;
+    }
+    let sort_sig = gen.signatures(N_LINES, MIN_DISTANCE);
+    signatures = sort_sig[1];
+    let sorted_lines = sort_sig[0];
+    baseline_run_order = gen.run_order(N_TRIALS, P_CATCH, N_NOISE, signatures, sorted_lines, MIN_DISTANCE, HIGHLIGHT);
+    training_run_order = gen.run_order(N_TRIALS, P_CATCH, N_NOISE, signatures, sorted_lines, MIN_DISTANCE, HIGHLIGHT);
+    test_run_order = gen.run_order(N_TRIALS, P_CATCH, N_NOISE, signatures, sorted_lines, MIN_DISTANCE, HIGHLIGHT);
+}
+export const VESSEL_SIGNATURES = signatures;
 
 export const RUN_ORDER = [
-    gen.run_order(N_PRACTICE_TRIALS, P_CATCH, N_NOISE, PRACTICE_SIGNATURES, practice_sorted_lines, MIN_DISTANCE, HIGHLIGHT),
-    gen.run_order(N_TRIALS, P_CATCH, N_NOISE, VESSEL_SIGNATURES, sorted_lines, MIN_DISTANCE, HIGHLIGHT),
-    gen.run_order(N_TRIALS, P_CATCH, N_NOISE, VESSEL_SIGNATURES, sorted_lines, MIN_DISTANCE, HIGHLIGHT),
-    gen.run_order(N_TRIALS, P_CATCH, N_NOISE, VESSEL_SIGNATURES, sorted_lines, MIN_DISTANCE, HIGHLIGHT),
+    practice_run_order,
+    baseline_run_order,
+    training_run_order,
+    test_run_order
 ];
 
 // Set apparent range on bands
