@@ -21,14 +21,6 @@ export const N_TRIALS = 30; // How many trials total of high/lowlight (not inclu
 
 export const MIN_DISTANCE = 0.1/3; // Minimum distance between lines
 
-let practice_sort_sig = gen.signatures(N_LINES, MIN_DISTANCE);
-export const PRACTICE_SIGNATURES = practice_sort_sig[1];
-let practice_sorted_lines = practice_sort_sig[0];  // sorted list of all lines (practice)
-
-let sort_sig = gen.signatures(N_LINES, MIN_DISTANCE);
-export const VESSEL_SIGNATURES = sort_sig[1];
-let sorted_lines = sort_sig[0]; // sorted list of all lines
-
 // Which keypress should respond to which vessel
 export const VESSEL_MAP = {
     '0': 'a', // Friend
@@ -46,6 +38,14 @@ export const PHASES = [
     {phase: 2}, // Training
     {phase: 3}  // Test
 ];
+
+let practice_sort_sig = gen.signatures(N_LINES, MIN_DISTANCE);
+export const PRACTICE_SIGNATURES = practice_sort_sig[1];
+let practice_sorted_lines = practice_sort_sig[0];  // sorted list of all lines (practice)
+
+let sort_sig = gen.signatures(N_LINES, MIN_DISTANCE);
+export const VESSEL_SIGNATURES = sort_sig[1];
+let sorted_lines = sort_sig[0]; // sorted list of all lines
 
 export const RUN_ORDER = [
     gen.run_order(N_PRACTICE_TRIALS, P_CATCH, N_NOISE, PRACTICE_SIGNATURES, practice_sorted_lines, MIN_DISTANCE, HIGHLIGHT),
@@ -71,70 +71,44 @@ export const WIDTH = 1.0;
 export const PRACTICE_LOOKUP_TEXT = gen.lookup_text(PRACTICE_SIGNATURES, BAND_RANGES);
 export const LOOKUP_TEXT = gen.lookup_text(VESSEL_SIGNATURES, BAND_RANGES);
 
-
-export const practice_instructions = `
-The practice phase is now beginning. You will be asked to classify an unknown vessel with the assistance of a lookup table on the right.
-
+const keypress_text = `
 Use the 'A' key to respond friend,
-Use the 'D' key to respond foe,
-use the 'S' key to repond neither.
-
-Press any key to begin.
+Use the 'L' key to respond foe,
+use the 'Space' key to repond neither.
 `;
 
-export const practice_debrief = `
+const debrief_text = `
 Thank you, practice is now complete!
 
 Press any key to continue.
 `;
 
+export const practice_instructions = `
+The practice phase is now beginning. You will be asked to classify an unknown vessel with the assistance of a lookup table on the right.
+` + keypress_text + 'Press any key to begin.';
+
+export const practice_debrief = debrief_text;
+
 export const baseline_instructions = `
 In this phase, you will be asked to classify an unknown vessel with the assistance of a lookup table on the right.
+` + keypress_text + 'Press any key to begin.';
 
-Use the 'A' key to respond friend,
-Use the 'D' key to respond foe,
-use the 'S' key to repond neither.
 
-Press any key to begin.
-`;
-
-export const baseline_debrief = `
-Thank you, this phase is now complete!
-
-Press any key to continue.
-`;
+export const baseline_debrief = debrief_text;
 
 export const training_instructions = `
 In this phase, you will be given assistance in classifying the vessel with two different tools.
+` + keypress_text + 'Press any key to begin.';
 
-Use the 'A' key to respond friend,
-Use the 'D' key to respond foe,
-use the 'S' key to repond neither.
 
-Press any key to begin.
-`;
-
-export const training_debrief = `
-Thank you, this phase is now complete!
-
-Press any key to continue.
-`;
+export const training_debrief = debrief_text;
 
 export const test_instructions = `
 In this phase, you will not be given any assistance. Please try your best.
+` + keypress_text + 'Press any key to begin.';
 
-Use the 'A' key to respond friend,
-Use the 'D' key to respond foe,
-use the 'S' key to repond neither.
 
-Press any key to begin.
-`;
-
-export const test_debrief = `
-Thank you, this phase is now complete!
-
-Press any key to continue.
-`;
+export const test_debrief = debrief_text;
 
 export const instructions = [
     practice_instructions,
