@@ -43,7 +43,7 @@ const errstring = 'Experiment run order generation failed, please contact experi
 let practice_signatures;
 let practice_run_order = false;
 for (var canary = 0; !practice_run_order; canary++) {
-    if (canary > 100) {
+    if (canary > 1000) {
         alert(errstring)
         throw errstring;
     }
@@ -62,7 +62,7 @@ let baseline_run_order = false;
 let training_run_order = false;
 let test_run_order = false;
 for (var canary = 0; !baseline_run_order || !training_run_order || !test_run_order; canary++) {
-    if (canary > 100) {
+    if (canary > 1000) {
         alert(errstring)
         throw errstring;
     }
