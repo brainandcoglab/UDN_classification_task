@@ -145,8 +145,9 @@ let run_order = function(n_ff_trials, p_catch, n_noise, signatures, sorted, mind
             run_order[i]['vessel'] = vessel; // Replace it in the run order
             run_order[i]['catch_trial'] = true; // indicate explicitly this is a catch trial
             var lines_trial = trial_lines(vessel, active_band, signatures, 0, sorted, distfn); // Do it with no noise
+        } else {
+            var lines_trial = trial_lines(vessel, active_band, signatures, n_noise, sorted, distfn);
         }
-        var lines_trial = trial_lines(vessel, active_band, signatures, n_noise, sorted, distfn);
         if (!lines_trial) {
             return false; // pass failure through
         }
