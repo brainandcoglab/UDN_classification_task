@@ -34,9 +34,11 @@ A little more stable on chrome.
 * [x] Ensure no-webgl fallback works correctly (it does, no noise or anything though)
 * [x] Make sure that lookup table is visible for all resolutions?
 * [x] Set minimum distance of lines from other lines
-* [ ] Have friend / foe trials bias towards left or right, with noise appearing on the opposite side
+* [x] Have friend / foe trials bias towards left or right, with noise appearing on the opposite side
 * [x] Change keypress to A/L and keep instructions on screen (also split lookup left and right)
+* [ ] Trialing: is this too easy? Log-bias seems to be very easy.
 * [ ] Better instructions
+* [ ] Better highlight colour
 * [ ] Trial timeout
 * [ ] Enforce full-screen for final release
 * [ ] Should output warning if unsupported resolution (also if webgl unavailable)
@@ -44,6 +46,9 @@ A little more stable on chrome.
 ## Desired
 
 * [x] Some nice rivets and stuff
+* [ ] Fix width so that resize is easier
+* [ ] Check that band space available is possible ahead of time
+* [ ] Scale down by available width
 * [ ] Cooler lookup table
 * [ ] Seedable RNG?
 * [ ] Prettier "Off" condition
