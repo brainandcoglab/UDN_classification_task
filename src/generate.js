@@ -23,7 +23,6 @@ let trial_lines = function(vessel, band, signatures, n_noise, sorted, distfn) {
 
     // copy sorted list so we can add to it
     let sorted_clone = Object.assign([], sorted);
-    let spacing = 1 / n_lines;
     // Initially, we fill in random lines (according to spacing rules)
     for (var i = 0; i < n_lines; i++) {
         is_signal.push(0);
@@ -36,7 +35,11 @@ let trial_lines = function(vessel, band, signatures, n_noise, sorted, distfn) {
             if (canary > 10000) {
                 return false;
             }
-            let val = (i * spacing) + (Math.random() * spacing);
+            var left = vessel ? jl.getvalright(i, n_lines) : jl.getvalleft(i, n_lines);
+            var right = vessel ? jl.getvalright(i+1, n_lines) : jl.getvalleft(i+1, n_lines);
+            var spacing = right - left;
+
+            let val = left + (Math.random() * spacing);
             // run binary search
             let bs = jl.binary_search(sorted_clone, val, distfn);
             if (bs >= 0) {
@@ -73,7 +76,6 @@ let trial_lines = function(vessel, band, signatures, n_noise, sorted, distfn) {
 // TODO: Ensure set distance from other lines
 let signatures = function(n_lines, mindist) {
     let sorted = []; // sorted list of all lines
-    let spacing = 1 / n_lines;
     let vessel_signatures = [
         // T    B
         [ [ ], [ ] ], // friend lines
@@ -82,9 +84,13 @@ let signatures = function(n_lines, mindist) {
     let distfn = float_compare_mindistance(mindist);
     for (var i = 0; i < n_lines; i++) {
         for (var sig = 0; sig < 2; sig++) {
+            // friend or foe...
+            var left = sig ? jl.getvalright(i, n_lines) : jl.getvalleft(i, n_lines);
+            var right = sig ? jl.getvalright(i+1, n_lines) : jl.getvalleft(i+1, n_lines);
+            var spacing = right - left;
             for (var band = 0; band < 2; band++) {
                 while(true) {
-                    let val = (i * spacing) + (Math.random() * spacing);
+                    let val = left + (Math.random() * spacing);
                     // run binary search
                     let bs = jl.binary_search(sorted, val, distfn);
                     if (bs >= 0) {

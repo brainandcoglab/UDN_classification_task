@@ -47,10 +47,27 @@ function float_compare(f0,f1) {
     return f0 - f1;
 }
 
+function logn(val, n) {
+    return Math.log(val) / Math.log(n);
+}
+
+// get val skewed to right
+function getvalright(i,outa) {
+    return logn(i+1, outa+1)
+}
+
+// get val skewed to left
+function getvalleft(i,outa) {
+    return 1 - logn((outa+1) - i, outa+1)
+}
+
 export {
     arange,
     repeat,
     RECT_VERTICES,
     binary_search,
-    float_compare
+    float_compare,
+    getvalleft,
+    getvalright,
+    logn
 };
