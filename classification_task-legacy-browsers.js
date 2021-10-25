@@ -97,7 +97,8 @@ var key_resp_4;
 var trialClock;
 var image;
 var key_resp;
-var lookup_table;
+var lookup_table_left;
+var lookup_table_right;
 var bands;
 var feedbackClock;
 var feedback_text;
@@ -146,33 +147,45 @@ async function experimentInit() {
     win : psychoJS.window,
     name : 'image', units : undefined, 
     image : 'data/bg.png', mask : undefined,
-    ori : 0.0, pos : [(- 0.09), 0], size : [1.25, 0.9],
+    ori : 0.0, pos : [0, 0], size : [1.25, 0.9],
     color : new util.Color([1, 1, 1]), opacity : undefined,
     flipHoriz : false, flipVert : false,
     texRes : 128.0, interpolate : true, depth : 0.0 
   });
   key_resp = new core.Keyboard({psychoJS: psychoJS, clock: new util.Clock(), waitForStart: true});
   
-  lookup_table = new visual.TextStim({
+  lookup_table_left = new visual.TextStim({
     win: psychoJS.window,
-    name: 'lookup_table',
+    name: 'lookup_table_left',
     text: '<insert lookup text here>\n\n<Friend frequencies>\n\n<Foe frequencies>\n\n0123456789',
     font: '"Lucida Console"',
     units: undefined, 
-    pos: [0.55, 0.0], height: 0.025,  wrapWidth: undefined, ori: 0.0,
+    pos: [(- 0.71), 0.0], height: 0.025,  wrapWidth: undefined, ori: 0.0,
     color: new util.Color('green'),  opacity: undefined,
     depth: -2.0 
   });
   
+  lookup_table_right = new visual.TextStim({
+    win: psychoJS.window,
+    name: 'lookup_table_right',
+    text: 'Any text\n\nincluding line breaks',
+    font: '"Lucida Console"',
+    units: undefined, 
+    pos: [0.7, 0], height: 0.025,  wrapWidth: undefined, ori: 0.0,
+    color: new util.Color('green'),  opacity: undefined,
+    depth: -3.0 
+  });
+  
   // set text align
-  lookup_table.setAlignHoriz('left')
+  lookup_table_left.setAlignHoriz('center');
+  lookup_table_right.setAlignHoriz('center');
   
   //psychoJS.window._renderer.roundPixels = true;
   
   bands = [
       new band.Band(
           psychoJS.window,
-          [-0.1, 0.24], // pos
+          [-0.01, 0.24], // pos
           [para.WIDTH, 0.2], // size
           para.VESSEL_SIGNATURES[0][0],
           jl.repeat(1, para.N_LINES),
@@ -180,7 +193,7 @@ async function experimentInit() {
       ),
       new band.Band(
           psychoJS.window,
-          [-0.1, -0.17], // pos
+          [-0.01, -0.17], // pos
           [para.WIDTH, 0.2], // size
           para.VESSEL_SIGNATURES[0][1],
           jl.repeat(1, para.N_LINES),
@@ -602,20 +615,24 @@ function trialRoutineBegin(snapshot) {
     
     bands[active_band].setLines(lines, is_signal);
     
-    var lookup = para.LOOKUP_TEXT[0][active_band] + '\n' + para.LOOKUP_TEXT[1][active_band];
+    var lookup_left = para.LOOKUP_TEXT[0][active_band];
+    var lookup_right = para.LOOKUP_TEXT[1][active_band];
     switch(phase) {
         case 0: // PRACTICE PHASE
-            lookup = para.PRACTICE_LOOKUP_TEXT[0][active_band] + '\n' + para.PRACTICE_LOOKUP_TEXT[1][active_band];
+            lookup_left = para.PRACTICE_LOOKUP_TEXT[0][active_band];
+            lookup_right = para.PRACTICE_LOOKUP_TEXT[1][active_band];
             break;
         case 1: // BASELINE PHASE
             break;
         case 2: // TRAINING PHASE
-            lookup = "";
+            lookup_left = "";
+            lookup_right = "";
             bands[para.HIGHLIGHT].setHighlight(true, vessel);
             bands[para.LOWLIGHT].setLowlight(true);
             break;
         case 3: // TEST PHASE
-            lookup = "";
+            lookup_left = "";
+            lookup_right = "";
             break;
     }
     
@@ -628,12 +645,14 @@ function trialRoutineBegin(snapshot) {
         band.setAutoDraw(true);
     }
     
-    lookup_table.text = lookup;
+    lookup_table_left.text = lookup_left;
+    lookup_table_right.text = lookup_right;
     // keep track of which components have finished
     trialComponents = [];
     trialComponents.push(image);
     trialComponents.push(key_resp);
-    trialComponents.push(lookup_table);
+    trialComponents.push(lookup_table_left);
+    trialComponents.push(lookup_table_right);
     
     trialComponents.forEach( function(thisComponent) {
       if ('status' in thisComponent)
@@ -692,13 +711,23 @@ function trialRoutineEachFrame() {
     }
     
     
-    // *lookup_table* updates
-    if (t >= 0.0 && lookup_table.status === PsychoJS.Status.NOT_STARTED) {
+    // *lookup_table_left* updates
+    if (t >= 0.0 && lookup_table_left.status === PsychoJS.Status.NOT_STARTED) {
       // keep track of start time/frame for later
-      lookup_table.tStart = t;  // (not accounting for frame time here)
-      lookup_table.frameNStart = frameN;  // exact frame index
+      lookup_table_left.tStart = t;  // (not accounting for frame time here)
+      lookup_table_left.frameNStart = frameN;  // exact frame index
       
-      lookup_table.setAutoDraw(true);
+      lookup_table_left.setAutoDraw(true);
+    }
+
+    
+    // *lookup_table_right* updates
+    if (t >= 0.0 && lookup_table_right.status === PsychoJS.Status.NOT_STARTED) {
+      // keep track of start time/frame for later
+      lookup_table_right.tStart = t;  // (not accounting for frame time here)
+      lookup_table_right.frameNStart = frameN;  // exact frame index
+      
+      lookup_table_right.setAutoDraw(true);
     }
 
     // Update uniforms

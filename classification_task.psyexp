@@ -69,7 +69,7 @@
         <Param name="name" updates="None" val="image" valType="code"/>
         <Param name="opacity" updates="constant" val="" valType="num"/>
         <Param name="ori" updates="constant" val="0" valType="num"/>
-        <Param name="pos" updates="constant" val="(-0.09, 0)" valType="list"/>
+        <Param name="pos" updates="constant" val="(0, 0)" valType="list"/>
         <Param name="saveStartStop" updates="None" val="True" valType="bool"/>
         <Param name="size" updates="constant" val="(1.25, 0.9)" valType="list"/>
         <Param name="startEstim" updates="None" val="" valType="code"/>
@@ -99,7 +99,7 @@
         <Param name="storeCorrect" updates="constant" val="True" valType="bool"/>
         <Param name="syncScreenRefresh" updates="constant" val="True" valType="bool"/>
       </KeyboardComponent>
-      <TextComponent name="lookup_table">
+      <TextComponent name="lookup_table_left">
         <Param name="color" updates="constant" val="green" valType="color"/>
         <Param name="colorSpace" updates="constant" val="rgb" valType="str"/>
         <Param name="contrast" updates="constant" val="1" valType="num"/>
@@ -109,10 +109,10 @@
         <Param name="font" updates="constant" val="&quot;Lucida Console&quot;" valType="str"/>
         <Param name="languageStyle" updates="None" val="LTR" valType="str"/>
         <Param name="letterHeight" updates="constant" val="0.025" valType="num"/>
-        <Param name="name" updates="None" val="lookup_table" valType="code"/>
+        <Param name="name" updates="None" val="lookup_table_left" valType="code"/>
         <Param name="opacity" updates="constant" val="" valType="num"/>
         <Param name="ori" updates="constant" val="0" valType="num"/>
-        <Param name="pos" updates="constant" val="(0.55, 0.0)" valType="list"/>
+        <Param name="pos" updates="constant" val="(-0.71, 0.0)" valType="list"/>
         <Param name="saveStartStop" updates="None" val="True" valType="bool"/>
         <Param name="startEstim" updates="None" val="" valType="code"/>
         <Param name="startType" updates="None" val="time (s)" valType="str"/>
@@ -124,12 +124,37 @@
         <Param name="units" updates="None" val="from exp settings" valType="str"/>
         <Param name="wrapWidth" updates="constant" val="" valType="num"/>
       </TextComponent>
+      <TextComponent name="lookup_table_right">
+        <Param name="color" updates="constant" val="green" valType="color"/>
+        <Param name="colorSpace" updates="constant" val="rgb" valType="str"/>
+        <Param name="contrast" updates="constant" val="1" valType="num"/>
+        <Param name="disabled" updates="None" val="False" valType="bool"/>
+        <Param name="durationEstim" updates="None" val="" valType="code"/>
+        <Param name="flip" updates="constant" val="None" valType="str"/>
+        <Param name="font" updates="constant" val="&quot;Lucida Console&quot;" valType="str"/>
+        <Param name="languageStyle" updates="None" val="LTR" valType="str"/>
+        <Param name="letterHeight" updates="constant" val="0.025" valType="num"/>
+        <Param name="name" updates="None" val="lookup_table_right" valType="code"/>
+        <Param name="opacity" updates="constant" val="" valType="num"/>
+        <Param name="ori" updates="constant" val="0" valType="num"/>
+        <Param name="pos" updates="constant" val="(0.7, 0)" valType="list"/>
+        <Param name="saveStartStop" updates="None" val="True" valType="bool"/>
+        <Param name="startEstim" updates="None" val="" valType="code"/>
+        <Param name="startType" updates="None" val="time (s)" valType="str"/>
+        <Param name="startVal" updates="None" val="0.0" valType="code"/>
+        <Param name="stopType" updates="None" val="duration (s)" valType="str"/>
+        <Param name="stopVal" updates="constant" val="" valType="code"/>
+        <Param name="syncScreenRefresh" updates="None" val="True" valType="bool"/>
+        <Param name="text" updates="constant" val="Any text&amp;#10;&amp;#10;including line breaks" valType="str"/>
+        <Param name="units" updates="None" val="from exp settings" valType="str"/>
+        <Param name="wrapWidth" updates="constant" val="" valType="num"/>
+      </TextComponent>
       <CodeComponent name="bands">
         <Param name="Before Experiment" updates="constant" val="" valType="extendedCode"/>
         <Param name="Before JS Experiment" updates="constant" val="// Random util functions that don't fit elsewhere&amp;#10;import * as jl from &quot;./src/johnlib.js&quot;&amp;#10;// Generative functions (trials orders, line positions, etc)&amp;#10;import * as gen from &quot;./src/generate.js&quot;&amp;#10;// Band objects&amp;#10;import * as band from &quot;./src/band.js&quot;&amp;#10;// Inital parameters&amp;#10;import * as para from &quot;./src/para.js&quot;" valType="extendedCode"/>
         <Param name="Begin Experiment" updates="constant" val="" valType="extendedCode"/>
-        <Param name="Begin JS Experiment" updates="constant" val="// set text align&amp;#10;lookup_table.setAlignHoriz('left')&amp;#10;&amp;#10;//psychoJS.window._renderer.roundPixels = true;&amp;#10;&amp;#10;bands = [&amp;#10;    new band.Band(&amp;#10;        psychoJS.window,&amp;#10;        [-0.1, 0.24], // pos&amp;#10;        [para.WIDTH, 0.2], // size&amp;#10;        para.VESSEL_SIGNATURES[0][0],&amp;#10;        jl.repeat(1, para.N_LINES),&amp;#10;        para.NTICKS_TOP,  para.BAND_RANGES[0],&amp;#10;    ),&amp;#10;    new band.Band(&amp;#10;        psychoJS.window,&amp;#10;        [-0.1, -0.17], // pos&amp;#10;        [para.WIDTH, 0.2], // size&amp;#10;        para.VESSEL_SIGNATURES[0][1],&amp;#10;        jl.repeat(1, para.N_LINES),&amp;#10;        para.NTICKS_BOTTOM,&amp;#10;        para.BAND_RANGES[1],&amp;#10;    )&amp;#10;];&amp;#10;&amp;#10;psychoJS.experiment.addData('practice_signatures_friend', para.PRACTICE_SIGNATURES[0]); &amp;#10;psychoJS.experiment.addData('practice_signatures_foe', para.PRACTICE_SIGNATURES[1]); &amp;#10;&amp;#10;psychoJS.experiment.addData('signatures_friend', para.VESSEL_SIGNATURES[0]);&amp;#10;psychoJS.experiment.addData('signatures_foe', para.VESSEL_SIGNATURES[1]);&amp;#10;&amp;#10;psychoJS.experiment.addData('band_ranges_top', para.BAND_RANGES[0]);&amp;#10;psychoJS.experiment.addData('band_ranges_bottom', para.BAND_RANGES[1]);" valType="extendedCode"/>
-        <Param name="Begin JS Routine" updates="constant" val="image.setAutoDraw(true);&amp;#10;&amp;#10;bands[active_band].setLines(lines, is_signal);&amp;#10;&amp;#10;var lookup = para.LOOKUP_TEXT[0][active_band] + '\n' + para.LOOKUP_TEXT[1][active_band];&amp;#10;switch(phase) {&amp;#10;    case 0: // PRACTICE PHASE&amp;#10;        lookup = para.PRACTICE_LOOKUP_TEXT[0][active_band] + '\n' + para.PRACTICE_LOOKUP_TEXT[1][active_band];&amp;#10;        break;&amp;#10;    case 1: // BASELINE PHASE&amp;#10;        break;&amp;#10;    case 2: // TRAINING PHASE&amp;#10;        lookup = &quot;&quot;;&amp;#10;        bands[para.HIGHLIGHT].setHighlight(true, vessel);&amp;#10;        bands[para.LOWLIGHT].setLowlight(true);&amp;#10;        break;&amp;#10;    case 3: // TEST PHASE&amp;#10;        lookup = &quot;&quot;;&amp;#10;        break;&amp;#10;}&amp;#10;&amp;#10;// Set active band&amp;#10;for(var i = 0; i &lt; bands.length; i++) {&amp;#10;    let band = bands[i];   &amp;#10;    band.active = active_band == i;&amp;#10;    band.rectangle.opacity = 1.0 - band.active;&amp;#10;    band.rectangle._needUpdate = true;&amp;#10;    band.setAutoDraw(true);&amp;#10;}&amp;#10;&amp;#10;lookup_table.text = lookup;" valType="extendedCode"/>
+        <Param name="Begin JS Experiment" updates="constant" val="// set text align&amp;#10;lookup_table_left.setAlignHoriz('center');&amp;#10;lookup_table_right.setAlignHoriz('center');&amp;#10;&amp;#10;//psychoJS.window._renderer.roundPixels = true;&amp;#10;&amp;#10;bands = [&amp;#10;    new band.Band(&amp;#10;        psychoJS.window,&amp;#10;        [-0.01, 0.24], // pos&amp;#10;        [para.WIDTH, 0.2], // size&amp;#10;        para.VESSEL_SIGNATURES[0][0],&amp;#10;        jl.repeat(1, para.N_LINES),&amp;#10;        para.NTICKS_TOP,  para.BAND_RANGES[0],&amp;#10;    ),&amp;#10;    new band.Band(&amp;#10;        psychoJS.window,&amp;#10;        [-0.01, -0.17], // pos&amp;#10;        [para.WIDTH, 0.2], // size&amp;#10;        para.VESSEL_SIGNATURES[0][1],&amp;#10;        jl.repeat(1, para.N_LINES),&amp;#10;        para.NTICKS_BOTTOM,&amp;#10;        para.BAND_RANGES[1],&amp;#10;    )&amp;#10;];&amp;#10;&amp;#10;psychoJS.experiment.addData('practice_signatures_friend', para.PRACTICE_SIGNATURES[0]); &amp;#10;psychoJS.experiment.addData('practice_signatures_foe', para.PRACTICE_SIGNATURES[1]); &amp;#10;&amp;#10;psychoJS.experiment.addData('signatures_friend', para.VESSEL_SIGNATURES[0]);&amp;#10;psychoJS.experiment.addData('signatures_foe', para.VESSEL_SIGNATURES[1]);&amp;#10;&amp;#10;psychoJS.experiment.addData('band_ranges_top', para.BAND_RANGES[0]);&amp;#10;psychoJS.experiment.addData('band_ranges_bottom', para.BAND_RANGES[1]);" valType="extendedCode"/>
+        <Param name="Begin JS Routine" updates="constant" val="image.setAutoDraw(true);&amp;#10;&amp;#10;bands[active_band].setLines(lines, is_signal);&amp;#10;&amp;#10;var lookup_left = para.LOOKUP_TEXT[0][active_band];&amp;#10;var lookup_right = para.LOOKUP_TEXT[1][active_band];&amp;#10;switch(phase) {&amp;#10;    case 0: // PRACTICE PHASE&amp;#10;        lookup_left = para.PRACTICE_LOOKUP_TEXT[0][active_band];&amp;#10;        lookup_right = para.PRACTICE_LOOKUP_TEXT[1][active_band];&amp;#10;        break;&amp;#10;    case 1: // BASELINE PHASE&amp;#10;        break;&amp;#10;    case 2: // TRAINING PHASE&amp;#10;        lookup_left = &quot;&quot;;&amp;#10;        lookup_right = &quot;&quot;;&amp;#10;        bands[para.HIGHLIGHT].setHighlight(true, vessel);&amp;#10;        bands[para.LOWLIGHT].setLowlight(true);&amp;#10;        break;&amp;#10;    case 3: // TEST PHASE&amp;#10;        lookup_left = &quot;&quot;;&amp;#10;        lookup_right = &quot;&quot;;&amp;#10;        break;&amp;#10;}&amp;#10;&amp;#10;// Set active band&amp;#10;for(var i = 0; i &lt; bands.length; i++) {&amp;#10;    let band = bands[i];   &amp;#10;    band.active = active_band == i;&amp;#10;    band.rectangle.opacity = 1.0 - band.active;&amp;#10;    band.rectangle._needUpdate = true;&amp;#10;    band.setAutoDraw(true);&amp;#10;}&amp;#10;&amp;#10;lookup_table_left.text = lookup_left;&amp;#10;lookup_table_right.text = lookup_right;" valType="extendedCode"/>
         <Param name="Begin Routine" updates="constant" val="" valType="extendedCode"/>
         <Param name="Code Type" updates="None" val="JS" valType="str"/>
         <Param name="Each Frame" updates="constant" val="" valType="extendedCode"/>
