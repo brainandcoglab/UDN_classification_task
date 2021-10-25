@@ -27,45 +27,42 @@ let trial_lines = function(vessel, band, signatures, n_noise, sorted, distfn) {
     for (var i = 0; i < n_lines; i++) {
         is_signal.push(0);
     }
-    for (var i = 0; i < n_lines; i++) {
-
-        let canary = 0; // allow this to fail after too many attempts
-        while(true) {
-            canary++;
-            if (canary > 1000) {
-                return false;
-            }
-            var left = vessel ? jl.getvalright(i, n_lines) : jl.getvalleft(i, n_lines);
-            var right = vessel ? jl.getvalright(i+1, n_lines) : jl.getvalleft(i+1, n_lines);
-            var spacing = right - left;
-
-            let val = left + (Math.random() * spacing);
-            // run binary search
-            let bs = jl.binary_search(sorted_clone, val, distfn);
-            if (bs >= 0) {
-                continue; // value is either already used, or too close to an existing value
-            } else {
-                // add to sorted array
-                let idx = (-bs) - 1;
-                sorted_clone.splice(idx, 0, val);
-                // push into vessel signatures
-                lines.push((val).toFixed(3));
-                break;
-            }
-        }
-
-    }
-    
     // Now, if we are presenting signal, randomly select which lines we want
     // We still preserve the quadrant spacing rule
     if (vessel >= 0) {
         // Random shuffle to select (N_LINES - N_NOISE) lines
         let signals = util.shuffle(line_choices);
-        for(var i = 0; i < n_lines - n_noise; i++) {
-                let l = signals[i]; // index of chosen signal line
+        for(var i = 0; i < n_lines; i++) {
+            let l = signals[i]; // index of chosen signal line
+            if ( i < n_lines - n_noise ) {
                 // insert in appropriate location
                 lines[l] = signatures[vessel][band][l]; 
                 is_signal[l] = 1;
+            } else {
+                let canary = 0;
+                while(true) {
+                    canary++;
+                    if (canary > 1000) {
+                        return false;
+                    }
+                    // This simply puts the random noise on the opposite side that the signature is biased towards
+                    var left = vessel ? 0.0 : 0.5;
+                    var spacing = 0.5;
+                    let val = left + (Math.random() * spacing);
+                    // run binary search
+                    let bs = jl.binary_search(sorted_clone, val, distfn);
+                    if (bs >= 0) {
+                        continue; // value is either already used, or too close to an existing value
+                    } else {
+                        // add to sorted array
+                        let idx = (-bs) - 1;
+                        sorted_clone.splice(idx, 0, val);
+                        // push into vessel signatures
+                        lines[l] = (val).toFixed(3);
+                        break;
+                    }
+                }  
+            }
          }
     }
     return [lines, is_signal];
