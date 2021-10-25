@@ -43,11 +43,14 @@ const errstring = 'Experiment run order generation failed, please contact experi
 let practice_signatures;
 let practice_run_order = false;
 for (var canary = 0; !practice_run_order; canary++) {
-    if (canary > 1000) {
+    if (canary > 100) {
         alert(errstring)
         throw errstring;
     }
     let practice_sort_sig = gen.signatures(N_LINES, MIN_DISTANCE);
+    if (!practice_sort_sig) {
+        continue;
+    }
     practice_signatures = practice_sort_sig[1];
     let practice_sorted_lines = practice_sort_sig[0];  // sorted list of all lines (practice)
     practice_run_order = gen.run_order(N_PRACTICE_TRIALS, P_CATCH, N_NOISE, practice_signatures, practice_sorted_lines, MIN_DISTANCE, HIGHLIGHT);
@@ -58,12 +61,15 @@ let signatures;
 let baseline_run_order = false;
 let training_run_order = false;
 let test_run_order = false;
-for (var canary = 0; !baseline_run_order && !training_run_order && !test_run_order; canary++) {
-    console.log(canary)
-    if (canary > 1000) {
+for (var canary = 0; !baseline_run_order || !training_run_order || !test_run_order; canary++) {
+    if (canary > 100) {
+        alert(errstring)
         throw errstring;
     }
     let sort_sig = gen.signatures(N_LINES, MIN_DISTANCE);
+    if (!sort_sig) {
+        continue;
+    }
     signatures = sort_sig[1];
     let sorted_lines = sort_sig[0];
     baseline_run_order = gen.run_order(N_TRIALS, P_CATCH, N_NOISE, signatures, sorted_lines, MIN_DISTANCE, HIGHLIGHT);
