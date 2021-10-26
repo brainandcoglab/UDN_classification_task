@@ -52,14 +52,11 @@ float random (vec2 seed) {
 
 void main() {
     
-    vec2 pos = (gl_FragCoord.xy - rectangle.xy);// / rectangle.zw;
-    //vec2 pos = gl_FragCoord.xy;
-    //vec2 pos = floor(-vTextureCoord * u_resolution + 0.5) + 0.5;
+    vec2 pos = (gl_FragCoord.xy - rectangle.xy) / rectangle.zw * u_resolution * 600.0;
     pos.y += ceil(frameN / 1.0);
-    vec2 seed = ceil(pos/1.0)/rectangle.zw;
-    //seed *= 1.0 + mod(frameN/10.0, 10.0);
+    vec2 seed = mod(ceil(pos), 1000.0);
     
-    float rnd = random( seed );
+    float rnd = random( seed/10.0 );
     gl_FragColor = vec4(0.0,rnd-0.7, 0.0, 0.2);
 }
 `;

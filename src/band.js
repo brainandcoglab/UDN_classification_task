@@ -155,9 +155,9 @@ function Band(window, pos, size=[1.0, 0.2], lines, is_signal, nticks, range) {
             _super.call(this);
             if (parent.active) {
                 // update uniforms and set filter (shader program)
-                let height = window.size[1]
-                let band_w = this._pixi.width;
-                let band_h = this._pixi.height;
+                let height = window.size[1];
+                let band_w = this.size[0];
+                let band_h = this.size[1];
                 parent.uniforms.u_resolution = [band_w, band_h];
                 this._pixi.filters = [parent.filter];
             } else {
