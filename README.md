@@ -48,7 +48,7 @@ A little more stable on chrome.
 * [x] Some nice rivets and stuff
 * [ ] Fix width so that resize is easier
 * [ ] Check that band space available is possible ahead of time
-* [ ] Scale down by available width
+* [x] Scale down by available width
 * [ ] Cooler lookup table
 * [ ] Seedable RNG?
 * [ ] Prettier "Off" condition
