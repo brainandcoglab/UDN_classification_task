@@ -25,7 +25,6 @@ export const MIN_DISTANCE = 0.1/3; // Minimum distance between lines
 export const VESSEL_MAP = {
     '0': 'a', // Friend
     '1': 'l', // Foe
-   '-1': 'space'  // Neither
 };
 
 // Decide which will be highlight / lowlight

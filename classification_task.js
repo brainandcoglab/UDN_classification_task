@@ -1,4 +1,4 @@
-﻿/**************************** 
+/**************************** 
  * Classification_Task Test *
  ****************************/
 
@@ -1053,7 +1053,7 @@ function trialRoutineEachFrame() {
   }
 
     if (key_resp.status === PsychoJS.Status.STARTED) {
-      let theseKeys = key_resp.getKeys({keyList: ['a', 'space', 'l'], waitRelease: false});
+      let theseKeys = key_resp.getKeys({keyList: ['a', 'l'], waitRelease: false});
       _key_resp_allKeys = _key_resp_allKeys.concat(theseKeys);
       if (_key_resp_allKeys.length > 0) {
         key_resp.keys = _key_resp_allKeys[_key_resp_allKeys.length - 1].name;  // just the last key pressed
