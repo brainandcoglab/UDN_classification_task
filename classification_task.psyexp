@@ -175,7 +175,7 @@
         <Param name="disabled" updates="None" val="False" valType="bool"/>
         <Param name="durationEstim" updates="None" val="" valType="code"/>
         <Param name="flip" updates="constant" val="None" valType="str"/>
-        <Param name="font" updates="constant" val="Open Sans" valType="str"/>
+        <Param name="font" updates="constant" val="&quot;Times New Roman&quot;" valType="str"/>
         <Param name="languageStyle" updates="None" val="LTR" valType="str"/>
         <Param name="letterHeight" updates="constant" val="0.08" valType="num"/>
         <Param name="name" updates="None" val="feedback_text" valType="code"/>
@@ -202,7 +202,7 @@
         <Param name="disabled" updates="None" val="False" valType="bool"/>
         <Param name="durationEstim" updates="None" val="" valType="code"/>
         <Param name="flip" updates="constant" val="None" valType="str"/>
-        <Param name="font" updates="constant" val="Open Sans" valType="str"/>
+        <Param name="font" updates="constant" val="&quot;Times New Roman&quot;" valType="str"/>
         <Param name="languageStyle" updates="None" val="LTR" valType="str"/>
         <Param name="letterHeight" updates="constant" val="0.04" valType="num"/>
         <Param name="name" updates="None" val="text" valType="code"/>
@@ -247,7 +247,7 @@
         <Param name="disabled" updates="None" val="False" valType="bool"/>
         <Param name="durationEstim" updates="None" val="" valType="code"/>
         <Param name="flip" updates="constant" val="None" valType="str"/>
-        <Param name="font" updates="constant" val="Open Sans" valType="str"/>
+        <Param name="font" updates="constant" val="&quot;Times New Roman&quot;" valType="str"/>
         <Param name="languageStyle" updates="None" val="LTR" valType="str"/>
         <Param name="letterHeight" updates="constant" val="0.04" valType="num"/>
         <Param name="name" updates="None" val="outro_text" valType="code"/>
@@ -292,7 +292,7 @@
         <Param name="disabled" updates="None" val="False" valType="bool"/>
         <Param name="durationEstim" updates="None" val="" valType="code"/>
         <Param name="flip" updates="constant" val="None" valType="str"/>
-        <Param name="font" updates="constant" val="Open Sans" valType="str"/>
+        <Param name="font" updates="constant" val="&quot;Times New Roman&quot;" valType="str"/>
         <Param name="languageStyle" updates="None" val="LTR" valType="str"/>
         <Param name="letterHeight" updates="constant" val="0.04" valType="num"/>
         <Param name="name" updates="None" val="instructions_text" valType="code"/>
@@ -354,7 +354,7 @@
         <Param name="disabled" updates="None" val="False" valType="bool"/>
         <Param name="durationEstim" updates="None" val="" valType="code"/>
         <Param name="flip" updates="constant" val="None" valType="str"/>
-        <Param name="font" updates="constant" val="Open Sans" valType="str"/>
+        <Param name="font" updates="constant" val="&quot;Times New Roman&quot;" valType="str"/>
         <Param name="languageStyle" updates="None" val="LTR" valType="str"/>
         <Param name="letterHeight" updates="constant" val="0.04" valType="num"/>
         <Param name="name" updates="None" val="debrief_text" valType="code"/>
@@ -556,7 +556,7 @@
         <Param name="disabled" updates="None" val="False" valType="bool"/>
         <Param name="durationEstim" updates="None" val="" valType="code"/>
         <Param name="flip" updates="constant" val="None" valType="str"/>
-        <Param name="font" updates="constant" val="Open Sans" valType="str"/>
+        <Param name="font" updates="constant" val="&quot;Times New Roman&quot;" valType="str"/>
         <Param name="languageStyle" updates="None" val="LTR" valType="str"/>
         <Param name="letterHeight" updates="constant" val="0.03" valType="num"/>
         <Param name="name" updates="None" val="textbox" valType="code"/>
