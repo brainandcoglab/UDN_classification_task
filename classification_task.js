@@ -956,7 +956,6 @@ function trialRoutineBegin(snapshot) {
     trialClock.reset(); // clock
     frameN = -1;
     continueRoutine = true; // until we're told otherwise
-    routineTimer.add(10.000000);
     // update component parameters for each repeat
     key_resp.keys = undefined;
     key_resp.rt = undefined;
@@ -1030,7 +1029,7 @@ function trialRoutineEachFrame() {
       image.setAutoDraw(true);
     }
 
-    frameRemains = 0.0 + 10 - psychoJS.window.monitorFramePeriod * 0.75;  // most of one frame period left
+    frameRemains = 0.0 + para.DURATION - psychoJS.window.monitorFramePeriod * 0.75;  // most of one frame period left
     if (image.status === PsychoJS.Status.STARTED && t >= frameRemains) {
       image.setAutoDraw(false);
     }
@@ -1047,7 +1046,7 @@ function trialRoutineEachFrame() {
       psychoJS.window.callOnFlip(function() { key_resp.clearEvents(); });
     }
 
-    frameRemains = 0.0 + 10 - psychoJS.window.monitorFramePeriod * 0.75;  // most of one frame period left
+    frameRemains = 0.0 + para.DURATION - psychoJS.window.monitorFramePeriod * 0.75;  // most of one frame period left
     if (key_resp.status === PsychoJS.Status.STARTED && t >= frameRemains) {
       key_resp.status = PsychoJS.Status.FINISHED;
   }
@@ -1079,7 +1078,7 @@ function trialRoutineEachFrame() {
       lookup_table_left.setAutoDraw(true);
     }
 
-    frameRemains = 0.0 + 10 - psychoJS.window.monitorFramePeriod * 0.75;  // most of one frame period left
+    frameRemains = 0.0 + para.DURATION - psychoJS.window.monitorFramePeriod * 0.75;  // most of one frame period left
     if (lookup_table_left.status === PsychoJS.Status.STARTED && t >= frameRemains) {
       lookup_table_left.setAutoDraw(false);
     }
@@ -1093,7 +1092,7 @@ function trialRoutineEachFrame() {
       lookup_table_right.setAutoDraw(true);
     }
 
-    frameRemains = 0.0 + 10 - psychoJS.window.monitorFramePeriod * 0.75;  // most of one frame period left
+    frameRemains = 0.0 + para.DURATION - psychoJS.window.monitorFramePeriod * 0.75;  // most of one frame period left
     if (lookup_table_right.status === PsychoJS.Status.STARTED && t >= frameRemains) {
       lookup_table_right.setAutoDraw(false);
     }
@@ -1120,7 +1119,7 @@ function trialRoutineEachFrame() {
       }
     
     // refresh the screen if continuing
-    if (continueRoutine && routineTimer.getTime() > 0) {
+    if (continueRoutine) {
       return Scheduler.Event.FLIP_REPEAT;
     } else {
       return Scheduler.Event.NEXT;
@@ -1183,6 +1182,9 @@ function trialRoutineEnd() {
     // For some reason it can't add array data automatically
     psychoJS.experiment.addData('lines_presented', lines); 
     psychoJS.experiment.addData('is_signal_presented', is_signal);
+    // the Routine "trial" was not non-slip safe, so reset the non-slip timer
+    routineTimer.reset();
+    
     return Scheduler.Event.NEXT;
   };
 }

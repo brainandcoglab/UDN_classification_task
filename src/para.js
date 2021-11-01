@@ -90,6 +90,8 @@ export const BAND_RANGES = [
     [100, 1000]
 ];
 
+export const DURATION = 10;
+
 // Number of major ticks on the x axis
 export const NTICKS_TOP = 10;
 export const NTICKS_BOTTOM = 10;
