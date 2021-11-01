@@ -44,6 +44,10 @@ flowScheduler.add(experimentInit);
 flowScheduler.add(introRoutineBegin());
 flowScheduler.add(introRoutineEachFrame());
 flowScheduler.add(introRoutineEnd());
+const tutorialLoopScheduler = new Scheduler(psychoJS);
+flowScheduler.add(tutorialLoopBegin(tutorialLoopScheduler));
+flowScheduler.add(tutorialLoopScheduler);
+flowScheduler.add(tutorialLoopEnd);
 const phasesLoopScheduler = new Scheduler(psychoJS);
 flowScheduler.add(phasesLoopBegin(phasesLoopScheduler));
 flowScheduler.add(phasesLoopScheduler);
@@ -91,6 +95,11 @@ async function updateInfo() {
 var introClock;
 var text;
 var key_resp_2;
+var tuteClock;
+var tute_resp;
+var tute_left;
+var tute_right;
+var textbox;
 var instructionsClock;
 var instructions_text;
 var key_resp_4;
@@ -116,7 +125,7 @@ async function experimentInit() {
   text = new visual.TextStim({
     win: psychoJS.window,
     name: 'text',
-    text: 'Welcome. This is the intro text, which will contain useful information on a future date.\n\nPlease press any key to continue.\n',
+    text: 'Welcome!\n\nIn this experiement, you will be taking on the role of a SONAR operator. You will be classifying different ship types using SONAR signals which appear as vertical lines on a simulated display. This experiment will be testing different ways of supporting SONAR operators to make decisions. \n\nThere will be four sections of the experiment, in which you will recieve different types of assistance to make classifications. Please try your best to classify the vessels. The experiment will likely take around 45 minutes in total to complete.\n\nPlease press any key to continue to the tutorial.',
     font: 'Open Sans',
     units: undefined, 
     pos: [0, 0], height: 0.04,  wrapWidth: undefined, ori: 0.0,
@@ -125,6 +134,55 @@ async function experimentInit() {
   });
   
   key_resp_2 = new core.Keyboard({psychoJS: psychoJS, clock: new util.Clock(), waitForStart: true});
+  
+  // Initialize components for Routine "tute"
+  tuteClock = new util.Clock();
+  tute_resp = new core.Keyboard({psychoJS: psychoJS, clock: new util.Clock(), waitForStart: true});
+  
+  tute_left = new visual.TextStim({
+    win: psychoJS.window,
+    name: 'tute_left',
+    text: 'Friend\n(Press A):\n2.50 Hz\n4.00 Hz\n6.50 Hz\n8.00 Hz',
+    font: '"Lucida Console"',
+    units: undefined, 
+    pos: [(- 0.71), 0.0], height: 0.025,  wrapWidth: undefined, ori: 0.0,
+    color: new util.Color('green'),  opacity: undefined,
+    depth: -1.0 
+  });
+  
+  tute_right = new visual.TextStim({
+    win: psychoJS.window,
+    name: 'tute_right',
+    text: 'Foe\n(Press L):\n3.20 Hz\n5.50 Hz\n7.80 Hz\n9.00 Hz',
+    font: '"Lucida Console"',
+    units: undefined, 
+    pos: [0.7, 0], height: 0.025,  wrapWidth: undefined, ori: 0.0,
+    color: new util.Color('green'),  opacity: undefined,
+    depth: -2.0 
+  });
+  
+  // set text align
+  tute_left.setAlignHoriz('center');
+  tute_right.setAlignHoriz('center');
+  
+  let tutebg = new util.Color([-.7,-.7,-.7]);
+  textbox = new visual.TextBox({
+    win: psychoJS.window,
+    name: 'textbox',
+    text: 'This is your SONAR display console. You will notice that there are two different "bands". Each band represents a different frequency range.\n\n(Press any key to continue)',
+    font: 'Open Sans',
+    pos: [0, (- 0.1)], letterHeight: 0.03,
+    size: [0.8, 0.3],  units: undefined, 
+    color: 'white', colorSpace: 'rgb',
+    fillColor: tutebg, borderColor: undefined,
+    bold: false, italic: false,
+    opacity: 0.8,
+    padding: 0.05,
+    editable: false,
+    multiline: true,
+    anchor: 'center',
+    depth: -4.0 
+  });
   
   // Initialize components for Routine "instructions"
   instructionsClock = new util.Clock();
@@ -384,8 +442,47 @@ function introRoutineEnd() {
 }
 
 
-var phases;
+var tutorial;
 var currentLoop;
+function tutorialLoopBegin(tutorialLoopScheduler, snapshot) {
+  return async function() {
+    TrialHandler.fromSnapshot(snapshot); // update internal variables (.thisN etc) of the loop
+    
+    // set up handler to look after randomisation of conditions etc
+    tutorial = new TrialHandler({
+      psychoJS: psychoJS,
+      nReps: 10, method: TrialHandler.Method.SEQUENTIAL,
+      extraInfo: expInfo, originPath: undefined,
+      trialList: undefined,
+      seed: undefined, name: 'tutorial'
+    });
+    psychoJS.experiment.addLoop(tutorial); // add the loop to the experiment
+    currentLoop = tutorial;  // we're now the current loop
+    
+    // Schedule all the trials in the trialList:
+    tutorial.forEach(function() {
+      const snapshot = tutorial.getSnapshot();
+    
+      tutorialLoopScheduler.add(importConditions(snapshot));
+      tutorialLoopScheduler.add(tuteRoutineBegin(snapshot));
+      tutorialLoopScheduler.add(tuteRoutineEachFrame());
+      tutorialLoopScheduler.add(tuteRoutineEnd());
+      tutorialLoopScheduler.add(endLoopIteration(tutorialLoopScheduler, snapshot));
+    });
+    
+    return Scheduler.Event.NEXT;
+  }
+}
+
+
+async function tutorialLoopEnd() {
+  psychoJS.experiment.removeLoop(tutorial);
+
+  return Scheduler.Event.NEXT;
+}
+
+
+var phases;
 function phasesLoopBegin(phasesLoopScheduler, snapshot) {
   return async function() {
     TrialHandler.fromSnapshot(snapshot); // update internal variables (.thisN etc) of the loop
@@ -470,6 +567,180 @@ async function phasesLoopEnd() {
   psychoJS.experiment.removeLoop(phases);
 
   return Scheduler.Event.NEXT;
+}
+
+
+var _tute_resp_allKeys;
+var tuteComponents;
+function tuteRoutineBegin(snapshot) {
+  return async function () {
+    TrialHandler.fromSnapshot(snapshot); // ensure that .thisN vals are up to date
+    
+    //------Prepare to start Routine 'tute'-------
+    t = 0;
+    tuteClock.reset(); // clock
+    frameN = -1;
+    continueRoutine = true; // until we're told otherwise
+    // update component parameters for each repeat
+    tute_resp.keys = undefined;
+    tute_resp.rt = undefined;
+    _tute_resp_allKeys = [];
+    image.setAutoDraw(true);
+    
+    let tute_stage = 0;
+    
+    // Set active band
+    for(var i = 0; i < bands.length; i++) {
+        let band = bands[i];
+        band.active = 0;
+        band.rectangle.opacity = 1.0 - band.active;
+        band.rectangle._needUpdate = true;
+        band.setAutoDraw(true);
+    }
+    // keep track of which components have finished
+    tuteComponents = [];
+    tuteComponents.push(tute_resp);
+    tuteComponents.push(tute_left);
+    tuteComponents.push(tute_right);
+    tuteComponents.push(textbox);
+    
+    tuteComponents.forEach( function(thisComponent) {
+      if ('status' in thisComponent)
+        thisComponent.status = PsychoJS.Status.NOT_STARTED;
+       });
+    return Scheduler.Event.NEXT;
+  }
+}
+
+
+function tuteRoutineEachFrame() {
+  return async function () {
+    //------Loop for each frame of Routine 'tute'-------
+    // get current time
+    t = tuteClock.getTime();
+    frameN = frameN + 1;// number of completed frames (so 0 is the first frame)
+    // update/draw components on each frame
+    
+    // *tute_resp* updates
+    if (t >= 0.0 && tute_resp.status === PsychoJS.Status.NOT_STARTED) {
+      // keep track of start time/frame for later
+      tute_resp.tStart = t;  // (not accounting for frame time here)
+      tute_resp.frameNStart = frameN;  // exact frame index
+      
+      // keyboard checking is just starting
+      psychoJS.window.callOnFlip(function() { tute_resp.clock.reset(); });  // t=0 on next screen flip
+      psychoJS.window.callOnFlip(function() { tute_resp.start(); }); // start on screen flip
+      psychoJS.window.callOnFlip(function() { tute_resp.clearEvents(); });
+    }
+
+    if (tute_resp.status === PsychoJS.Status.STARTED) {
+      let theseKeys = tute_resp.getKeys({keyList: [], waitRelease: false});
+      _tute_resp_allKeys = _tute_resp_allKeys.concat(theseKeys);
+      if (_tute_resp_allKeys.length > 0) {
+        tute_resp.keys = _tute_resp_allKeys[_tute_resp_allKeys.length - 1].name;  // just the last key pressed
+        tute_resp.rt = _tute_resp_allKeys[_tute_resp_allKeys.length - 1].rt;
+        // a response ends the routine
+        continueRoutine = false;
+      }
+    }
+    
+    
+    // *tute_left* updates
+    if (t >= 0.0 && tute_left.status === PsychoJS.Status.NOT_STARTED) {
+      // keep track of start time/frame for later
+      tute_left.tStart = t;  // (not accounting for frame time here)
+      tute_left.frameNStart = frameN;  // exact frame index
+      
+      tute_left.setAutoDraw(true);
+    }
+
+    
+    // *tute_right* updates
+    if (t >= 0.0 && tute_right.status === PsychoJS.Status.NOT_STARTED) {
+      // keep track of start time/frame for later
+      tute_right.tStart = t;  // (not accounting for frame time here)
+      tute_right.frameNStart = frameN;  // exact frame index
+      
+      tute_right.setAutoDraw(true);
+    }
+
+    /*
+    if (tute_resp.keys.length > 0) {
+        
+        switch(tute_stage) {
+            case 0:
+                
+                tute_stage++;
+                break;
+        
+            
+        }
+        
+        
+    }*/
+    
+    // *textbox* updates
+    if (t >= 0.5 && textbox.status === PsychoJS.Status.NOT_STARTED) {
+      // keep track of start time/frame for later
+      textbox.tStart = t;  // (not accounting for frame time here)
+      textbox.frameNStart = frameN;  // exact frame index
+      
+      textbox.setAutoDraw(true);
+    }
+
+    // check for quit (typically the Esc key)
+    if (psychoJS.experiment.experimentEnded || psychoJS.eventManager.getKeys({keyList:['escape']}).length > 0) {
+      return quitPsychoJS('The [Escape] key was pressed. Goodbye!', false);
+    }
+    
+    // check if the Routine should terminate
+    if (!continueRoutine) {  // a component has requested a forced-end of Routine
+      return Scheduler.Event.NEXT;
+    }
+    
+    continueRoutine = false;  // reverts to True if at least one component still running
+    tuteComponents.forEach( function(thisComponent) {
+      if ('status' in thisComponent && thisComponent.status !== PsychoJS.Status.FINISHED) {
+        continueRoutine = true;
+      }
+    });
+    
+    // refresh the screen if continuing
+    if (continueRoutine) {
+      return Scheduler.Event.FLIP_REPEAT;
+    } else {
+      return Scheduler.Event.NEXT;
+    }
+  };
+}
+
+
+function tuteRoutineEnd() {
+  return async function () {
+    //------Ending Routine 'tute'-------
+    tuteComponents.forEach( function(thisComponent) {
+      if (typeof thisComponent.setAutoDraw === 'function') {
+        thisComponent.setAutoDraw(false);
+      }
+    });
+    psychoJS.experiment.addData('tute_resp.keys', tute_resp.keys);
+    if (typeof tute_resp.keys !== 'undefined') {  // we had a response
+        psychoJS.experiment.addData('tute_resp.rt', tute_resp.rt);
+        routineTimer.reset();
+        }
+    
+    tute_resp.stop();
+    image.setAutoDraw(false);
+    for(var i = 0; i < bands.length; i++) {
+        let band = bands[i];
+        band.active = false;
+        band.setAutoDraw(false);
+    }
+    // the Routine "tute" was not non-slip safe, so reset the non-slip timer
+    routineTimer.reset();
+    
+    return Scheduler.Event.NEXT;
+  };
 }
 
 
@@ -607,6 +878,7 @@ function trialRoutineBegin(snapshot) {
     trialClock.reset(); // clock
     frameN = -1;
     continueRoutine = true; // until we're told otherwise
+    routineTimer.add(10.000000);
     // update component parameters for each repeat
     key_resp.keys = undefined;
     key_resp.rt = undefined;
@@ -663,6 +935,7 @@ function trialRoutineBegin(snapshot) {
 }
 
 
+var frameRemains;
 function trialRoutineEachFrame() {
   return async function () {
     //------Loop for each frame of Routine 'trial'-------
@@ -680,6 +953,10 @@ function trialRoutineEachFrame() {
       image.setAutoDraw(true);
     }
 
+    frameRemains = 0.0 + 10 - psychoJS.window.monitorFramePeriod * 0.75;  // most of one frame period left
+    if (image.status === PsychoJS.Status.STARTED && t >= frameRemains) {
+      image.setAutoDraw(false);
+    }
     
     // *key_resp* updates
     if (t >= 0.0 && key_resp.status === PsychoJS.Status.NOT_STARTED) {
@@ -692,6 +969,11 @@ function trialRoutineEachFrame() {
       psychoJS.window.callOnFlip(function() { key_resp.start(); }); // start on screen flip
       psychoJS.window.callOnFlip(function() { key_resp.clearEvents(); });
     }
+
+    frameRemains = 0.0 + 10 - psychoJS.window.monitorFramePeriod * 0.75;  // most of one frame period left
+    if (key_resp.status === PsychoJS.Status.STARTED && t >= frameRemains) {
+      key_resp.status = PsychoJS.Status.FINISHED;
+  }
 
     if (key_resp.status === PsychoJS.Status.STARTED) {
       let theseKeys = key_resp.getKeys({keyList: ['a', 'space', 'l'], waitRelease: false});
@@ -720,6 +1002,10 @@ function trialRoutineEachFrame() {
       lookup_table_left.setAutoDraw(true);
     }
 
+    frameRemains = 0.0 + 10 - psychoJS.window.monitorFramePeriod * 0.75;  // most of one frame period left
+    if (lookup_table_left.status === PsychoJS.Status.STARTED && t >= frameRemains) {
+      lookup_table_left.setAutoDraw(false);
+    }
     
     // *lookup_table_right* updates
     if (t >= 0.0 && lookup_table_right.status === PsychoJS.Status.NOT_STARTED) {
@@ -730,6 +1016,10 @@ function trialRoutineEachFrame() {
       lookup_table_right.setAutoDraw(true);
     }
 
+    frameRemains = 0.0 + 10 - psychoJS.window.monitorFramePeriod * 0.75;  // most of one frame period left
+    if (lookup_table_right.status === PsychoJS.Status.STARTED && t >= frameRemains) {
+      lookup_table_right.setAutoDraw(false);
+    }
     // Update uniforms
     for(var i = 0; i < bands.length; i++) {
         var band = bands[i];
@@ -753,7 +1043,7 @@ function trialRoutineEachFrame() {
     });
     
     // refresh the screen if continuing
-    if (continueRoutine) {
+    if (continueRoutine && routineTimer.getTime() > 0) {
       return Scheduler.Event.FLIP_REPEAT;
     } else {
       return Scheduler.Event.NEXT;
@@ -816,9 +1106,6 @@ function trialRoutineEnd() {
     // For some reason it can't add array data automatically
     psychoJS.experiment.addData('lines_presented', lines); 
     psychoJS.experiment.addData('is_signal_presented', is_signal);
-    // the Routine "trial" was not non-slip safe, so reset the non-slip timer
-    routineTimer.reset();
-    
     return Scheduler.Event.NEXT;
   };
 }
@@ -849,7 +1136,6 @@ function feedbackRoutineBegin(snapshot) {
 }
 
 
-var frameRemains;
 function feedbackRoutineEachFrame() {
   return async function () {
     //------Loop for each frame of Routine 'feedback'-------
@@ -1187,6 +1473,8 @@ async function quitPsychoJS(message, isCompleted) {
   if (psychoJS.experiment.isEntryEmpty()) {
     psychoJS.experiment.nextEntry();
   }
+  
+  
   
   
   
