@@ -1,4 +1,4 @@
-/**************************** 
+﻿/**************************** 
  * Classification_Task Test *
  ****************************/
 
@@ -182,13 +182,19 @@ async function experimentInit() {
   
   (Press any key to continue)`, [0.0, 0.3], [0.8, 0.2]],
   
-  [`You will initally need to use the lookup tables, found on the left and right of the console, to determine whether this signal is from a friend or a foe vessel. Can you classify the current vessel?
+  [`You will initally need to use the lookup tables, found to the left and right of the console, to determine whether this signal is from a friend or a foe vessel. Can you classify the current vessel?
   
   (Press any key to continue)`, [-0.35, 0.3], [0.8, 0.2]],
   
   [`If you thought that this was a Friend vessel, you were correct! If you were wrong, pay attention to the frequencies listed on the left, and what frequencies are present in the lower band.
   
   (Press any key to continue)`, [-0.35, 0.3], [0.8, 0.2]],
+  
+  [`You will be given 10 seconds on each trial to classify a vessel. Respond using the A key for friend, or L key for foe. You'll be told if you were correct or not.
+  Later on in the experiment, the lookup tables will be removed, and other types of assistance will be provided, but you'll learn more about that later.
+  
+  (Press any key to continue)`, [0.0, 0.1], [0.8, 0.3]],
+  
   
   ]
   polygon = new visual.Rect ({
@@ -328,7 +334,7 @@ async function experimentInit() {
   outro_text = new visual.TextStim({
     win: psychoJS.window,
     name: 'outro_text',
-    text: 'Thank you for participating!',
+    text: 'Thank you very much for participating!',
     font: 'Open Sans',
     units: undefined, 
     pos: [0, 0], height: 0.04,  wrapWidth: undefined, ori: 0.0,
@@ -972,14 +978,14 @@ function trialRoutineBegin(snapshot) {
         case 1: // BASELINE PHASE
             break;
         case 2: // TRAINING PHASE
-            lookup_left = "";
-            lookup_right = "";
+            lookup_left = "Friend\n(Press A)";
+            lookup_right = "Foe\n(Press L)";
             bands[para.HIGHLIGHT].setHighlight(true, vessel);
             bands[para.LOWLIGHT].setLowlight(true);
             break;
         case 3: // TEST PHASE
-            lookup_left = "";
-            lookup_right = "";
+            lookup_left = "Friend\n(Press A)";
+            lookup_right = "Foe\n(Press L)";
             break;
     }
     
