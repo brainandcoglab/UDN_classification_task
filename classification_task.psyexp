@@ -449,7 +449,7 @@
         <Param name="saveStartStop" updates="None" val="True" valType="bool"/>
         <Param name="startEstim" updates="None" val="" valType="code"/>
         <Param name="startType" updates="None" val="time (s)" valType="str"/>
-        <Param name="startVal" updates="None" val="0.0" valType="code"/>
+        <Param name="startVal" updates="None" val="0.5" valType="code"/>
         <Param name="stopType" updates="None" val="duration (s)" valType="str"/>
         <Param name="stopVal" updates="constant" val="" valType="code"/>
         <Param name="store" updates="constant" val="last key" valType="str"/>
@@ -510,46 +510,60 @@
         <Param name="Before Experiment" updates="constant" val="" valType="extendedCode"/>
         <Param name="Before JS Experiment" updates="constant" val="" valType="extendedCode"/>
         <Param name="Begin Experiment" updates="constant" val="" valType="extendedCode"/>
-        <Param name="Begin JS Experiment" updates="constant" val="// set text align&amp;#10;tute_left.setAlignHoriz('center');&amp;#10;tute_right.setAlignHoriz('center');&amp;#10;&amp;#10;let tutebg = new util.Color([-.7,-.7,-.7]);" valType="extendedCode"/>
-        <Param name="Begin JS Routine" updates="constant" val="image.setAutoDraw(true);&amp;#10;&amp;#10;let tute_stage = 0;&amp;#10;&amp;#10;// Set active band&amp;#10;for(var i = 0; i &lt; bands.length; i++) {&amp;#10;    let band = bands[i];&amp;#10;    band.active = 0;&amp;#10;    band.rectangle.opacity = 1.0 - band.active;&amp;#10;    band.rectangle._needUpdate = true;&amp;#10;    band.setAutoDraw(true);&amp;#10;}" valType="extendedCode"/>
+        <Param name="Begin JS Experiment" updates="constant" val="// set text align&amp;#10;tute_left.setAlignHoriz('center');&amp;#10;tute_right.setAlignHoriz('center');&amp;#10;&amp;#10;tutebg = new util.Color([-.9,-.9,-.9]);&amp;#10;&amp;#10;tute_stage = 0;&amp;#10;&amp;#10;tute_config = [&amp;#10;[`This is your SONAR display console. You will notice that there are two different frequency &quot;bands&quot;. Each band represents a different frequency range in hertz (Hz).&amp;#10;&amp;#10;(Press any key to continue)`, [0.0, -0.1], [0.8, 0.3]],&amp;#10;&amp;#10;[`On each trial, one of the bands will become active and display simulated SONAR signals. This time, the bottom band has been activated.&amp;#10;&amp;#10;(Press any key to continue)`, [0.0, 0.3], [0.8, 0.2]],&amp;#10;&amp;#10;[`You will initally need to use the lookup tables, found on the left and right of the console, to determine whether this signal is from a friend or a foe vessel. Can you classify the current vessel?&amp;#10;&amp;#10;(Press any key to continue)`, [-0.35, 0.3], [0.8, 0.2]],&amp;#10;&amp;#10;[`If you thought that this was a Friend vessel, you were correct! If you were wrong, pay attention to the frequencies listed on the left, and what frequencies are present in the lower band.&amp;#10;&amp;#10;(Press any key to continue)`, [-0.35, 0.3], [0.8, 0.2]],&amp;#10;&amp;#10;]" valType="extendedCode"/>
+        <Param name="Begin JS Routine" updates="constant" val="image.setAutoDraw(true);&amp;#10;&amp;#10;&amp;#10;textbox.fillColor = tutebg;&amp;#10;textbox.text = tute_config[tute_stage][0];&amp;#10;textbox.pos = tute_config[tute_stage][1];&amp;#10;textbox.wrapWidth = tute_config[tute_stage][2][0] - 0.1;&amp;#10;&amp;#10;polygon.pos = tute_config[tute_stage][1];&amp;#10;polygon.shape = tute_config[tute_stage][2];&amp;#10;&amp;#10;let tute_lines = [0.21,0.29,0.63,0.84];&amp;#10;&amp;#10;let range = para.BAND_RANGES[1];&amp;#10;let tute_friend_text = &quot;Friend\n(Press A):\n&quot;;&amp;#10;for (var i = 0; i &lt; tute_lines.length; i++) {&amp;#10;    let x = tute_lines[i];&amp;#10;    let val = (range[1] - range[0]) * x + range[0];&amp;#10;    tute_friend_text += val.toFixed(0) + &quot; Hz\n&quot;;&amp;#10;} &amp;#10;tute_foe_text = &quot;Foe\n(Press L):\n&quot; +&amp;#10;&quot;324 Hz\n&quot; +&amp;#10;&quot;552 Hz\n&quot; +&amp;#10;&quot;787 Hz\n&quot; +&amp;#10;&quot;902 Hz&quot;;&amp;#10;&amp;#10;bands[1].setLines(tute_lines, [1,1,1,1]);&amp;#10;switch(tute_stage) {&amp;#10;    case 0:&amp;#10;        tute_left.text = &quot;&quot;;&amp;#10;        tute_right.text = &quot;&quot;;&amp;#10;        // Set active band&amp;#10;        for(var i = 0; i &lt; bands.length; i++) {&amp;#10;            let band = bands[i];&amp;#10;            band.active = 0;&amp;#10;            band.rectangle.opacity = 1.0 - band.active;&amp;#10;            band.rectangle._needUpdate = true;&amp;#10;            band.setAutoDraw(true);&amp;#10;        }&amp;#10;        break;&amp;#10;    case 1:&amp;#10;        bands[1].active = 1;&amp;#10;        bands[1].rectangle.opacity = 0.0;&amp;#10;        bands[1].rectangle._needUpdate = true;&amp;#10;        bands[1].setAutoDraw(true);&amp;#10;        break;&amp;#10;    case 2:&amp;#10;        tute_left.text = tute_friend_text;&amp;#10;        tute_right.text = tute_foe_text;&amp;#10;    default:&amp;#10;        break;&amp;#10;}" valType="extendedCode"/>
         <Param name="Begin Routine" updates="constant" val="" valType="extendedCode"/>
         <Param name="Code Type" updates="None" val="JS" valType="str"/>
         <Param name="Each Frame" updates="constant" val="" valType="extendedCode"/>
-        <Param name="Each JS Frame" updates="constant" val="/*&amp;#10;if (tute_resp.keys.length &gt; 0) {&amp;#10;    &amp;#10;    switch(tute_stage) {&amp;#10;        case 0:&amp;#10;            &amp;#10;            tute_stage++;&amp;#10;            break;&amp;#10;    &amp;#10;        &amp;#10;    }&amp;#10;    &amp;#10;    &amp;#10;}*/" valType="extendedCode"/>
+        <Param name="Each JS Frame" updates="constant" val="// Update uniforms&amp;#10;for(var i = 0; i &lt; bands.length; i++) {&amp;#10;    var band = bands[i];&amp;#10;    band.uniforms.frameN = frameN;&amp;#10;}" valType="extendedCode"/>
         <Param name="End Experiment" updates="constant" val="" valType="extendedCode"/>
         <Param name="End JS Experiment" updates="constant" val="" valType="extendedCode"/>
-        <Param name="End JS Routine" updates="constant" val="image.setAutoDraw(false);&amp;#10;for(var i = 0; i &lt; bands.length; i++) {&amp;#10;    let band = bands[i];&amp;#10;    band.active = false;&amp;#10;    band.setAutoDraw(false);&amp;#10;}" valType="extendedCode"/>
+        <Param name="End JS Routine" updates="constant" val="&amp;#10;&amp;#10;tute_stage++;&amp;#10;&amp;#10;if (tute_stage == tute_config.length) {&amp;#10;    image.setAutoDraw(false);&amp;#10;    for(var i = 0; i &lt; bands.length; i++) {&amp;#10;        let band = bands[i];&amp;#10;        band.active = false;&amp;#10;        band.setAutoDraw(false);&amp;#10;    }&amp;#10;}" valType="extendedCode"/>
         <Param name="End Routine" updates="constant" val="" valType="extendedCode"/>
         <Param name="disabled" updates="None" val="False" valType="bool"/>
         <Param name="name" updates="None" val="code" valType="code"/>
       </CodeComponent>
-      <TextboxComponent name="textbox">
-        <Param name="anchor" updates="constant" val="center" valType="str"/>
-        <Param name="autoLog" updates="constant" val="True" valType="bool"/>
-        <Param name="bold" updates="constant" val="False" valType="bool"/>
-        <Param name="borderColor" updates="constant" val="None" valType="color"/>
-        <Param name="borderWidth" updates="constant" val="2" valType="num"/>
+      <PolygonComponent name="polygon">
+        <Param name="colorSpace" updates="constant" val="rgb" valType="str"/>
+        <Param name="contrast" updates="constant" val="1" valType="num"/>
+        <Param name="disabled" updates="None" val="False" valType="bool"/>
+        <Param name="durationEstim" updates="None" val="" valType="code"/>
+        <Param name="fillColor" updates="constant" val="$tutebg" valType="color"/>
+        <Param name="interpolate" updates="constant" val="linear" valType="str"/>
+        <Param name="lineColor" updates="constant" val="white" valType="color"/>
+        <Param name="lineWidth" updates="constant" val="1" valType="num"/>
+        <Param name="nVertices" updates="constant" val="4" valType="int"/>
+        <Param name="name" updates="None" val="polygon" valType="code"/>
+        <Param name="opacity" updates="constant" val="0.7" valType="num"/>
+        <Param name="ori" updates="constant" val="0" valType="num"/>
+        <Param name="pos" updates="constant" val="(0, -0.1)" valType="list"/>
+        <Param name="saveStartStop" updates="None" val="True" valType="bool"/>
+        <Param name="shape" updates="None" val="rectangle" valType="str"/>
+        <Param name="size" updates="constant" val="(0.8, 0.3)" valType="list"/>
+        <Param name="startEstim" updates="None" val="" valType="code"/>
+        <Param name="startType" updates="None" val="time (s)" valType="str"/>
+        <Param name="startVal" updates="None" val="0.5" valType="code"/>
+        <Param name="stopType" updates="None" val="duration (s)" valType="str"/>
+        <Param name="stopVal" updates="constant" val="" valType="code"/>
+        <Param name="syncScreenRefresh" updates="None" val="True" valType="bool"/>
+        <Param name="units" updates="None" val="from exp settings" valType="str"/>
+        <Param name="vertices" updates="constant" val="" valType="list"/>
+      </PolygonComponent>
+      <TextComponent name="textbox">
         <Param name="color" updates="constant" val="white" valType="color"/>
         <Param name="colorSpace" updates="constant" val="rgb" valType="str"/>
         <Param name="contrast" updates="constant" val="1" valType="num"/>
         <Param name="disabled" updates="None" val="False" valType="bool"/>
         <Param name="durationEstim" updates="None" val="" valType="code"/>
-        <Param name="editable" updates="constant" val="False" valType="bool"/>
-        <Param name="fillColor" updates="constant" val="$tutebg" valType="color"/>
-        <Param name="flipHoriz" updates="constant" val="False" valType="bool"/>
-        <Param name="flipVert" updates="constant" val="False" valType="bool"/>
+        <Param name="flip" updates="constant" val="None" valType="str"/>
         <Param name="font" updates="constant" val="Open Sans" valType="str"/>
-        <Param name="italic" updates="constant" val="False" valType="bool"/>
         <Param name="languageStyle" updates="None" val="LTR" valType="str"/>
         <Param name="letterHeight" updates="constant" val="0.03" valType="num"/>
-        <Param name="lineSpacing" updates="constant" val="1.0" valType="num"/>
         <Param name="name" updates="None" val="textbox" valType="code"/>
-        <Param name="opacity" updates="constant" val="0.8" valType="num"/>
+        <Param name="opacity" updates="constant" val="" valType="num"/>
         <Param name="ori" updates="constant" val="0" valType="num"/>
-        <Param name="padding" updates="constant" val="0.05" valType="num"/>
-        <Param name="pos" updates="constant" val="(0, -0.1)" valType="list"/>
+        <Param name="pos" updates="constant" val="(0.0,-0.1)" valType="list"/>
         <Param name="saveStartStop" updates="None" val="True" valType="bool"/>
-        <Param name="size" updates="constant" val="(0.8,0.3)" valType="list"/>
         <Param name="startEstim" updates="None" val="" valType="code"/>
         <Param name="startType" updates="None" val="time (s)" valType="str"/>
         <Param name="startVal" updates="None" val="0.5" valType="code"/>
@@ -558,7 +572,8 @@
         <Param name="syncScreenRefresh" updates="None" val="True" valType="bool"/>
         <Param name="text" updates="constant" val="This is your SONAR display console. You will notice that there are two different &quot;bands&quot;. Each band represents a different frequency range.&amp;#10;&amp;#10;(Press any key to continue)" valType="str"/>
         <Param name="units" updates="None" val="from exp settings" valType="str"/>
-      </TextboxComponent>
+        <Param name="wrapWidth" updates="constant" val="0.7" valType="num"/>
+      </TextComponent>
     </Routine>
   </Routines>
   <Flow>
@@ -568,9 +583,9 @@
       <Param name="conditions" updates="None" val="None" valType="str"/>
       <Param name="conditionsFile" updates="None" val="" valType="file"/>
       <Param name="endPoints" updates="None" val="[0, 1]" valType="num"/>
-      <Param name="isTrials" updates="None" val="True" valType="bool"/>
+      <Param name="isTrials" updates="None" val="False" valType="bool"/>
       <Param name="loopType" updates="None" val="sequential" valType="str"/>
-      <Param name="nReps" updates="None" val="10" valType="num"/>
+      <Param name="nReps" updates="None" val="tute_config.length" valType="num"/>
       <Param name="name" updates="None" val="tutorial" valType="code"/>
       <Param name="random seed" updates="None" val="" valType="code"/>
     </LoopInitiator>

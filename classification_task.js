@@ -107,6 +107,10 @@ var tuteClock;
 var tute_resp;
 var tute_left;
 var tute_right;
+var tutebg;
+var tute_stage;
+var tute_config;
+var polygon;
 var textbox;
 var instructionsClock;
 var instructions_text;
@@ -173,23 +177,46 @@ async function experimentInit() {
   tute_left.setAlignHoriz('center');
   tute_right.setAlignHoriz('center');
   
-  let tutebg = new util.Color([-.7,-.7,-.7]);
-  textbox = new visual.TextBox({
+  tutebg = new util.Color([-.9,-.9,-.9]);
+  
+  tute_stage = 0;
+  
+  tute_config = [
+  [`This is your SONAR display console. You will notice that there are two different frequency "bands". Each band represents a different frequency range in hertz (Hz).
+  
+  (Press any key to continue)`, [0.0, -0.1], [0.8, 0.3]],
+  
+  [`On each trial, one of the bands will become active and display simulated SONAR signals. This time, the bottom band has been activated.
+  
+  (Press any key to continue)`, [0.0, 0.3], [0.8, 0.2]],
+  
+  [`You will initally need to use the lookup tables, found on the left and right of the console, to determine whether this signal is from a friend or a foe vessel. Can you classify the current vessel?
+  
+  (Press any key to continue)`, [-0.35, 0.3], [0.8, 0.2]],
+  
+  [`If you thought that this was a Friend vessel, you were correct! If you were wrong, pay attention to the frequencies listed on the left, and what frequencies are present in the lower band.
+  
+  (Press any key to continue)`, [-0.35, 0.3], [0.8, 0.2]],
+  
+  ]
+  polygon = new visual.Rect ({
+    win: psychoJS.window, name: 'polygon', 
+    width: [0.8, 0.3][0], height: [0.8, 0.3][1],
+    ori: 0.0, pos: [0, (- 0.1)],
+    lineWidth: 1.0, lineColor: new util.Color('white'),
+    fillColor: new util.Color(tutebg),
+    opacity: 0.7, depth: -4, interpolate: true,
+  });
+  
+  textbox = new visual.TextStim({
     win: psychoJS.window,
     name: 'textbox',
     text: 'This is your SONAR display console. You will notice that there are two different "bands". Each band represents a different frequency range.\n\n(Press any key to continue)',
     font: 'Open Sans',
-    pos: [0, (- 0.1)], letterHeight: 0.03,
-    size: [0.8, 0.3],  units: undefined, 
-    color: 'white', colorSpace: 'rgb',
-    fillColor: tutebg, borderColor: undefined,
-    bold: false, italic: false,
-    opacity: 0.8,
-    padding: 0.05,
-    editable: false,
-    multiline: true,
-    anchor: 'center',
-    depth: -4.0 
+    units: undefined, 
+    pos: [0.0, (- 0.1)], height: 0.03,  wrapWidth: 0.7, ori: 0.0,
+    color: new util.Color('white'),  opacity: undefined,
+    depth: -5.0 
   });
   
   // Initialize components for Routine "instructions"
@@ -458,7 +485,7 @@ function tutorialLoopBegin(tutorialLoopScheduler, snapshot) {
     // set up handler to look after randomisation of conditions etc
     tutorial = new TrialHandler({
       psychoJS: psychoJS,
-      nReps: 10, method: TrialHandler.Method.SEQUENTIAL,
+      nReps: tute_config.length, method: TrialHandler.Method.SEQUENTIAL,
       extraInfo: expInfo, originPath: undefined,
       trialList: undefined,
       seed: undefined, name: 'tutorial'
@@ -575,6 +602,7 @@ async function phasesLoopEnd() {
 
 
 var _tute_resp_allKeys;
+var tute_foe_text;
 var tuteComponents;
 function tuteRoutineBegin(snapshot) {
   return async function () {
@@ -591,21 +619,62 @@ function tuteRoutineBegin(snapshot) {
     _tute_resp_allKeys = [];
     image.setAutoDraw(true);
     
-    let tute_stage = 0;
     
-    // Set active band
-    for(var i = 0; i < bands.length; i++) {
-        let band = bands[i];
-        band.active = 0;
-        band.rectangle.opacity = 1.0 - band.active;
-        band.rectangle._needUpdate = true;
-        band.setAutoDraw(true);
+    textbox.fillColor = tutebg;
+    textbox.text = tute_config[tute_stage][0];
+    textbox.pos = tute_config[tute_stage][1];
+    textbox.wrapWidth = tute_config[tute_stage][2][0] - 0.1;
+    
+    polygon.pos = tute_config[tute_stage][1];
+    polygon.shape = tute_config[tute_stage][2];
+    
+    let tute_lines = [0.21,0.29,0.63,0.84];
+    
+    let range = para.BAND_RANGES[1];
+    let tute_friend_text = "Friend\n(Press A):\n";
+    for (var i = 0; i < tute_lines.length; i++) {
+        let x = tute_lines[i];
+        let val = (range[1] - range[0]) * x + range[0];
+        tute_friend_text += val.toFixed(0) + " Hz\n";
+    } 
+    tute_foe_text = "Foe\n(Press L):\n" +
+    "324 Hz\n" +
+    "552 Hz\n" +
+    "787 Hz\n" +
+    "902 Hz";
+    
+    bands[1].setLines(tute_lines, [1,1,1,1]);
+    switch(tute_stage) {
+        case 0:
+            tute_left.text = "";
+            tute_right.text = "";
+            // Set active band
+            for(var i = 0; i < bands.length; i++) {
+                let band = bands[i];
+                band.active = 0;
+                band.rectangle.opacity = 1.0 - band.active;
+                band.rectangle._needUpdate = true;
+                band.setAutoDraw(true);
+            }
+            break;
+        case 1:
+            bands[1].active = 1;
+            bands[1].rectangle.opacity = 0.0;
+            bands[1].rectangle._needUpdate = true;
+            bands[1].setAutoDraw(true);
+            break;
+        case 2:
+            tute_left.text = tute_friend_text;
+            tute_right.text = tute_foe_text;
+        default:
+            break;
     }
     // keep track of which components have finished
     tuteComponents = [];
     tuteComponents.push(tute_resp);
     tuteComponents.push(tute_left);
     tuteComponents.push(tute_right);
+    tuteComponents.push(polygon);
     tuteComponents.push(textbox);
     
     for (const thisComponent of tuteComponents)
@@ -625,7 +694,7 @@ function tuteRoutineEachFrame() {
     // update/draw components on each frame
     
     // *tute_resp* updates
-    if (t >= 0.0 && tute_resp.status === PsychoJS.Status.NOT_STARTED) {
+    if (t >= 0.5 && tute_resp.status === PsychoJS.Status.NOT_STARTED) {
       // keep track of start time/frame for later
       tute_resp.tStart = t;  // (not accounting for frame time here)
       tute_resp.frameNStart = frameN;  // exact frame index
@@ -667,20 +736,21 @@ function tuteRoutineEachFrame() {
       tute_right.setAutoDraw(true);
     }
 
-    /*
-    if (tute_resp.keys.length > 0) {
-        
-        switch(tute_stage) {
-            case 0:
-                
-                tute_stage++;
-                break;
-        
-            
-        }
-        
-        
-    }*/
+    // Update uniforms
+    for(var i = 0; i < bands.length; i++) {
+        var band = bands[i];
+        band.uniforms.frameN = frameN;
+    }
+    
+    // *polygon* updates
+    if (t >= 0.5 && polygon.status === PsychoJS.Status.NOT_STARTED) {
+      // keep track of start time/frame for later
+      polygon.tStart = t;  // (not accounting for frame time here)
+      polygon.frameNStart = frameN;  // exact frame index
+      
+      polygon.setAutoDraw(true);
+    }
+
     
     // *textbox* updates
     if (t >= 0.5 && textbox.status === PsychoJS.Status.NOT_STARTED) {
@@ -733,11 +803,17 @@ function tuteRoutineEnd() {
         }
     
     tute_resp.stop();
-    image.setAutoDraw(false);
-    for(var i = 0; i < bands.length; i++) {
-        let band = bands[i];
-        band.active = false;
-        band.setAutoDraw(false);
+    
+    
+    tute_stage++;
+    
+    if (tute_stage == tute_config.length) {
+        image.setAutoDraw(false);
+        for(var i = 0; i < bands.length; i++) {
+            let band = bands[i];
+            band.active = false;
+            band.setAutoDraw(false);
+        }
     }
     // the Routine "tute" was not non-slip safe, so reset the non-slip timer
     routineTimer.reset();
