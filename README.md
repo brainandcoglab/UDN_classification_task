@@ -37,17 +37,17 @@ A little more stable on chrome.
 * [x] Have friend / foe trials bias towards left or right, with noise appearing on the opposite side
 * [x] Change keypress to A/L and keep instructions on screen (also split lookup left and right)
 * [ ] Trialing: is this too easy? Log-bias seems to be very easy.
-* [ ] Better instructions
+* [X] Better instructions
 * [ ] Breaks?
 * [ ] Better highlight colour
-* [ ] Trial timeout
+* [X] Trial timeout
 * [ ] Enforce full-screen for final release
 * [ ] Should output warning if unsupported resolution (also if webgl unavailable)
 
 ## Desired
 
 * [x] Some nice rivets and stuff
-* [ ] Fix width so that resize is easier
+* [X] Fix width so that resize is easier
 * [ ] Check that band space available is possible ahead of time
 * [x] Scale down by available width
 * [ ] Cooler lookup table
