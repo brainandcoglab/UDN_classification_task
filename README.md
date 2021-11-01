@@ -39,6 +39,7 @@ A little more stable on chrome.
 * [ ] Trialing: is this too easy? Log-bias seems to be very easy.
 * [X] Better instructions
 * [ ] Breaks?
+* [ ] Lines apparently not visible on Mac, some kinda transparency issue? Hopefully not GL problem..
 * [ ] Better highlight colour
 * [X] Trial timeout
 * [ ] Enforce full-screen for final release
