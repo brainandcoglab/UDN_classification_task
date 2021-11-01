@@ -38,6 +38,7 @@ A little more stable on chrome.
 * [x] Change keypress to A/L and keep instructions on screen (also split lookup left and right)
 * [ ] Trialing: is this too easy? Log-bias seems to be very easy.
 * [ ] Better instructions
+* [ ] Breaks?
 * [ ] Better highlight colour
 * [ ] Trial timeout
 * [ ] Enforce full-screen for final release
