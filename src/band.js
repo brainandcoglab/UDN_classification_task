@@ -88,7 +88,7 @@ function Lines(window, pos, size, lines, is_signal) {
             "colorSpace": "rgb",
             "lineColor": "green",
             "fillColor": "green",
-            "opacity": null,
+            "opacity": 1.0,
             "depth": (-2.0),
             "interpolate": false
         });
@@ -140,7 +140,7 @@ function Band(window, pos, size=[1.0, 0.2], lines, is_signal, nticks, range) {
         "colorSpace": "rgb",
         "lineColor": "black",
         "fillColor": "black",
-        "opacity": null,
+        "opacity": 0.0,
         "depth": (- 3.0),
         "interpolate": true
     });

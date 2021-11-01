@@ -182,7 +182,7 @@ async function experimentInit() {
   tute_stage = 0;
   
   tute_config = [
-  [`This is your SONAR display console. You will notice that there are two different frequency "bands". Each band represents a different frequency range in hertz (Hz).
+  [`This is your SONAR display console. You will notice that there are two different frequency "bands". Each band represents a different frequency range in Hertz (Hz).
   
   (Press any key to continue)`, [0.0, -0.1], [0.8, 0.3]],
   
