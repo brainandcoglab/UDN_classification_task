@@ -46,9 +46,9 @@ let trial_lines = function(vessel, band, signatures, n_noise, sorted, distfn) {
                         return false;
                     }
                     // This simply puts the random noise on the SAME side that the signature is biased towards (updated)
-                    var left = 0.05;
-                    var spacing = 0.9;
-                    let val = left + (Math.random() * spacing);
+                    var left = vessel ? 0.5 : 0.0;
+                    var spacing = 0.5;
+                    let val = (left + (Math.random() * spacing)) * 0.9 + 0.05;
                     // run binary search
                     let bs = jl.binary_search(sorted_clone, val, distfn);
                     if (bs >= 0) {
