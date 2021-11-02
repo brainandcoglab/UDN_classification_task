@@ -44,6 +44,7 @@ A little more stable on chrome.
 * [X] Trial timeout
 * [ ] Enforce full-screen for final release
 * [ ] Should output warning if unsupported resolution (also if webgl unavailable)
+* [ ] Longer timer for practice
 
 ## Desired
 
