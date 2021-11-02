@@ -45,9 +45,9 @@ let trial_lines = function(vessel, band, signatures, n_noise, sorted, distfn) {
                     if (canary > 1000) {
                         return false;
                     }
-                    // This simply puts the random noise on the opposite side that the signature is biased towards
-                    var left = vessel ? 0.0 : 0.5;
-                    var spacing = 0.5;
+                    // This simply puts the random noise on the SAME side that the signature is biased towards (updated)
+                    var left = 0.05;
+                    var spacing = 0.9;
                     let val = left + (Math.random() * spacing);
                     // run binary search
                     let bs = jl.binary_search(sorted_clone, val, distfn);
@@ -82,8 +82,8 @@ let signatures = function(n_lines, mindist) {
     for (var i = 0; i < n_lines; i++) {
         for (var sig = 0; sig < 2; sig++) {
             // friend or foe...
-            var left = sig ? jl.getvalright(i, n_lines) : jl.getvalleft(i, n_lines);
-            var right = sig ? jl.getvalright(i+1, n_lines) : jl.getvalleft(i+1, n_lines);
+            var left = (sig ? jl.getvalright(i, n_lines) : jl.getvalleft(i, n_lines))  * 0.9 + 0.05;
+            var right = (sig ? jl.getvalright(i+1, n_lines) : jl.getvalleft(i+1, n_lines))  * 0.9 + 0.05;
             var spacing = right - left;
             for (var band = 0; band < 2; band++) {
                 let canary = 0;
@@ -109,6 +109,13 @@ let signatures = function(n_lines, mindist) {
             }
         }
     }
+    // Perform swap of the most extreme values, trying to make it harder
+    for (var i = 0; i < 2; i++) {
+        let tmp = vessel_signatures[0][i][0];
+        vessel_signatures[0][i][0] = vessel_signatures[1][i][n_lines - 1];
+        vessel_signatures[1][i][n_lines - 1] = tmp;
+    }
+
     return [sorted, vessel_signatures];
 };
 
