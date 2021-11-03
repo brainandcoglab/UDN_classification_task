@@ -114,6 +114,8 @@ let signatures = function(n_lines, mindist) {
         let tmp = vessel_signatures[0][i][0];
         vessel_signatures[0][i][0] = vessel_signatures[1][i][n_lines - 1];
         vessel_signatures[1][i][n_lines - 1] = tmp;
+        vessel_signatures[0][i] = vessel_signatures[0][i].sort(function(a, b){return a-b});
+        vessel_signatures[1][i] = vessel_signatures[1][i].sort(function(a, b){return a-b});
     }
 
     return [sorted, vessel_signatures];
