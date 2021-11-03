@@ -9,7 +9,7 @@ attribute vec2 aVertexPosition;
 uniform mat3 projectionMatrix;
 
 varying vec2 vTextureCoord;
-varying vec4 rectangle;
+varying vec2 filterCoord;
 
 uniform vec4 inputSize;
 uniform vec4 outputFrame;
@@ -28,9 +28,9 @@ vec2 filterTextureCoord( void )
 
 void main(void)
 {
-    rectangle = outputFrame;
     gl_Position = filterVertexPosition();
     vTextureCoord = filterTextureCoord();
+    filterCoord = vTextureCoord * inputSize.xy / outputFrame.zw;
 }
 `;
 
@@ -43,7 +43,7 @@ precision mediump float;
 
 uniform float frameN;
 uniform vec2 u_resolution;
-varying vec4 rectangle;
+varying vec2 filterCoord;
 
 float random (vec2 seed) {
     return fract(sin(dot(seed.xy, vec2(12.9898,78.233)))*
@@ -52,8 +52,8 @@ float random (vec2 seed) {
 
 void main() {
     
-    vec2 pos = (gl_FragCoord.xy - rectangle.xy) / rectangle.zw * u_resolution * 600.0;
-    pos.y += ceil(frameN / 1.0);
+    vec2 pos = filterCoord * u_resolution * 600.0;
+    pos.y -= ceil(frameN / 1.0);
     vec2 seed = mod(ceil(pos), 1000.0);
     
     float rnd = random( seed/10.0 );
@@ -68,14 +68,13 @@ precision mediump float;
 
 uniform sampler2D uSampler;
 varying vec2 vTextureCoord;
-varying vec4 rectangle;
+varying vec2 filterCoord;
 
 void main() {
     
     vec4 colour = texture2D(uSampler, vTextureCoord);
     
-    vec2 coord = (gl_FragCoord.xy - rectangle.xy) / rectangle.zw;
-    float intensity = (0.5 - abs(coord.x - 0.5)) * 3.0;
+    float intensity = (0.5 - abs(filterCoord.x - 0.5)) * 3.0;
     gl_FragColor = vec4(colour.xyz * intensity, 1.0);
 }
 `;
