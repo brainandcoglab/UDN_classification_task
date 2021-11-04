@@ -27,6 +27,14 @@ export const VESSEL_MAP = {
     '1': 'l', // Foe
 };
 
+// Time to respond in seconds
+export const DURATION_MAP = {
+    '0': 20,
+    '1': 10,
+    '2': 10,
+    '3': 10,
+};
+
 // Decide which will be highlight / lowlight
 export const HIGHLIGHT = Math.round(Math.random());
 export const LOWLIGHT = 1 - HIGHLIGHT;
@@ -90,7 +98,6 @@ export const BAND_RANGES = [
     [100, 1000]
 ];
 
-export const DURATION = 10;
 
 // Number of major ticks on the x axis
 export const NTICKS_TOP = 10;

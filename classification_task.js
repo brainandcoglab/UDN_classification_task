@@ -1035,7 +1035,7 @@ function trialRoutineEachFrame() {
       image.setAutoDraw(true);
     }
 
-    frameRemains = 0.0 + para.DURATION - psychoJS.window.monitorFramePeriod * 0.75;  // most of one frame period left
+    frameRemains = 0.0 + para.DURATION_MAP[phase] - psychoJS.window.monitorFramePeriod * 0.75;  // most of one frame period left
     if (image.status === PsychoJS.Status.STARTED && t >= frameRemains) {
       image.setAutoDraw(false);
     }
@@ -1052,7 +1052,7 @@ function trialRoutineEachFrame() {
       psychoJS.window.callOnFlip(function() { key_resp.clearEvents(); });
     }
 
-    frameRemains = 0.0 + para.DURATION - psychoJS.window.monitorFramePeriod * 0.75;  // most of one frame period left
+    frameRemains = 0.0 + para.DURATION_MAP[phase] - psychoJS.window.monitorFramePeriod * 0.75;  // most of one frame period left
     if (key_resp.status === PsychoJS.Status.STARTED && t >= frameRemains) {
       key_resp.status = PsychoJS.Status.FINISHED;
   }
@@ -1084,7 +1084,7 @@ function trialRoutineEachFrame() {
       lookup_table_left.setAutoDraw(true);
     }
 
-    frameRemains = 0.0 + para.DURATION - psychoJS.window.monitorFramePeriod * 0.75;  // most of one frame period left
+    frameRemains = 0.0 + para.DURATION_MAP[phase] - psychoJS.window.monitorFramePeriod * 0.75;  // most of one frame period left
     if (lookup_table_left.status === PsychoJS.Status.STARTED && t >= frameRemains) {
       lookup_table_left.setAutoDraw(false);
     }
@@ -1098,7 +1098,7 @@ function trialRoutineEachFrame() {
       lookup_table_right.setAutoDraw(true);
     }
 
-    frameRemains = 0.0 + para.DURATION - psychoJS.window.monitorFramePeriod * 0.75;  // most of one frame period left
+    frameRemains = 0.0 + para.DURATION_MAP[phase] - psychoJS.window.monitorFramePeriod * 0.75;  // most of one frame period left
     if (lookup_table_right.status === PsychoJS.Status.STARTED && t >= frameRemains) {
       lookup_table_right.setAutoDraw(false);
     }
