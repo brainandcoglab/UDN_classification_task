@@ -84,7 +84,7 @@ function Lines(window, pos, size, lines, is_signal) {
             "vertices": jl.RECT_VERTICES, 
             "ori": 0.0, 
             "pos": [zero + x, pos[1]],
-            "lineWidth": 1.0,
+            "lineWidth": 0.0,
             "colorSpace": "rgb",
             "lineColor": "green",
             "fillColor": "green",
