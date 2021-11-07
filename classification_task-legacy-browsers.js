@@ -668,6 +668,7 @@ function tuteRoutineBegin(snapshot) {
         case 2:
             tute_left.text = tute_friend_text;
             tute_right.text = tute_foe_text;
+            break;
         default:
             break;
     }
