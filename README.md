@@ -36,24 +36,34 @@ A little more stable on chrome.
 * [x] Set minimum distance of lines from other lines
 * [x] Have friend / foe trials bias towards left or right, with noise appearing on the opposite side
 * [x] Change keypress to A/L and keep instructions on screen (also split lookup left and right)
-* [ ] Trialing: is this too easy? Log-bias seems to be very easy.
 * [X] Better instructions
-* [ ] Breaks?
-* [ ] Lines apparently not visible on Mac, some kinda transparency issue? Hopefully not GL problem..
-* [ ] Better highlight colour
+* [X] Lines apparently not visible on Mac, some kinda transparency issue? Hopefully not GL problem..
 * [X] Trial timeout
-* [ ] Enforce full-screen for final release
-* [ ] Should output warning if unsupported resolution (also if webgl unavailable)
-* [ ] Longer timer for practice
+* [X] Longer timer for practice
+* [ ] Should output warning if webgl unavailable - can we ensure that it is?
 
 ## Desired
 
 * [x] Some nice rivets and stuff
 * [X] Fix width so that resize is easier
-* [ ] Check that band space available is possible ahead of time
 * [x] Scale down by available width
+* [ ] Check that band space available is possible ahead of time
 * [ ] Cooler lookup table
 * [ ] Seedable RNG?
 * [ ] Prettier "Off" condition
 * [ ] Waterfall plot style updates?
 * [ ] Other random lines in background?
+* [ ] Better highlight colour
+
+## Before launch
+
+* [ ] Update n trials to total around 15-20 minutes - update text appropriately
+* [ ] Add questionnaires, including SWAT, a machine trust score, and gaming questions
+* [ ] Text for breaks?
+* [ ] Add total time in output file
+* [ ] Ensure all lines are output correctly
+* [ ] Add reminder of which colour is which for highlight
+* [ ] Test colour-blindness friendliness - part of questionnaire?
+* [ ] Ensure we don't bail out before random lines are chosen
+* [ ] Slow waterfall plot scroll somewhat
+* [ ] Enforce full-screen for final release
