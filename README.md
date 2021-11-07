@@ -64,6 +64,6 @@ A little more stable on chrome.
 * [ ] Ensure all lines are output correctly
 * [ ] Add reminder of which colour is which for highlight
 * [ ] Test colour-blindness friendliness - part of questionnaire?
-* [ ] Ensure we don't bail out before random lines are chosen
+* [X] Ensure we don't bail out before random lines are chosen
 * [ ] Slow waterfall plot scroll somewhat
 * [ ] Enforce full-screen for final release
