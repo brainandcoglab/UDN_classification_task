@@ -667,6 +667,7 @@ function tuteRoutineBegin(snapshot) {
             bands[1].active = 1;
             bands[1].rectangle.opacity = 0.0;
             bands[1].rectangle._needUpdate = true;
+            bands[1].xaxis.scalebar._needUpdate = true;
             bands[1].setAutoDraw(true);
             break;
         case 2:
