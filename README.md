@@ -49,7 +49,7 @@ A little more stable on chrome.
 * [x] Scale down by available width
 * [ ] Check that band space available is possible ahead of time
 * [ ] Cooler lookup table
-* [ ] Seedable RNG?
+* [ ] Seedable RNG? Have list of known good seeds from which a choice is made. Solves all issues.
 * [ ] Prettier "Off" condition
 * [ ] Waterfall plot style updates?
 * [ ] Other random lines in background?
