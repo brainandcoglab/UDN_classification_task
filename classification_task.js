@@ -51,6 +51,9 @@ psychoJS.scheduleCondition(function() { return (psychoJS.gui.dialogComponent.but
 // flowScheduler gets run if the participants presses OK
 flowScheduler.add(updateInfo); // add timeStamp
 flowScheduler.add(experimentInit);
+flowScheduler.add(init_qsRoutineBegin());
+flowScheduler.add(init_qsRoutineEachFrame());
+flowScheduler.add(init_qsRoutineEnd());
 flowScheduler.add(introRoutineBegin());
 flowScheduler.add(introRoutineEachFrame());
 flowScheduler.add(introRoutineEnd());
@@ -74,7 +77,8 @@ psychoJS.start({
   expName: expName,
   expInfo: expInfo,
   resources: [
-    {'name': 'data/bg.png', 'path': 'data/bg.png'}
+    {'name': 'data/bg.png', 'path': 'data/bg.png'},
+    {'name': 'data/intial_qs.csv', 'path': 'data/intial_qs.csv'}
   ]
 });
 
@@ -102,6 +106,10 @@ async function updateInfo() {
 }
 
 
+var init_qsClock;
+var form;
+var button;
+var welc_text;
 var introClock;
 var text;
 var key_resp_2;
@@ -134,12 +142,65 @@ var key_resp_5;
 var globalClock;
 var routineTimer;
 async function experimentInit() {
+  // Initialize components for Routine "init_qs"
+  init_qsClock = new util.Clock();
+  form = new visual.Form({
+    win : psychoJS.window, name:'form',
+    items : 'data/intial_qs.csv',
+    textHeight : 0.03,
+    font : '"Times New Roman"',
+    randomize : false,
+    size : [1, 0.7],
+    pos : [0, 0],
+    style : 'custom...',
+    itemPadding : 0.05
+  });
+  form = new visual.Form({
+      win : psychoJS.window, name:'form',
+      items : 'data/intial_qs.csv',
+      textHeight : 0.03,
+      font : '"Times New Roman"',
+      randomize : false,
+      size : [1, 0.7],
+      pos : [0, 0],
+      //responseColor : 'black',
+      itemPadding : 0.05
+  });
+  // Fix the text colour 'cos GUI wont' do it
+  //form.responseColor = 'black';
+  // Make the broken scrollbar invisible
+  form._scrollbar.size = [0,0];
+  form._scrollbar.markerColor = 'black';
+  form._scrollbar.lineColor = 'black';
+  form._scrollbar.fillColor = 'black';
+  // THIS IS A NON-GENERIC HACK
+  form._visual.responseStims[2].color = 'black';
+  button = new visual.ButtonStim({
+    win: psychoJS.window,
+    name: 'button',
+    text: 'Click here to continue',
+    pos: [0.5, (- 0.4)], letterHeight: 0.03,
+    size: [0.35, 0.1]
+  });
+  button.clock = new util.Clock();
+  
+  welc_text = new visual.TextStim({
+    win: psychoJS.window,
+    name: 'welc_text',
+    text: 'Welcome! Please answer the questions below to get started.',
+    font: '"Times New Roman"',
+    units: undefined, 
+    pos: [0, 0.4], height: 0.04,  wrapWidth: undefined, ori: 0.0,
+    color: new util.Color('white'),  opacity: undefined,
+    depth: -3.0 
+  });
+  
   // Initialize components for Routine "intro"
   introClock = new util.Clock();
   text = new visual.TextStim({
     win: psychoJS.window,
     name: 'text',
-    text: 'Welcome!\n\nIn this experiement, you will be taking on the role of a SONAR operator. You will be classifying different ship types using SONAR signals which appear as vertical lines on a simulated display. This experiment will be testing different ways of supporting SONAR operators to make decisions. \n\nThere will be four sections of the experiment, in which you will recieve different types of assistance to make classifications. Please try your best to classify the vessels. The experiment will likely take around 30 minutes in total to complete.\n\nPlease press any key to continue to the tutorial.',
+    text: 'In this experiement, you will be taking on the role of a SONAR operator. You will be classifying different ship types using SONAR signals which appear as vertical lines on a simulated display. This experiment will be testing different ways of supporting SONAR operators to make decisions. \n\nThere will be four sections of the experiment, in which you will recieve different types of assistance to make classifications. Please try your best to classify the vessels. The experiment will likely take around 30 minutes in total to complete.\n\nPlease press any key to continue to the tutorial.',
     font: '"Times New Roman"',
     units: undefined, 
     pos: [0, 0], height: 0.04,  wrapWidth: undefined, ori: 0.0,
@@ -370,6 +431,144 @@ async function experimentInit() {
 var t;
 var frameN;
 var continueRoutine;
+var init_qsComponents;
+function init_qsRoutineBegin(snapshot) {
+  return async function () {
+    TrialHandler.fromSnapshot(snapshot); // ensure that .thisN vals are up to date
+    
+    //------Prepare to start Routine 'init_qs'-------
+    t = 0;
+    init_qsClock.reset(); // clock
+    frameN = -1;
+    continueRoutine = true; // until we're told otherwise
+    // update component parameters for each repeat
+    button.fillColor = 'darkblue';
+    button.font = 'Times New Roman'
+    // keep track of which components have finished
+    init_qsComponents = [];
+    init_qsComponents.push(form);
+    init_qsComponents.push(button);
+    init_qsComponents.push(welc_text);
+    
+    for (const thisComponent of init_qsComponents)
+      if ('status' in thisComponent)
+        thisComponent.status = PsychoJS.Status.NOT_STARTED;
+    return Scheduler.Event.NEXT;
+  }
+}
+
+
+function init_qsRoutineEachFrame() {
+  return async function () {
+    //------Loop for each frame of Routine 'init_qs'-------
+    // get current time
+    t = init_qsClock.getTime();
+    frameN = frameN + 1;// number of completed frames (so 0 is the first frame)
+    // update/draw components on each frame
+    
+    // *form* updates
+    if (t >= 0.0 && form.status === PsychoJS.Status.NOT_STARTED) {
+      // keep track of start time/frame for later
+      form.tStart = t;  // (not accounting for frame time here)
+      form.frameNStart = frameN;  // exact frame index
+      
+      form.setAutoDraw(true);
+    }
+
+    
+    // *button* updates
+    if (t >= 0 && button.status === PsychoJS.Status.NOT_STARTED) {
+      // keep track of start time/frame for later
+      button.tStart = t;  // (not accounting for frame time here)
+      button.frameNStart = frameN;  // exact frame index
+      
+      button.setAutoDraw(true);
+    }
+
+    if (button.status === PsychoJS.Status.STARTED) {
+      // check whether button has been pressed
+      if (button.isClicked) {
+        if (!button.wasClicked) {
+          // store time of first click
+          button.timesOn.push(button.clock.getTime());
+          // store time clicked until
+          button.timesOff.push(button.clock.getTime());
+        } else {
+          // update time clicked until;
+          button.timesOff[button.timesOff.length - 1] = button.clock.getTime();
+        }
+        if (!button.wasClicked) {
+          // end routine when button is clicked
+          continueRoutine = false;
+          null;
+        }
+        // if button is still clicked next frame, it is not a new click
+        button.wasClicked = true;
+      } else {
+        // if button is clicked next frame, it is a new click
+        button.wasClicked = false
+      }
+    } else {
+      // keep clock at 0 if button hasn't started / has finished
+      button.clock.reset();
+      // if button is clicked next frame, it is a new click
+      button.wasClicked = false;
+    }
+    
+    // *welc_text* updates
+    if (t >= 0.0 && welc_text.status === PsychoJS.Status.NOT_STARTED) {
+      // keep track of start time/frame for later
+      welc_text.tStart = t;  // (not accounting for frame time here)
+      welc_text.frameNStart = frameN;  // exact frame index
+      
+      welc_text.setAutoDraw(true);
+    }
+
+    // check for quit (typically the Esc key)
+    if (psychoJS.experiment.experimentEnded || psychoJS.eventManager.getKeys({keyList:['escape']}).length > 0) {
+      return quitPsychoJS('The [Escape] key was pressed. Goodbye!', false);
+    }
+    
+    // check if the Routine should terminate
+    if (!continueRoutine) {  // a component has requested a forced-end of Routine
+      return Scheduler.Event.NEXT;
+    }
+    
+    continueRoutine = false;  // reverts to True if at least one component still running
+    for (const thisComponent of init_qsComponents)
+      if ('status' in thisComponent && thisComponent.status !== PsychoJS.Status.FINISHED) {
+        continueRoutine = true;
+        break;
+      }
+    
+    // refresh the screen if continuing
+    if (continueRoutine) {
+      return Scheduler.Event.FLIP_REPEAT;
+    } else {
+      return Scheduler.Event.NEXT;
+    }
+  };
+}
+
+
+function init_qsRoutineEnd() {
+  return async function () {
+    //------Ending Routine 'init_qs'-------
+    for (const thisComponent of init_qsComponents) {
+      if (typeof thisComponent.setAutoDraw === 'function') {
+        thisComponent.setAutoDraw(false);
+      }
+    }
+    form.addDataToExp(psychoJS.experiment, 'columns');
+    form.addDataToExp(psychoJS.experiment, 'rows');
+    // the Routine "init_qs" was not non-slip safe, so reset the non-slip timer
+    routineTimer.reset();
+    
+    return Scheduler.Event.NEXT;
+  };
+}
+
+
 var _key_resp_2_allKeys;
 var introComponents;
 function introRoutineBegin(snapshot) {
@@ -1570,6 +1769,8 @@ async function quitPsychoJS(message, isCompleted) {
   if (psychoJS.experiment.isEntryEmpty()) {
     psychoJS.experiment.nextEntry();
   }
+  
+  
   
   
   
