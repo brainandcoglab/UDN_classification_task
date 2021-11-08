@@ -40,7 +40,7 @@ A little more stable on chrome.
 * [X] Lines apparently not visible on Mac, some kinda transparency issue? Hopefully not GL problem..
 * [X] Trial timeout
 * [X] Longer timer for practice
-* [ ] Should output warning if webgl unavailable - can we ensure that it is?
+* [X] Record if webGL available
 
 ## Desired
 
