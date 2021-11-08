@@ -115,14 +115,14 @@ Use the 'A' key to respond friend,
 Use the 'L' key to respond foe.
 `;
 
-const debrief_text = `Press any key to continue.`;
+const debrief_text = `Press the 'space' key to continue.`;
 
 export const practice_instructions = `
 You're now ready to begin the practice phase. You will be asked to classify an unknown vessel with the assistance of lookup tables to the left and right of the console.
 Some signals may not be associated with any ship classification, so be careful.
 Feedback will be provided on whether your classification was correct.
 
-` + keypress_text + 'Press any key to begin.';
+` + keypress_text + `Press the 'space' key to begin.`;
 
 export const practice_debrief = `Great work, the practice phase is now complete!
 
@@ -133,7 +133,7 @@ In the next phase, you will again be asked to classify an unknown vessel with th
 The friend and foe signals in this phase are different from the practice phase.
 Feedback will be provided on whether your classification was correct. 
 
-` + keypress_text + 'Press any key to begin.';
+` + keypress_text + `Press the 'space' key to begin.`;
 
 
 export const baseline_debrief = `Great work, this phase is now complete!
@@ -144,7 +144,7 @@ export const training_instructions = `
 In the next phase, the lookup tables will be removed. However, you will be given assistance in classifying the vessel with two different tools.
 One tool will highlight signals associated with foe ships in red, and friend ships in blue. The other tool will dim all signals that are not associated with friend or foe ships.
 
-` + keypress_text + 'Press any key to begin.';
+` + keypress_text + `Press the 'space' key to begin.`;
 
 
 export const training_debrief = `Great work, this phase is now complete!
@@ -155,7 +155,7 @@ export const test_instructions = `
 Well done, there is now only one final phase remaining. In this phase, you will not be given any assistance to classify vessels, or any feedback as to whether you were correct.
 Please try your best.
 
-` + keypress_text + 'Press any key to begin.';
+` + keypress_text + `Press the 'space' key to begin.`;
 
 
 export const test_debrief = `Great work, this phase is now complete!

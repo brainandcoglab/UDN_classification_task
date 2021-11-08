@@ -200,7 +200,7 @@ async function experimentInit() {
   text = new visual.TextStim({
     win: psychoJS.window,
     name: 'text',
-    text: 'In this experiement, you will be taking on the role of a SONAR operator. You will be classifying different ship types using SONAR signals which appear as vertical lines on a simulated display. This experiment will be testing different ways of supporting SONAR operators to make decisions. \n\nThere will be four sections of the experiment, in which you will recieve different types of assistance to make classifications. Please try your best to classify the vessels. The experiment will likely take around 30 minutes in total to complete.\n\nPlease press any key to continue to the tutorial.',
+    text: "In this experiement, you will be taking on the role of a SONAR operator. You will be classifying different ship types using SONAR signals which appear as vertical lines on a simulated display. This experiment will be testing different ways of supporting SONAR operators to make decisions. \n\nThere will be four sections of the experiment, in which you will recieve different types of assistance to make classifications. Please try your best to classify the vessels. The experiment will likely take around 30 minutes in total to complete.\n\nPlease press the 'space' key to continue to the tutorial.",
     font: '"Times New Roman"',
     units: undefined, 
     pos: [0, 0], height: 0.04,  wrapWidth: undefined, ori: 0.0,
@@ -247,24 +247,24 @@ async function experimentInit() {
   tute_config = [
   [`This is your SONAR display console. You will notice that there are two different frequency "bands". Each band represents a different frequency range in Hertz (Hz).
   
-  (Press any key to continue)`, [0.0, -0.1], [0.8, 0.3]],
+  (Press the 'space' key to continue)`, [0.0, -0.1], [0.8, 0.3]],
   
   [`On each trial, one of the bands will become active and display simulated SONAR signals. This time, the bottom band has been activated.
   
-  (Press any key to continue)`, [0.0, 0.3], [0.8, 0.2]],
+  (Press the 'space' key to continue)`, [0.0, 0.3], [0.8, 0.2]],
   
   [`You will initally need to use the lookup tables, found to the left and right of the console, to determine whether this signal is from a friend or a foe vessel. Can you classify the current vessel?
   
-  (Press any key to continue)`, [-0.35, 0.3], [0.8, 0.2]],
+  (Press the 'space' key to continue)`, [-0.35, 0.3], [0.8, 0.2]],
   
   [`If you thought that this was a Friend vessel, you were correct! If you were wrong, pay attention to the frequencies listed on the left, and what frequencies are present in the lower band.
   
-  (Press any key to continue)`, [-0.35, 0.3], [0.8, 0.2]],
+  (Press the 'space' key to continue)`, [-0.35, 0.3], [0.8, 0.2]],
   
   [`You will be given 10 seconds on each trial to classify a vessel. Respond using the A key for friend, or L key for foe. You'll be told if you were correct or not.
   Later on in the experiment, the lookup tables will be removed, and other types of assistance will be provided, but you'll learn more about that later.
   
-  (Press any key to continue)`, [0.0, 0.1], [0.8, 0.3]],
+  (Press the 'space' key to continue)`, [0.0, 0.1], [0.8, 0.3]],
   
   
   ]
@@ -280,7 +280,7 @@ async function experimentInit() {
   textbox = new visual.TextStim({
     win: psychoJS.window,
     name: 'textbox',
-    text: 'This is your SONAR display console. You will notice that there are two different "bands". Each band represents a different frequency range.\n\n(Press any key to continue)',
+    text: 'This is your SONAR display console. You will notice that there are two different "bands". Each band represents a different frequency range.\n\n(Press the \'space\' key to continue)',
     font: '"Times New Roman"',
     units: undefined, 
     pos: [0.0, (- 0.1)], height: 0.03,  wrapWidth: 0.7, ori: 0.0,
@@ -643,7 +643,7 @@ function introRoutineEachFrame() {
     }
 
     if (key_resp_2.status === PsychoJS.Status.STARTED) {
-      let theseKeys = key_resp_2.getKeys({keyList: [], waitRelease: false});
+      let theseKeys = key_resp_2.getKeys({keyList: ['space'], waitRelease: false});
       _key_resp_2_allKeys = _key_resp_2_allKeys.concat(theseKeys);
       if (_key_resp_2_allKeys.length > 0) {
         key_resp_2.keys = _key_resp_2_allKeys[_key_resp_2_allKeys.length - 1].name;  // just the last key pressed
@@ -935,7 +935,7 @@ function tuteRoutineEachFrame() {
     }
 
     if (tute_resp.status === PsychoJS.Status.STARTED) {
-      let theseKeys = tute_resp.getKeys({keyList: [], waitRelease: false});
+      let theseKeys = tute_resp.getKeys({keyList: ['space'], waitRelease: false});
       _tute_resp_allKeys = _tute_resp_allKeys.concat(theseKeys);
       if (_tute_resp_allKeys.length > 0) {
         tute_resp.keys = _tute_resp_allKeys[_tute_resp_allKeys.length - 1].name;  // just the last key pressed
@@ -1114,7 +1114,7 @@ function instructionsRoutineEachFrame() {
     }
 
     if (key_resp_4.status === PsychoJS.Status.STARTED) {
-      let theseKeys = key_resp_4.getKeys({keyList: [], waitRelease: false});
+      let theseKeys = key_resp_4.getKeys({keyList: ['space'], waitRelease: false});
       _key_resp_4_allKeys = _key_resp_4_allKeys.concat(theseKeys);
       if (_key_resp_4_allKeys.length > 0) {
         key_resp_4.keys = _key_resp_4_allKeys[_key_resp_4_allKeys.length - 1].name;  // just the last key pressed
@@ -1567,7 +1567,7 @@ function debriefRoutineEachFrame() {
     }
 
     if (key_resp_3.status === PsychoJS.Status.STARTED) {
-      let theseKeys = key_resp_3.getKeys({keyList: [], waitRelease: false});
+      let theseKeys = key_resp_3.getKeys({keyList: ['space'], waitRelease: false});
       _key_resp_3_allKeys = _key_resp_3_allKeys.concat(theseKeys);
       if (_key_resp_3_allKeys.length > 0) {
         key_resp_3.keys = _key_resp_3_allKeys[_key_resp_3_allKeys.length - 1].name;  // just the last key pressed
@@ -1638,6 +1638,7 @@ function outroRoutineBegin(snapshot) {
     outroClock.reset(); // clock
     frameN = -1;
     continueRoutine = true; // until we're told otherwise
+    routineTimer.add(1.000000);
     // update component parameters for each repeat
     key_resp_5.keys = undefined;
     key_resp_5.rt = undefined;
@@ -1672,6 +1673,10 @@ function outroRoutineEachFrame() {
       outro_text.setAutoDraw(true);
     }
 
+    frameRemains = 0.0 + 1.0 - psychoJS.window.monitorFramePeriod * 0.75;  // most of one frame period left
+    if (outro_text.status === PsychoJS.Status.STARTED && t >= frameRemains) {
+      outro_text.setAutoDraw(false);
+    }
     
     // *key_resp_5* updates
     if (t >= 0.0 && key_resp_5.status === PsychoJS.Status.NOT_STARTED) {
@@ -1684,6 +1689,11 @@ function outroRoutineEachFrame() {
       psychoJS.window.callOnFlip(function() { key_resp_5.start(); }); // start on screen flip
       psychoJS.window.callOnFlip(function() { key_resp_5.clearEvents(); });
     }
+
+    frameRemains = 0.0 + 1.0 - psychoJS.window.monitorFramePeriod * 0.75;  // most of one frame period left
+    if (key_resp_5.status === PsychoJS.Status.STARTED && t >= frameRemains) {
+      key_resp_5.status = PsychoJS.Status.FINISHED;
+  }
 
     if (key_resp_5.status === PsychoJS.Status.STARTED) {
       let theseKeys = key_resp_5.getKeys({keyList: [], waitRelease: false});
@@ -1714,7 +1724,7 @@ function outroRoutineEachFrame() {
       }
     
     // refresh the screen if continuing
-    if (continueRoutine) {
+    if (continueRoutine && routineTimer.getTime() > 0) {
       return Scheduler.Event.FLIP_REPEAT;
     } else {
       return Scheduler.Event.NEXT;
@@ -1740,9 +1750,6 @@ function outroRoutineEnd() {
     key_resp_5.stop();
     psychoJS.experiment.addData('globalClockTime', globalClock.getTime());
     psychoJS.experiment.nextEntry();
-    // the Routine "outro" was not non-slip safe, so reset the non-slip timer
-    routineTimer.reset();
-    
     return Scheduler.Event.NEXT;
   };
 }
