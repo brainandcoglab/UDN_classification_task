@@ -423,6 +423,7 @@ async function experimentInit() {
 var t;
 var frameN;
 var continueRoutine;
+var button_callback;
 var init_qsComponents;
 function init_qsRoutineBegin(snapshot) {
   return async function () {
@@ -434,8 +435,17 @@ function init_qsRoutineBegin(snapshot) {
     frameN = -1;
     continueRoutine = true; // until we're told otherwise
     // update component parameters for each repeat
-    button.fillColor = 'darkblue';
+    button.fillColor = 'darkgrey';
     button.font = 'Times New Roman'
+    
+    button_callback = function() {
+        
+        if (form.formComplete()) {
+            continueRoutine = false;
+        } else {
+            continueRoutine = true;
+        }
+    }
     // keep track of which components have finished
     init_qsComponents = [];
     init_qsComponents.push(form);
@@ -468,6 +478,11 @@ function init_qsRoutineEachFrame() {
       form.setAutoDraw(true);
     }
 
+    if (form.formComplete()) {
+        button.fillColor = 'darkblue';
+    } else {
+        button.fillColor = 'darkgrey';
+    }
     
     // *button* updates
     if (t >= 0 && button.status === PsychoJS.Status.NOT_STARTED) {
@@ -493,7 +508,7 @@ function init_qsRoutineEachFrame() {
         if (!button.wasClicked) {
           // end routine when button is clicked
           continueRoutine = false;
-          null;
+          button_callback();
         }
         // if button is still clicked next frame, it is not a new click
         button.wasClicked = true;
