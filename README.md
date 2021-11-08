@@ -57,11 +57,11 @@ A little more stable on chrome.
 
 ## Before launch
 
-* [ ] Update n trials to total around 15-20 minutes - update text appropriately
+* [X] Update n trials to total around 15-20 minutes - update text appropriately - wanna test another time
 * [ ] Add questionnaires, including SWAT, a machine trust score, and gaming questions
 * [ ] Text for breaks?
 * [X] Add total time in output file
-* [ ] Ensure all lines are output correctly
+* [X] Ensure all lines are output correctly
 * [X] Add reminder of which colour is which for highlight
 * [ ] Test colour-blindness friendliness - part of questionnaire?
 * [X] Ensure we don't bail out before random lines are chosen
