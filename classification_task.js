@@ -1513,6 +1513,8 @@ function outroRoutineEnd() {
         }
     
     key_resp_5.stop();
+    psychoJS.experiment.addData('globalClockTime', globalClock.getTime());
+    psychoJS.experiment.nextEntry();
     // the Routine "outro" was not non-slip safe, so reset the non-slip timer
     routineTimer.reset();
     
@@ -1557,6 +1559,8 @@ async function quitPsychoJS(message, isCompleted) {
   if (psychoJS.experiment.isEntryEmpty()) {
     psychoJS.experiment.nextEntry();
   }
+  
+  
   
   
   
