@@ -16,6 +16,8 @@ import * as gen from "./src/generate.js"
 import * as band from "./src/band.js"
 // Inital parameters
 import * as para from "./src/para.js"
+// PIXI
+import * as PIXI from "../lib/pixi-legacy.min.js"
 // init psychoJS:
 const psychoJS = new PsychoJS({
   debug: true
@@ -271,7 +273,12 @@ async function experimentInit() {
   lookup_table_left.setAlignHoriz('center');
   lookup_table_right.setAlignHoriz('center');
   
-  //psychoJS.window._renderer.roundPixels = true;
+  window.PIXI = PIXI;
+  window.psychoJS = psychoJS;
+  // Check if we're using WebGL
+  let webgl = psychoJS.window._renderer.type == PIXI.RENDERER_TYPE.WEBGL;
+  psychoJS.experiment.addData('usingWebGL', webgl);
+  psychoJS.experiment.nextEntry();
   
   bands = [
       new band.Band(
