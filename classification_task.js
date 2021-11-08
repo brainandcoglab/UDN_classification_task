@@ -984,6 +984,10 @@ function trialRoutineBegin(snapshot) {
         case 2: // TRAINING PHASE
             lookup_left = "Friend\n(Press A)";
             lookup_right = "Foe\n(Press L)";
+            if (active_band == para.HIGHLIGHT) {
+                lookup_left = "Friend\n(Blue)\n(Press A)";
+                lookup_right = "Foe\n(Red)\n(Press L)";  
+            }
             bands[para.HIGHLIGHT].setHighlight(true, vessel);
             bands[para.LOWLIGHT].setLowlight(true);
             break;

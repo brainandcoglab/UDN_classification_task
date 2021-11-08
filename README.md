@@ -60,9 +60,9 @@ A little more stable on chrome.
 * [ ] Update n trials to total around 15-20 minutes - update text appropriately
 * [ ] Add questionnaires, including SWAT, a machine trust score, and gaming questions
 * [ ] Text for breaks?
-* [ ] Add total time in output file
+* [X] Add total time in output file
 * [ ] Ensure all lines are output correctly
-* [ ] Add reminder of which colour is which for highlight
+* [X] Add reminder of which colour is which for highlight
 * [ ] Test colour-blindness friendliness - part of questionnaire?
 * [X] Ensure we don't bail out before random lines are chosen
 * [ ] Slow waterfall plot scroll somewhat
