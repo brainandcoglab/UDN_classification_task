@@ -65,5 +65,5 @@ A little more stable on chrome.
 * [X] Add reminder of which colour is which for highlight
 * [ ] Test colour-blindness friendliness - part of questionnaire?
 * [X] Ensure we don't bail out before random lines are chosen
-* [ ] Slow waterfall plot scroll somewhat
+* [X] Slow waterfall plot scroll somewhat
 * [ ] Enforce full-screen for final release

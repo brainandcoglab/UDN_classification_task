@@ -53,7 +53,7 @@ float random (vec2 seed) {
 void main() {
     
     vec2 pos = filterCoord * u_resolution * 600.0;
-    pos.y -= ceil(frameN / 1.0);
+    pos.y -= frameN / 2.5;
     vec2 seed = mod(ceil(pos), 1000.0);
     
     float rnd = random( seed/10.0 );
