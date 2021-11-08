@@ -58,12 +58,11 @@ A little more stable on chrome.
 ## Before launch
 
 * [X] Update n trials to total around 15-20 minutes - update text appropriately - wanna test another time
-* [ ] Add questionnaires, including SWAT, a machine trust score, and gaming questions
-* [ ] Text for breaks?
 * [X] Add total time in output file
 * [X] Ensure all lines are output correctly
 * [X] Add reminder of which colour is which for highlight
-* [ ] Test colour-blindness friendliness - part of questionnaire?
 * [X] Ensure we don't bail out before random lines are chosen
 * [X] Slow waterfall plot scroll somewhat
+* [ ] Add questionnaires, including SWAT, a machine trust score, and gaming questions
+* [ ] Test colour-blindness friendliness - part of questionnaire? Yes, just ask are you colourblind. Prolific can ask if you have normal or corrected-to-normal (includes you can see colour).
 * [ ] Enforce full-screen for final release
