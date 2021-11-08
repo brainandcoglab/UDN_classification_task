@@ -63,6 +63,10 @@ A little more stable on chrome.
 * [X] Add reminder of which colour is which for highlight
 * [X] Ensure we don't bail out before random lines are chosen
 * [X] Slow waterfall plot scroll somewhat
-* [ ] Add questionnaires, including SWAT, a machine trust score, and gaming questions
-* [ ] Test colour-blindness friendliness - part of questionnaire? Yes, just ask are you colourblind. Prolific can ask if you have normal or corrected-to-normal (includes you can see colour).
+* [ ] Add questionnaires:
+    * [ ] SWAT
+    * [ ] machine trust score 
+    * [ ] Gaming questions <- still need to make the button only work if filled in
+* [X] Test colour-blindness friendliness - part of questionnaire? Yes, just ask are you colourblind. Prolific can ask if you have normal or corrected-to-normal (includes you can see colour).
 * [ ] Enforce full-screen for final release
+* [ ] Change to Space to continue rather than any key to avoid accidents
