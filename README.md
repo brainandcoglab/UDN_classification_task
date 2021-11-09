@@ -64,7 +64,7 @@ A little more stable on chrome.
 * [X] Ensure we don't bail out before random lines are chosen
 * [X] Slow waterfall plot scroll somewhat
 * [ ] Add questionnaires:
-    * [ ] SWAT
+    * [X] SWAT
     * [ ] machine trust score 
     * [X] Gaming questions <- still need to make the button only work if filled in
 * [X] Test colour-blindness friendliness - part of questionnaire? Yes, just ask are you colourblind. Prolific can ask if you have normal or corrected-to-normal (includes you can see colour).
