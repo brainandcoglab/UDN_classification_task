@@ -17,7 +17,7 @@ import * as band from "./src/band.js"
 // Inital parameters
 import * as para from "./src/para.js"
 // PIXI
-import * as PIXI from "../lib/pixi-legacy.min.js"
+import * as PIXI from "./lib/pixi-legacy.min.js"
 // init psychoJS:
 const psychoJS = new PsychoJS({
   debug: true
@@ -73,9 +73,6 @@ psychoJS.start({
   expName: expName,
   expInfo: expInfo,
   resources: [
-    {'name': 'data/SWAT.csv', 'path': 'data/SWAT.csv'},
-    {'name': 'data/trust.csv', 'path': 'data/trust.csv'},
-    {'name': 'data/initial_qs.csv', 'path': 'data/initial_qs.csv'},
     {'name': 'data/bg.png', 'path': 'data/bg.png'}
   ]
 });
