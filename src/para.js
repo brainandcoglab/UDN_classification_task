@@ -115,7 +115,8 @@ Use the 'A' key to respond friend,
 Use the 'L' key to respond foe.
 `;
 
-const debrief_text = `Press the 'space' key to continue.`;
+const debrief_text = 'Please select along each scale below to indicate your assessment of where the task you just performed falls along the continuum between the two descriptions.';
+
 
 export const practice_instructions = `
 You're now ready to begin the practice phase. You will be asked to classify an unknown vessel with the assistance of lookup tables to the left and right of the console.

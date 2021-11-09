@@ -13,7 +13,7 @@
     <Param name="HTML path" updates="None" val="" valType="str"/>
     <Param name="Incomplete URL" updates="None" val="" valType="str"/>
     <Param name="Monitor" updates="None" val="testMonitor" valType="str"/>
-    <Param name="Resources" updates="None" val="[]" valType="list"/>
+    <Param name="Resources" updates="None" val="['data\\bg.png', 'data\\SWAT.csv', 'data\\initial_qs.csv']" valType="list"/>
     <Param name="Save csv file" updates="None" val="False" valType="bool"/>
     <Param name="Save excel file" updates="None" val="False" valType="bool"/>
     <Param name="Save hdf5 file" updates="None" val="False" valType="bool"/>
@@ -364,6 +364,52 @@
       </CodeComponent>
     </Routine>
     <Routine name="debrief">
+      <FormComponent name="debrief_form">
+        <Param name="Data Format" updates="constant" val="rows" valType="str"/>
+        <Param name="Font" updates="constant" val="Open Sans" valType="str"/>
+        <Param name="Item Padding" updates="constant" val="0.07" valType="num"/>
+        <Param name="Items" updates="constant" val="data\SWAT.csv" valType="file"/>
+        <Param name="Randomize" updates="constant" val="False" valType="bool"/>
+        <Param name="Style" updates="constant" val="dark" valType="str"/>
+        <Param name="Text Height" updates="constant" val="0.03" valType="num"/>
+        <Param name="borderColor" updates="constant" val="" valType="color"/>
+        <Param name="colorSpace" updates="constant" val="rgb" valType="str"/>
+        <Param name="contrast" updates="constant" val="1" valType="num"/>
+        <Param name="disabled" updates="None" val="True" valType="bool"/>
+        <Param name="durationEstim" updates="None" val="" valType="code"/>
+        <Param name="fillColor" updates="constant" val="" valType="color"/>
+        <Param name="itemColor" updates="constant" val="white" valType="color"/>
+        <Param name="markerColor" updates="constant" val="red" valType="color"/>
+        <Param name="name" updates="None" val="debrief_form" valType="code"/>
+        <Param name="opacity" updates="constant" val="0.0" valType="num"/>
+        <Param name="pos" updates="constant" val="(0, 0)" valType="list"/>
+        <Param name="responseColor" updates="constant" val="white" valType="color"/>
+        <Param name="saveStartStop" updates="None" val="True" valType="bool"/>
+        <Param name="size" updates="constant" val="(0.8, 0.7)" valType="list"/>
+        <Param name="startEstim" updates="None" val="" valType="code"/>
+        <Param name="startType" updates="None" val="time (s)" valType="str"/>
+        <Param name="startVal" updates="None" val="0.0" valType="code"/>
+        <Param name="stopType" updates="None" val="duration (s)" valType="str"/>
+        <Param name="stopVal" updates="constant" val="" valType="code"/>
+        <Param name="syncScreenRefresh" updates="None" val="True" valType="bool"/>
+      </FormComponent>
+      <CodeComponent name="debrief_code">
+        <Param name="Before Experiment" updates="constant" val="" valType="extendedCode"/>
+        <Param name="Before JS Experiment" updates="constant" val="" valType="extendedCode"/>
+        <Param name="Begin Experiment" updates="constant" val="" valType="extendedCode"/>
+        <Param name="Begin JS Experiment" updates="constant" val="debrief_form = new visual.Form({&amp;#10;    win : psychoJS.window, name:'debrief_form',&amp;#10;    items : 'data/SWAT.csv',&amp;#10;    textHeight : 0.03,&amp;#10;    font : '&quot;Times New Roman&quot;',&amp;#10;    randomize : false,&amp;#10;    size : [0.8, 0.5],&amp;#10;    pos : [0, 0.05],&amp;#10;    //responseColor : 'black',&amp;#10;    itemPadding : 0.12,&amp;#10;    depth: 0.0,&amp;#10;    opacity: 0.0&amp;#10;});&amp;#10;// Fix the text colour 'cos GUI wont' do it&amp;#10;//form.responseColor = 'black';&amp;#10;// Make the broken scrollbar invisible&amp;#10;debrief_form._scrollbar.size = [0,0];&amp;#10;debrief_form._scrollbar.markerColor = 'black';&amp;#10;debrief_form._scrollbar.lineColor = 'black';&amp;#10;debrief_form._scrollbar.fillColor = 'black';&amp;#10;&amp;#10;// Functions for each response&amp;#10;let time_load = function(side) {&amp;#10;    return `${side?'Almost never':'Often'} have spare time. Interruptions or overlap among activities are ${side?'frequent':'infrequent'}.`;&amp;#10;}&amp;#10;let mental_effort = function(side) {&amp;#10;    return `Very ${side?'intense':'little'} concentration required. Activity is ${side?'complex':'almost automatic'}, and requires ${side?'total':'little'} attention.`;&amp;#10;}&amp;#10;let stress_load = function(side) {&amp;#10;    return `Task causes ${side?'intense':'little'} stress due to confusion, frustration or anxiety.`;&amp;#10;}&amp;#10;let funcs = [time_load, mental_effort, stress_load];&amp;#10;&amp;#10;texts = [];&amp;#10;&amp;#10;for (var i = 0; i &lt; 3; i++) {&amp;#10;    for (var j = 0; j &lt; 2; j++) {&amp;#10;        var t = new visual.TextStim({&amp;#10;            win: psychoJS.window,&amp;#10;            name: 't',&amp;#10;            text: funcs[i](j),&amp;#10;            font: '&quot;Times New Roman&quot;',&amp;#10;            units: undefined, &amp;#10;            pos: [-0.35 + j*0.8, 0.18 - i * 0.19], height: 0.02,  wrapWidth: 0.3, ori: 0.0,&amp;#10;            color: new util.Color('white'),  opacity: undefined,&amp;#10;            depth: 3.0 &amp;#10;        });&amp;#10;        texts.push(t);&amp;#10;    }&amp;#10;}" valType="extendedCode"/>
+        <Param name="Begin JS Routine" updates="constant" val="button_2.fillColor = 'darkgrey';&amp;#10;button_2.font = 'Times New Roman'&amp;#10;&amp;#10;button_callback_2 = function() {&amp;#10;    &amp;#10;    if (debrief_form.formComplete()) {&amp;#10;        continueRoutine = false;&amp;#10;    } else {&amp;#10;        continueRoutine = true;&amp;#10;    }&amp;#10;}&amp;#10;debrief_form.setAutoDraw(true);&amp;#10;&amp;#10;for(var i = 0; i &lt; texts.length; i++) {&amp;#10;    let t = texts[i];   &amp;#10;    t.setAutoDraw(true);&amp;#10;}&amp;#10;" valType="extendedCode"/>
+        <Param name="Begin Routine" updates="constant" val="" valType="extendedCode"/>
+        <Param name="Code Type" updates="None" val="JS" valType="str"/>
+        <Param name="Each Frame" updates="constant" val="" valType="extendedCode"/>
+        <Param name="Each JS Frame" updates="constant" val="if (debrief_form.formComplete()) {&amp;#10;    button_2.fillColor = 'darkblue';&amp;#10;} else {&amp;#10;    button_2.fillColor = 'darkgrey';&amp;#10;}" valType="extendedCode"/>
+        <Param name="End Experiment" updates="constant" val="" valType="extendedCode"/>
+        <Param name="End JS Experiment" updates="constant" val="" valType="extendedCode"/>
+        <Param name="End JS Routine" updates="constant" val="debrief_form.addDataToExp(psychoJS.experiment, 'rows');&amp;#10;&amp;#10;for(var i = 0; i &lt; texts.length; i++) {&amp;#10;    let t = texts[i];   &amp;#10;    t.setAutoDraw(false);&amp;#10;}&amp;#10;&amp;#10;debrief_form._scrollbar.setAutoDraw(false);&amp;#10;for (let i = 0; i &lt; debrief_form._items.length; ++i) {&amp;#10;    var ts = debrief_form._visual.textStims[i];&amp;#10;    if (ts) {&amp;#10;        ts.setAutoDraw(false);&amp;#10;    }&amp;#10;    var rs = debrief_form._visual.responseStims[i];&amp;#10;    if (rs) {&amp;#10;        rs.reset();&amp;#10;        rs.setAutoDraw(false);&amp;#10;    }&amp;#10;}&amp;#10;debrief_form.hide();&amp;#10;debrief_form.setAutoDraw(false);&amp;#10;&amp;#10;    " valType="extendedCode"/>
+        <Param name="End Routine" updates="constant" val="" valType="extendedCode"/>
+        <Param name="disabled" updates="None" val="False" valType="bool"/>
+        <Param name="name" updates="None" val="debrief_code" valType="code"/>
+      </CodeComponent>
       <TextComponent name="debrief_text">
         <Param name="color" updates="constant" val="white" valType="color"/>
         <Param name="colorSpace" updates="constant" val="rgb" valType="str"/>
@@ -377,7 +423,7 @@
         <Param name="name" updates="None" val="debrief_text" valType="code"/>
         <Param name="opacity" updates="constant" val="" valType="num"/>
         <Param name="ori" updates="constant" val="0" valType="num"/>
-        <Param name="pos" updates="constant" val="(0, 0)" valType="list"/>
+        <Param name="pos" updates="constant" val="(0, 0.4)" valType="list"/>
         <Param name="saveStartStop" updates="None" val="True" valType="bool"/>
         <Param name="startEstim" updates="None" val="" valType="code"/>
         <Param name="startType" updates="None" val="time (s)" valType="str"/>
@@ -385,28 +431,45 @@
         <Param name="stopType" updates="None" val="duration (s)" valType="str"/>
         <Param name="stopVal" updates="constant" val="" valType="code"/>
         <Param name="syncScreenRefresh" updates="None" val="True" valType="bool"/>
-        <Param name="text" updates="constant" val="&lt;Phase-specific debrief text goes here&gt;" valType="str"/>
+        <Param name="text" updates="constant" val="Great work! The phase is now complete.&amp;#10;Please select along each scale below to indicate your assessment of where the task you just performed falls along the continuum between the two descriptions." valType="str"/>
         <Param name="units" updates="None" val="from exp settings" valType="str"/>
         <Param name="wrapWidth" updates="constant" val="" valType="num"/>
       </TextComponent>
-      <KeyboardComponent name="key_resp_3">
-        <Param name="allowedKeys" updates="constant" val="'space'" valType="list"/>
-        <Param name="correctAns" updates="constant" val="" valType="str"/>
+      <ButtonComponent name="button_2">
+        <Param name="anchor" updates="constant" val="center" valType="str"/>
+        <Param name="bold" updates="constant" val="True" valType="bool"/>
+        <Param name="borderColor" updates="constant" val="None" valType="color"/>
+        <Param name="borderWidth" updates="constant" val="0" valType="num"/>
+        <Param name="callback" updates="constant" val="button_callback_2()" valType="extendedCode"/>
+        <Param name="color" updates="constant" val="white" valType="color"/>
+        <Param name="colorSpace" updates="constant" val="rgb" valType="str"/>
+        <Param name="contrast" updates="constant" val="1" valType="num"/>
         <Param name="disabled" updates="None" val="False" valType="bool"/>
-        <Param name="discard previous" updates="constant" val="True" valType="bool"/>
         <Param name="durationEstim" updates="None" val="" valType="code"/>
-        <Param name="forceEndRoutine" updates="constant" val="True" valType="bool"/>
-        <Param name="name" updates="None" val="key_resp_3" valType="code"/>
+        <Param name="fillColor" updates="constant" val="darkgrey" valType="color"/>
+        <Param name="font" updates="constant" val="&quot;Times New Roman&quot;" valType="str"/>
+        <Param name="forceEndRoutine" updates="constant" val="False" valType="bool"/>
+        <Param name="italic" updates="constant" val="False" valType="bool"/>
+        <Param name="letterHeight" updates="constant" val="0.03" valType="num"/>
+        <Param name="name" updates="None" val="button_2" valType="code"/>
+        <Param name="oncePerClick" updates="constant" val="True" valType="bool"/>
+        <Param name="opacity" updates="constant" val="" valType="num"/>
+        <Param name="ori" updates="constant" val="0" valType="num"/>
+        <Param name="padding" updates="constant" val="" valType="num"/>
+        <Param name="pos" updates="constant" val="(0.5, -0.4)" valType="list"/>
+        <Param name="save" updates="None" val="every click" valType="str"/>
         <Param name="saveStartStop" updates="None" val="True" valType="bool"/>
+        <Param name="size" updates="constant" val="[0.35,0.1]" valType="list"/>
         <Param name="startEstim" updates="None" val="" valType="code"/>
         <Param name="startType" updates="None" val="time (s)" valType="str"/>
-        <Param name="startVal" updates="None" val="0.0" valType="code"/>
+        <Param name="startVal" updates="None" val="0" valType="code"/>
         <Param name="stopType" updates="None" val="duration (s)" valType="str"/>
         <Param name="stopVal" updates="constant" val="" valType="code"/>
-        <Param name="store" updates="constant" val="last key" valType="str"/>
-        <Param name="storeCorrect" updates="constant" val="False" valType="bool"/>
-        <Param name="syncScreenRefresh" updates="constant" val="True" valType="bool"/>
-      </KeyboardComponent>
+        <Param name="syncScreenRefresh" updates="None" val="True" valType="bool"/>
+        <Param name="text" updates="constant" val="Click here to continue" valType="str"/>
+        <Param name="timeRelativeTo" updates="constant" val="button onset" valType="str"/>
+        <Param name="units" updates="None" val="from exp settings" valType="str"/>
+      </ButtonComponent>
     </Routine>
     <Routine name="explaination">
       <ImageComponent name="screenshot">
@@ -597,14 +660,14 @@
         <Param name="Data Format" updates="constant" val="columns" valType="str"/>
         <Param name="Font" updates="constant" val="&quot;Times New Roman&quot;" valType="str"/>
         <Param name="Item Padding" updates="constant" val="0.05" valType="num"/>
-        <Param name="Items" updates="constant" val="data\intial_qs.csv" valType="file"/>
+        <Param name="Items" updates="constant" val="data\initial_qs.csv" valType="file"/>
         <Param name="Randomize" updates="constant" val="False" valType="bool"/>
-        <Param name="Style" updates="constant" val="custom..." valType="str"/>
+        <Param name="Style" updates="constant" val="dark" valType="str"/>
         <Param name="Text Height" updates="constant" val="0.03" valType="num"/>
         <Param name="borderColor" updates="constant" val="" valType="color"/>
         <Param name="colorSpace" updates="constant" val="rgb" valType="str"/>
         <Param name="contrast" updates="constant" val="1" valType="num"/>
-        <Param name="disabled" updates="None" val="False" valType="bool"/>
+        <Param name="disabled" updates="None" val="True" valType="bool"/>
         <Param name="durationEstim" updates="None" val="" valType="code"/>
         <Param name="fillColor" updates="constant" val="black" valType="color"/>
         <Param name="itemColor" updates="constant" val="black" valType="color"/>
@@ -626,15 +689,15 @@
         <Param name="Before Experiment" updates="constant" val="" valType="extendedCode"/>
         <Param name="Before JS Experiment" updates="constant" val="" valType="extendedCode"/>
         <Param name="Begin Experiment" updates="constant" val="form.responseColor = 'black'&amp;#10;form._scrollbar." valType="extendedCode"/>
-        <Param name="Begin JS Experiment" updates="constant" val="form = new visual.Form({&amp;#10;    win : psychoJS.window, name:'form',&amp;#10;    items : 'data/intial_qs.csv',&amp;#10;    textHeight : 0.03,&amp;#10;    font : '&quot;Times New Roman&quot;',&amp;#10;    randomize : false,&amp;#10;    size : [1, 0.7],&amp;#10;    pos : [0, 0],&amp;#10;    //responseColor : 'black',&amp;#10;    itemPadding : 0.05&amp;#10;});&amp;#10;// Fix the text colour 'cos GUI wont' do it&amp;#10;//form.responseColor = 'black';&amp;#10;// Make the broken scrollbar invisible&amp;#10;form._scrollbar.size = [0,0];&amp;#10;form._scrollbar.markerColor = 'black';&amp;#10;form._scrollbar.lineColor = 'black';&amp;#10;form._scrollbar.fillColor = 'black';&amp;#10;// THIS IS A NON-GENERIC HACK&amp;#10;form._visual.responseStims[2].color = 'black';" valType="extendedCode"/>
-        <Param name="Begin JS Routine" updates="constant" val="button.fillColor = 'darkgrey';&amp;#10;button.font = 'Times New Roman'&amp;#10;&amp;#10;button_callback = function() {&amp;#10;    &amp;#10;    if (form.formComplete()) {&amp;#10;        continueRoutine = false;&amp;#10;    } else {&amp;#10;        continueRoutine = true;&amp;#10;    }&amp;#10;}" valType="extendedCode"/>
+        <Param name="Begin JS Experiment" updates="constant" val="form = new visual.Form({&amp;#10;    win : psychoJS.window, name:'form',&amp;#10;    items : 'data/initial_qs.csv',&amp;#10;    textHeight : 0.03,&amp;#10;    font : '&quot;Times New Roman&quot;',&amp;#10;    randomize : false,&amp;#10;    size : [1, 0.7],&amp;#10;    pos : [0, 0],&amp;#10;    style : 'dark',&amp;#10;    //responseColor : 'black',&amp;#10;    itemPadding : 0.05&amp;#10;});&amp;#10;// Fix the text colour 'cos GUI wont' do it&amp;#10;//form.responseColor = 'black';&amp;#10;// Make the broken scrollbar invisible&amp;#10;form._scrollbar.size = [0,0];&amp;#10;form._scrollbar.markerColor = 'black';&amp;#10;form._scrollbar.lineColor = 'black';&amp;#10;form._scrollbar.fillColor = 'black';&amp;#10;// THIS IS A NON-GENERIC HACK&amp;#10;form._visual.responseStims[2].color = 'black';" valType="extendedCode"/>
+        <Param name="Begin JS Routine" updates="constant" val="button.fillColor = 'darkgrey';&amp;#10;button.font = 'Times New Roman'&amp;#10;&amp;#10;button_callback = function() {&amp;#10;    &amp;#10;    if (form.formComplete()) {&amp;#10;        continueRoutine = false;&amp;#10;    } else {&amp;#10;        continueRoutine = true;&amp;#10;    }&amp;#10;}&amp;#10;&amp;#10;form.setAutoDraw(true);" valType="extendedCode"/>
         <Param name="Begin Routine" updates="constant" val="" valType="extendedCode"/>
         <Param name="Code Type" updates="None" val="JS" valType="str"/>
         <Param name="Each Frame" updates="constant" val="" valType="extendedCode"/>
         <Param name="Each JS Frame" updates="constant" val="if (form.formComplete()) {&amp;#10;    button.fillColor = 'darkblue';&amp;#10;} else {&amp;#10;    button.fillColor = 'darkgrey';&amp;#10;}" valType="extendedCode"/>
         <Param name="End Experiment" updates="constant" val="" valType="extendedCode"/>
         <Param name="End JS Experiment" updates="constant" val="" valType="extendedCode"/>
-        <Param name="End JS Routine" updates="constant" val="form.addDataToExp(psychoJS.experiment, 'rows');" valType="extendedCode"/>
+        <Param name="End JS Routine" updates="constant" val="form.addDataToExp(psychoJS.experiment, 'rows');&amp;#10;&amp;#10;&amp;#10;form._scrollbar.setAutoDraw(false);&amp;#10;for (let i = 0; i &lt; form._items.length; ++i) {&amp;#10;    &amp;#10;    var ts = form._visual.textStims[i];&amp;#10;    if (ts) {&amp;#10;        ts.setAutoDraw(false);&amp;#10;    }&amp;#10;    var rs = form._visual.responseStims[i];&amp;#10;    if (rs) {&amp;#10;        rs.setAutoDraw(false);&amp;#10;    }&amp;#10;}&amp;#10;form.hide();&amp;#10;form.setAutoDraw(false);" valType="extendedCode"/>
         <Param name="End Routine" updates="constant" val="" valType="extendedCode"/>
         <Param name="disabled" updates="None" val="False" valType="bool"/>
         <Param name="name" updates="None" val="start_form" valType="code"/>
@@ -652,7 +715,7 @@
         <Param name="durationEstim" updates="None" val="" valType="code"/>
         <Param name="fillColor" updates="constant" val="darkgrey" valType="color"/>
         <Param name="font" updates="constant" val="&quot;Times New Roman&quot;" valType="str"/>
-        <Param name="forceEndRoutine" updates="constant" val="True" valType="bool"/>
+        <Param name="forceEndRoutine" updates="constant" val="False" valType="bool"/>
         <Param name="italic" updates="constant" val="False" valType="bool"/>
         <Param name="letterHeight" updates="constant" val="0.03" valType="num"/>
         <Param name="name" updates="None" val="button" valType="code"/>
@@ -702,6 +765,7 @@
     </Routine>
   </Routines>
   <Flow>
+    <Routine name="debrief"/>
     <Routine name="init_qs"/>
     <Routine name="intro"/>
     <LoopInitiator loopType="TrialHandler" name="tutorial">
