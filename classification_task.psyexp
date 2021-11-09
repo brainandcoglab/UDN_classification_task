@@ -364,35 +364,6 @@
       </CodeComponent>
     </Routine>
     <Routine name="debrief">
-      <FormComponent name="debrief_form">
-        <Param name="Data Format" updates="constant" val="rows" valType="str"/>
-        <Param name="Font" updates="constant" val="Open Sans" valType="str"/>
-        <Param name="Item Padding" updates="constant" val="0.07" valType="num"/>
-        <Param name="Items" updates="constant" val="data\SWAT.csv" valType="file"/>
-        <Param name="Randomize" updates="constant" val="False" valType="bool"/>
-        <Param name="Style" updates="constant" val="dark" valType="str"/>
-        <Param name="Text Height" updates="constant" val="0.03" valType="num"/>
-        <Param name="borderColor" updates="constant" val="" valType="color"/>
-        <Param name="colorSpace" updates="constant" val="rgb" valType="str"/>
-        <Param name="contrast" updates="constant" val="1" valType="num"/>
-        <Param name="disabled" updates="None" val="True" valType="bool"/>
-        <Param name="durationEstim" updates="None" val="" valType="code"/>
-        <Param name="fillColor" updates="constant" val="" valType="color"/>
-        <Param name="itemColor" updates="constant" val="white" valType="color"/>
-        <Param name="markerColor" updates="constant" val="red" valType="color"/>
-        <Param name="name" updates="None" val="debrief_form" valType="code"/>
-        <Param name="opacity" updates="constant" val="0.0" valType="num"/>
-        <Param name="pos" updates="constant" val="(0, 0)" valType="list"/>
-        <Param name="responseColor" updates="constant" val="white" valType="color"/>
-        <Param name="saveStartStop" updates="None" val="True" valType="bool"/>
-        <Param name="size" updates="constant" val="(0.8, 0.7)" valType="list"/>
-        <Param name="startEstim" updates="None" val="" valType="code"/>
-        <Param name="startType" updates="None" val="time (s)" valType="str"/>
-        <Param name="startVal" updates="None" val="0.0" valType="code"/>
-        <Param name="stopType" updates="None" val="duration (s)" valType="str"/>
-        <Param name="stopVal" updates="constant" val="" valType="code"/>
-        <Param name="syncScreenRefresh" updates="None" val="True" valType="bool"/>
-      </FormComponent>
       <CodeComponent name="debrief_code">
         <Param name="Before Experiment" updates="constant" val="" valType="extendedCode"/>
         <Param name="Before JS Experiment" updates="constant" val="" valType="extendedCode"/>
@@ -656,40 +627,11 @@
       </TextComponent>
     </Routine>
     <Routine name="init_qs">
-      <FormComponent name="form">
-        <Param name="Data Format" updates="constant" val="columns" valType="str"/>
-        <Param name="Font" updates="constant" val="&quot;Times New Roman&quot;" valType="str"/>
-        <Param name="Item Padding" updates="constant" val="0.05" valType="num"/>
-        <Param name="Items" updates="constant" val="data\initial_qs.csv" valType="file"/>
-        <Param name="Randomize" updates="constant" val="False" valType="bool"/>
-        <Param name="Style" updates="constant" val="dark" valType="str"/>
-        <Param name="Text Height" updates="constant" val="0.03" valType="num"/>
-        <Param name="borderColor" updates="constant" val="" valType="color"/>
-        <Param name="colorSpace" updates="constant" val="rgb" valType="str"/>
-        <Param name="contrast" updates="constant" val="1" valType="num"/>
-        <Param name="disabled" updates="None" val="True" valType="bool"/>
-        <Param name="durationEstim" updates="None" val="" valType="code"/>
-        <Param name="fillColor" updates="constant" val="black" valType="color"/>
-        <Param name="itemColor" updates="constant" val="black" valType="color"/>
-        <Param name="markerColor" updates="constant" val="white" valType="color"/>
-        <Param name="name" updates="None" val="form" valType="code"/>
-        <Param name="opacity" updates="constant" val="" valType="num"/>
-        <Param name="pos" updates="constant" val="(0, 0)" valType="list"/>
-        <Param name="responseColor" updates="constant" val="black" valType="color"/>
-        <Param name="saveStartStop" updates="None" val="True" valType="bool"/>
-        <Param name="size" updates="constant" val="(1, 0.7)" valType="list"/>
-        <Param name="startEstim" updates="None" val="" valType="code"/>
-        <Param name="startType" updates="None" val="time (s)" valType="str"/>
-        <Param name="startVal" updates="None" val="0.0" valType="code"/>
-        <Param name="stopType" updates="None" val="duration (s)" valType="str"/>
-        <Param name="stopVal" updates="constant" val="" valType="code"/>
-        <Param name="syncScreenRefresh" updates="None" val="True" valType="bool"/>
-      </FormComponent>
       <CodeComponent name="start_form">
         <Param name="Before Experiment" updates="constant" val="" valType="extendedCode"/>
         <Param name="Before JS Experiment" updates="constant" val="" valType="extendedCode"/>
         <Param name="Begin Experiment" updates="constant" val="form.responseColor = 'black'&amp;#10;form._scrollbar." valType="extendedCode"/>
-        <Param name="Begin JS Experiment" updates="constant" val="form = new visual.Form({&amp;#10;    win : psychoJS.window, name:'form',&amp;#10;    items : 'data/initial_qs.csv',&amp;#10;    textHeight : 0.03,&amp;#10;    font : '&quot;Times New Roman&quot;',&amp;#10;    randomize : false,&amp;#10;    size : [1, 0.7],&amp;#10;    pos : [0, 0],&amp;#10;    style : 'dark',&amp;#10;    //responseColor : 'black',&amp;#10;    itemPadding : 0.05&amp;#10;});&amp;#10;// Fix the text colour 'cos GUI wont' do it&amp;#10;//form.responseColor = 'black';&amp;#10;// Make the broken scrollbar invisible&amp;#10;form._scrollbar.size = [0,0];&amp;#10;form._scrollbar.markerColor = 'black';&amp;#10;form._scrollbar.lineColor = 'black';&amp;#10;form._scrollbar.fillColor = 'black';&amp;#10;// THIS IS A NON-GENERIC HACK&amp;#10;form._visual.responseStims[2].color = 'black';" valType="extendedCode"/>
+        <Param name="Begin JS Experiment" updates="constant" val="form = new visual.Form({&amp;#10;    win : psychoJS.window, name:'form',&amp;#10;    items : 'data/initial_qs.csv',&amp;#10;    textHeight : 0.03,&amp;#10;    font : '&quot;Times New Roman&quot;',&amp;#10;    randomize : false,&amp;#10;    size : [1, 0.7],&amp;#10;    pos : [0, 0],&amp;#10;    style : 'dark',&amp;#10;    //responseColor : 'black',&amp;#10;    itemPadding : 0.05&amp;#10;});&amp;#10;// Fix the text colour 'cos GUI wont' do it&amp;#10;//form.responseColor = 'black';&amp;#10;// Make the broken scrollbar invisible&amp;#10;form._scrollbar.size = [0,0];&amp;#10;form._scrollbar.markerColor = 'black';&amp;#10;form._scrollbar.lineColor = 'black';&amp;#10;form._scrollbar.fillColor = 'black';&amp;#10;// THIS IS A NON-GENERIC HACK&amp;#10;form._visual.responseStims[1].color = 'black';&amp;#10;form._visual.responseStims[2].color = 'black';" valType="extendedCode"/>
         <Param name="Begin JS Routine" updates="constant" val="button.fillColor = 'darkgrey';&amp;#10;button.font = 'Times New Roman'&amp;#10;&amp;#10;button_callback = function() {&amp;#10;    &amp;#10;    if (form.formComplete()) {&amp;#10;        continueRoutine = false;&amp;#10;    } else {&amp;#10;        continueRoutine = true;&amp;#10;    }&amp;#10;}&amp;#10;&amp;#10;form.setAutoDraw(true);" valType="extendedCode"/>
         <Param name="Begin Routine" updates="constant" val="" valType="extendedCode"/>
         <Param name="Code Type" updates="None" val="JS" valType="str"/>
@@ -765,7 +707,6 @@
     </Routine>
   </Routines>
   <Flow>
-    <Routine name="debrief"/>
     <Routine name="init_qs"/>
     <Routine name="intro"/>
     <LoopInitiator loopType="TrialHandler" name="tutorial">

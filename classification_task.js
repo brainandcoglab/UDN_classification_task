@@ -51,9 +51,6 @@ psychoJS.scheduleCondition(function() { return (psychoJS.gui.dialogComponent.but
 // flowScheduler gets run if the participants presses OK
 flowScheduler.add(updateInfo); // add timeStamp
 flowScheduler.add(experimentInit);
-flowScheduler.add(debriefRoutineBegin());
-flowScheduler.add(debriefRoutineEachFrame());
-flowScheduler.add(debriefRoutineEnd());
 flowScheduler.add(init_qsRoutineBegin());
 flowScheduler.add(init_qsRoutineEachFrame());
 flowScheduler.add(init_qsRoutineEnd());
@@ -110,11 +107,6 @@ async function updateInfo() {
 }
 
 
-var debriefClock;
-var debrief_form;
-var texts;
-var debrief_text;
-var button_2;
 var init_qsClock;
 var form;
 var button;
@@ -142,84 +134,17 @@ var lookup_table_right;
 var bands;
 var feedbackClock;
 var feedback_text;
+var debriefClock;
+var debrief_form;
+var texts;
+var debrief_text;
+var button_2;
 var outroClock;
 var outro_text;
 var key_resp_5;
 var globalClock;
 var routineTimer;
 async function experimentInit() {
-  // Initialize components for Routine "debrief"
-  debriefClock = new util.Clock();
-  debrief_form = new visual.Form({
-      win : psychoJS.window, name:'debrief_form',
-      items : 'data/SWAT.csv',
-      textHeight : 0.03,
-      font : '"Times New Roman"',
-      randomize : false,
-      size : [0.8, 0.5],
-      pos : [0, 0.05],
-      //responseColor : 'black',
-      itemPadding : 0.12,
-      depth: 0.0,
-      opacity: 0.0
-  });
-  // Fix the text colour 'cos GUI wont' do it
-  //form.responseColor = 'black';
-  // Make the broken scrollbar invisible
-  debrief_form._scrollbar.size = [0,0];
-  debrief_form._scrollbar.markerColor = 'black';
-  debrief_form._scrollbar.lineColor = 'black';
-  debrief_form._scrollbar.fillColor = 'black';
-  
-  // Functions for each response
-  let time_load = function(side) {
-      return `${side?'Almost never':'Often'} have spare time. Interruptions or overlap among activities are ${side?'frequent':'infrequent'}.`;
-  }
-  let mental_effort = function(side) {
-      return `Very ${side?'intense':'little'} concentration required. Activity is ${side?'complex':'almost automatic'}, and requires ${side?'total':'little'} attention.`;
-  }
-  let stress_load = function(side) {
-      return `Task causes ${side?'intense':'little'} stress due to confusion, frustration or anxiety.`;
-  }
-  let funcs = [time_load, mental_effort, stress_load];
-  
-  texts = [];
-  
-  for (var i = 0; i < 3; i++) {
-      for (var j = 0; j < 2; j++) {
-          var t = new visual.TextStim({
-              win: psychoJS.window,
-              name: 't',
-              text: funcs[i](j),
-              font: '"Times New Roman"',
-              units: undefined, 
-              pos: [-0.35 + j*0.8, 0.18 - i * 0.19], height: 0.02,  wrapWidth: 0.3, ori: 0.0,
-              color: new util.Color('white'),  opacity: undefined,
-              depth: 3.0 
-          });
-          texts.push(t);
-      }
-  }
-  debrief_text = new visual.TextStim({
-    win: psychoJS.window,
-    name: 'debrief_text',
-    text: 'Great work! The phase is now complete.\nPlease select along each scale below to indicate your assessment of where the task you just performed falls along the continuum between the two descriptions.',
-    font: '"Times New Roman"',
-    units: undefined, 
-    pos: [0, 0.4], height: 0.04,  wrapWidth: undefined, ori: 0.0,
-    color: new util.Color('white'),  opacity: undefined,
-    depth: -1.0 
-  });
-  
-  button_2 = new visual.ButtonStim({
-    win: psychoJS.window,
-    name: 'button_2',
-    text: 'Click here to continue',
-    pos: [0.5, (- 0.4)], letterHeight: 0.03,
-    size: [0.35, 0.1]
-  });
-  button_2.clock = new util.Clock();
-  
   // Initialize components for Routine "init_qs"
   init_qsClock = new util.Clock();
   form = new visual.Form({
@@ -242,6 +167,7 @@ async function experimentInit() {
   form._scrollbar.lineColor = 'black';
   form._scrollbar.fillColor = 'black';
   // THIS IS A NON-GENERIC HACK
+  form._visual.responseStims[1].color = 'black';
   form._visual.responseStims[2].color = 'black';
   button = new visual.ButtonStim({
     win: psychoJS.window,
@@ -458,6 +384,78 @@ async function experimentInit() {
     depth: 0.0 
   });
   
+  // Initialize components for Routine "debrief"
+  debriefClock = new util.Clock();
+  debrief_form = new visual.Form({
+      win : psychoJS.window, name:'debrief_form',
+      items : 'data/SWAT.csv',
+      textHeight : 0.03,
+      font : '"Times New Roman"',
+      randomize : false,
+      size : [0.8, 0.5],
+      pos : [0, 0.05],
+      //responseColor : 'black',
+      itemPadding : 0.12,
+      depth: 0.0,
+      opacity: 0.0
+  });
+  // Fix the text colour 'cos GUI wont' do it
+  //form.responseColor = 'black';
+  // Make the broken scrollbar invisible
+  debrief_form._scrollbar.size = [0,0];
+  debrief_form._scrollbar.markerColor = 'black';
+  debrief_form._scrollbar.lineColor = 'black';
+  debrief_form._scrollbar.fillColor = 'black';
+  
+  // Functions for each response
+  let time_load = function(side) {
+      return `${side?'Almost never':'Often'} have spare time. Interruptions or overlap among activities are ${side?'frequent':'infrequent'}.`;
+  }
+  let mental_effort = function(side) {
+      return `Very ${side?'intense':'little'} concentration required. Activity is ${side?'complex':'almost automatic'}, and requires ${side?'total':'little'} attention.`;
+  }
+  let stress_load = function(side) {
+      return `Task causes ${side?'intense':'little'} stress due to confusion, frustration or anxiety.`;
+  }
+  let funcs = [time_load, mental_effort, stress_load];
+  
+  texts = [];
+  
+  for (var i = 0; i < 3; i++) {
+      for (var j = 0; j < 2; j++) {
+          var t = new visual.TextStim({
+              win: psychoJS.window,
+              name: 't',
+              text: funcs[i](j),
+              font: '"Times New Roman"',
+              units: undefined, 
+              pos: [-0.35 + j*0.8, 0.18 - i * 0.19], height: 0.02,  wrapWidth: 0.3, ori: 0.0,
+              color: new util.Color('white'),  opacity: undefined,
+              depth: 3.0 
+          });
+          texts.push(t);
+      }
+  }
+  debrief_text = new visual.TextStim({
+    win: psychoJS.window,
+    name: 'debrief_text',
+    text: 'Great work! The phase is now complete.\nPlease select along each scale below to indicate your assessment of where the task you just performed falls along the continuum between the two descriptions.',
+    font: '"Times New Roman"',
+    units: undefined, 
+    pos: [0, 0.4], height: 0.04,  wrapWidth: undefined, ori: 0.0,
+    color: new util.Color('white'),  opacity: undefined,
+    depth: -1.0 
+  });
+  
+  button_2 = new visual.ButtonStim({
+    win: psychoJS.window,
+    name: 'button_2',
+    text: 'Click here to continue',
+    pos: [0.5, (- 0.4)], letterHeight: 0.03,
+    size: [0.35, 0.1]
+  });
+  button_2.clock = new util.Clock();
+  
   // Initialize components for Routine "outro"
   outroClock = new util.Clock();
   outro_text = new visual.TextStim({
@@ -484,174 +482,6 @@ async function experimentInit() {
 var t;
 var frameN;
 var continueRoutine;
-var button_callback_2;
-var debriefComponents;
-function debriefRoutineBegin(snapshot) {
-  return async function () {
-    TrialHandler.fromSnapshot(snapshot); // ensure that .thisN vals are up to date
-    
-    //------Prepare to start Routine 'debrief'-------
-    t = 0;
-    debriefClock.reset(); // clock
-    frameN = -1;
-    continueRoutine = true; // until we're told otherwise
-    // update component parameters for each repeat
-    button_2.fillColor = 'darkgrey';
-    button_2.font = 'Times New Roman'
-    
-    button_callback_2 = function() {
-        
-        if (debrief_form.formComplete()) {
-            continueRoutine = false;
-        } else {
-            continueRoutine = true;
-        }
-    }
-    debrief_form.setAutoDraw(true);
-    
-    for(var i = 0; i < texts.length; i++) {
-        let t = texts[i];   
-        t.setAutoDraw(true);
-    }
-    
-    // keep track of which components have finished
-    debriefComponents = [];
-    debriefComponents.push(debrief_text);
-    debriefComponents.push(button_2);
-    
-    for (const thisComponent of debriefComponents)
-      if ('status' in thisComponent)
-        thisComponent.status = PsychoJS.Status.NOT_STARTED;
-    return Scheduler.Event.NEXT;
-  }
-}
-
-
-function debriefRoutineEachFrame() {
-  return async function () {
-    //------Loop for each frame of Routine 'debrief'-------
-    // get current time
-    t = debriefClock.getTime();
-    frameN = frameN + 1;// number of completed frames (so 0 is the first frame)
-    // update/draw components on each frame
-    if (debrief_form.formComplete()) {
-        button_2.fillColor = 'darkblue';
-    } else {
-        button_2.fillColor = 'darkgrey';
-    }
-    
-    // *debrief_text* updates
-    if (t >= 0.0 && debrief_text.status === PsychoJS.Status.NOT_STARTED) {
-      // keep track of start time/frame for later
-      debrief_text.tStart = t;  // (not accounting for frame time here)
-      debrief_text.frameNStart = frameN;  // exact frame index
-      
-      debrief_text.setAutoDraw(true);
-    }
-
-    
-    // *button_2* updates
-    if (t >= 0 && button_2.status === PsychoJS.Status.NOT_STARTED) {
-      // keep track of start time/frame for later
-      button_2.tStart = t;  // (not accounting for frame time here)
-      button_2.frameNStart = frameN;  // exact frame index
-      
-      button_2.setAutoDraw(true);
-    }
-
-    if (button_2.status === PsychoJS.Status.STARTED) {
-      // check whether button_2 has been pressed
-      if (button_2.isClicked) {
-        if (!button_2.wasClicked) {
-          // store time of first click
-          button_2.timesOn.push(button_2.clock.getTime());
-          // store time clicked until
-          button_2.timesOff.push(button_2.clock.getTime());
-        } else {
-          // update time clicked until;
-          button_2.timesOff[button_2.timesOff.length - 1] = button_2.clock.getTime();
-        }
-        if (!button_2.wasClicked) {
-          button_callback_2();
-        }
-        // if button_2 is still clicked next frame, it is not a new click
-        button_2.wasClicked = true;
-      } else {
-        // if button_2 is clicked next frame, it is a new click
-        button_2.wasClicked = false
-      }
-    } else {
-      // keep clock at 0 if button_2 hasn't started / has finished
-      button_2.clock.reset();
-      // if button_2 is clicked next frame, it is a new click
-      button_2.wasClicked = false;
-    }
-    // check for quit (typically the Esc key)
-    if (psychoJS.experiment.experimentEnded || psychoJS.eventManager.getKeys({keyList:['escape']}).length > 0) {
-      return quitPsychoJS('The [Escape] key was pressed. Goodbye!', false);
-    }
-    
-    // check if the Routine should terminate
-    if (!continueRoutine) {  // a component has requested a forced-end of Routine
-      return Scheduler.Event.NEXT;
-    }
-    
-    continueRoutine = false;  // reverts to True if at least one component still running
-    for (const thisComponent of debriefComponents)
-      if ('status' in thisComponent && thisComponent.status !== PsychoJS.Status.FINISHED) {
-        continueRoutine = true;
-        break;
-      }
-    
-    // refresh the screen if continuing
-    if (continueRoutine) {
-      return Scheduler.Event.FLIP_REPEAT;
-    } else {
-      return Scheduler.Event.NEXT;
-    }
-  };
-}
-
-
-function debriefRoutineEnd() {
-  return async function () {
-    //------Ending Routine 'debrief'-------
-    for (const thisComponent of debriefComponents) {
-      if (typeof thisComponent.setAutoDraw === 'function') {
-        thisComponent.setAutoDraw(false);
-      }
-    }
-    debrief_form.addDataToExp(psychoJS.experiment, 'rows');
-    
-    for(var i = 0; i < texts.length; i++) {
-        let t = texts[i];   
-        t.setAutoDraw(false);
-    }
-    
-    debrief_form._scrollbar.setAutoDraw(false);
-    for (let i = 0; i < debrief_form._items.length; ++i) {
-        var ts = debrief_form._visual.textStims[i];
-        if (ts) {
-            ts.setAutoDraw(false);
-        }
-        var rs = debrief_form._visual.responseStims[i];
-        if (rs) {
-            rs.reset();
-            rs.setAutoDraw(false);
-        }
-    }
-    debrief_form.hide();
-    debrief_form.setAutoDraw(false);
-    
-        
-    // the Routine "debrief" was not non-slip safe, so reset the non-slip timer
-    routineTimer.reset();
-    
-    return Scheduler.Event.NEXT;
-  };
-}
-
-
 var button_callback;
 var init_qsComponents;
 function init_qsRoutineBegin(snapshot) {
@@ -1728,6 +1558,174 @@ function feedbackRoutineEnd() {
         thisComponent.setAutoDraw(false);
       }
     }
+    return Scheduler.Event.NEXT;
+  };
+}
+
+
+var button_callback_2;
+var debriefComponents;
+function debriefRoutineBegin(snapshot) {
+  return async function () {
+    TrialHandler.fromSnapshot(snapshot); // ensure that .thisN vals are up to date
+    
+    //------Prepare to start Routine 'debrief'-------
+    t = 0;
+    debriefClock.reset(); // clock
+    frameN = -1;
+    continueRoutine = true; // until we're told otherwise
+    // update component parameters for each repeat
+    button_2.fillColor = 'darkgrey';
+    button_2.font = 'Times New Roman'
+    
+    button_callback_2 = function() {
+        
+        if (debrief_form.formComplete()) {
+            continueRoutine = false;
+        } else {
+            continueRoutine = true;
+        }
+    }
+    debrief_form.setAutoDraw(true);
+    
+    for(var i = 0; i < texts.length; i++) {
+        let t = texts[i];   
+        t.setAutoDraw(true);
+    }
+    
+    // keep track of which components have finished
+    debriefComponents = [];
+    debriefComponents.push(debrief_text);
+    debriefComponents.push(button_2);
+    
+    for (const thisComponent of debriefComponents)
+      if ('status' in thisComponent)
+        thisComponent.status = PsychoJS.Status.NOT_STARTED;
+    return Scheduler.Event.NEXT;
+  }
+}
+
+
+function debriefRoutineEachFrame() {
+  return async function () {
+    //------Loop for each frame of Routine 'debrief'-------
+    // get current time
+    t = debriefClock.getTime();
+    frameN = frameN + 1;// number of completed frames (so 0 is the first frame)
+    // update/draw components on each frame
+    if (debrief_form.formComplete()) {
+        button_2.fillColor = 'darkblue';
+    } else {
+        button_2.fillColor = 'darkgrey';
+    }
+    
+    // *debrief_text* updates
+    if (t >= 0.0 && debrief_text.status === PsychoJS.Status.NOT_STARTED) {
+      // keep track of start time/frame for later
+      debrief_text.tStart = t;  // (not accounting for frame time here)
+      debrief_text.frameNStart = frameN;  // exact frame index
+      
+      debrief_text.setAutoDraw(true);
+    }
+
+    
+    // *button_2* updates
+    if (t >= 0 && button_2.status === PsychoJS.Status.NOT_STARTED) {
+      // keep track of start time/frame for later
+      button_2.tStart = t;  // (not accounting for frame time here)
+      button_2.frameNStart = frameN;  // exact frame index
+      
+      button_2.setAutoDraw(true);
+    }
+
+    if (button_2.status === PsychoJS.Status.STARTED) {
+      // check whether button_2 has been pressed
+      if (button_2.isClicked) {
+        if (!button_2.wasClicked) {
+          // store time of first click
+          button_2.timesOn.push(button_2.clock.getTime());
+          // store time clicked until
+          button_2.timesOff.push(button_2.clock.getTime());
+        } else {
+          // update time clicked until;
+          button_2.timesOff[button_2.timesOff.length - 1] = button_2.clock.getTime();
+        }
+        if (!button_2.wasClicked) {
+          button_callback_2();
+        }
+        // if button_2 is still clicked next frame, it is not a new click
+        button_2.wasClicked = true;
+      } else {
+        // if button_2 is clicked next frame, it is a new click
+        button_2.wasClicked = false
+      }
+    } else {
+      // keep clock at 0 if button_2 hasn't started / has finished
+      button_2.clock.reset();
+      // if button_2 is clicked next frame, it is a new click
+      button_2.wasClicked = false;
+    }
+    // check for quit (typically the Esc key)
+    if (psychoJS.experiment.experimentEnded || psychoJS.eventManager.getKeys({keyList:['escape']}).length > 0) {
+      return quitPsychoJS('The [Escape] key was pressed. Goodbye!', false);
+    }
+    
+    // check if the Routine should terminate
+    if (!continueRoutine) {  // a component has requested a forced-end of Routine
+      return Scheduler.Event.NEXT;
+    }
+    
+    continueRoutine = false;  // reverts to True if at least one component still running
+    for (const thisComponent of debriefComponents)
+      if ('status' in thisComponent && thisComponent.status !== PsychoJS.Status.FINISHED) {
+        continueRoutine = true;
+        break;
+      }
+    
+    // refresh the screen if continuing
+    if (continueRoutine) {
+      return Scheduler.Event.FLIP_REPEAT;
+    } else {
+      return Scheduler.Event.NEXT;
+    }
+  };
+}
+
+
+function debriefRoutineEnd() {
+  return async function () {
+    //------Ending Routine 'debrief'-------
+    for (const thisComponent of debriefComponents) {
+      if (typeof thisComponent.setAutoDraw === 'function') {
+        thisComponent.setAutoDraw(false);
+      }
+    }
+    debrief_form.addDataToExp(psychoJS.experiment, 'rows');
+    
+    for(var i = 0; i < texts.length; i++) {
+        let t = texts[i];   
+        t.setAutoDraw(false);
+    }
+    
+    debrief_form._scrollbar.setAutoDraw(false);
+    for (let i = 0; i < debrief_form._items.length; ++i) {
+        var ts = debrief_form._visual.textStims[i];
+        if (ts) {
+            ts.setAutoDraw(false);
+        }
+        var rs = debrief_form._visual.responseStims[i];
+        if (rs) {
+            rs.reset();
+            rs.setAutoDraw(false);
+        }
+    }
+    debrief_form.hide();
+    debrief_form.setAutoDraw(false);
+    
+        
+    // the Routine "debrief" was not non-slip safe, so reset the non-slip timer
+    routineTimer.reset();
+    
     return Scheduler.Event.NEXT;
   };
 }

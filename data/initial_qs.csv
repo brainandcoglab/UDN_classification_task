@@ -1,6 +1,6 @@
 itemText,type,options,,itemWidth,responseWidth
 Video game experience,description,,,,
-Approximately how many hours did you spend playing video games in the last week?,radio,"0,Less than 3,3-10,10+",,0.5,0.5
-Which game did you play the most this year?,free_text,enter response here,,,
+Approximately how many hours did you spend playing video games in the last week?,free_text,enter response here,,,
+"Which game did you play the most this year? (Enter ""None"" if you didn't play any)",free_text,enter response here,,,
 Visual perception,description,,,,
 Do you have any form of color blindness?,choice,"Yes,No",,,
