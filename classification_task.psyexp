@@ -13,7 +13,7 @@
     <Param name="HTML path" updates="None" val="" valType="str"/>
     <Param name="Incomplete URL" updates="None" val="" valType="str"/>
     <Param name="Monitor" updates="None" val="testMonitor" valType="str"/>
-    <Param name="Resources" updates="None" val="['data\\trust.csv', 'data\\bg.png', 'data\\SWAT.csv', 'data\\initial_qs.csv']" valType="list"/>
+    <Param name="Resources" updates="None" val="['data/trust.csv', 'data/SWAT.csv', 'data/initial_qs.csv', 'data/bg.png']" valType="list"/>
     <Param name="Save csv file" updates="None" val="False" valType="bool"/>
     <Param name="Save excel file" updates="None" val="False" valType="bool"/>
     <Param name="Save hdf5 file" updates="None" val="False" valType="bool"/>
