@@ -385,7 +385,7 @@ async function experimentInit() {
       font : '"Times New Roman"',
       randomize : false,
       size : [0.8, 0.5],
-      pos : [0, 0.05],
+      pos : [0, 0.0],
       //responseColor : 'black',
       itemPadding : 0.12,
       depth: 0.0,
@@ -421,7 +421,7 @@ async function experimentInit() {
               text: funcs[i](j),
               font: '"Times New Roman"',
               units: undefined, 
-              pos: [-0.35 + j*0.8, 0.18 - i * 0.19], height: 0.02,  wrapWidth: 0.3, ori: 0.0,
+              pos: [-0.35 + j*0.8, 0.13 - i * 0.18], height: 0.02,  wrapWidth: 0.3, ori: 0.0,
               color: new util.Color('white'),  opacity: undefined,
               depth: 3.0 
           });
@@ -434,7 +434,7 @@ async function experimentInit() {
     text: 'Great work! The phase is now complete.\nPlease select along each scale below to indicate your assessment of where the task you just performed falls along the continuum between the two descriptions.',
     font: '"Times New Roman"',
     units: undefined, 
-    pos: [0, 0.4], height: 0.04,  wrapWidth: undefined, ori: 0.0,
+    pos: [0, 0.35], height: 0.04,  wrapWidth: undefined, ori: 0.0,
     color: new util.Color('white'),  opacity: undefined,
     depth: -1.0 
   });
