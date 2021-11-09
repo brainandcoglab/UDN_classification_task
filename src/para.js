@@ -46,6 +46,11 @@ export const PHASES = [
     {phase: 3}  // Test
 ];
 
+export const CONDITIONS = [
+    {condition: 0},
+    {condition: 1}
+]
+
 const errstring = 'Experiment run order generation failed, please contact experimenter!';
 let practice_signatures;
 let practice_run_order = false;

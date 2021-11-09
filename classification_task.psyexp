@@ -13,7 +13,7 @@
     <Param name="HTML path" updates="None" val="" valType="str"/>
     <Param name="Incomplete URL" updates="None" val="" valType="str"/>
     <Param name="Monitor" updates="None" val="testMonitor" valType="str"/>
-    <Param name="Resources" updates="None" val="['data\\bg.png', 'data\\SWAT.csv', 'data\\initial_qs.csv']" valType="list"/>
+    <Param name="Resources" updates="None" val="['data\\trust.csv', 'data\\bg.png', 'data\\SWAT.csv', 'data\\initial_qs.csv']" valType="list"/>
     <Param name="Save csv file" updates="None" val="False" valType="bool"/>
     <Param name="Save excel file" updates="None" val="False" valType="bool"/>
     <Param name="Save hdf5 file" updates="None" val="False" valType="bool"/>
@@ -705,6 +705,85 @@
         <Param name="wrapWidth" updates="constant" val="" valType="num"/>
       </TextComponent>
     </Routine>
+    <Routine name="trust_qs">
+      <CodeComponent name="code_2">
+        <Param name="Before Experiment" updates="constant" val="" valType="extendedCode"/>
+        <Param name="Before JS Experiment" updates="constant" val="" valType="extendedCode"/>
+        <Param name="Begin Experiment" updates="constant" val="" valType="extendedCode"/>
+        <Param name="Begin JS Experiment" updates="constant" val="trust = new visual.Form({&amp;#10;    win : psychoJS.window, name:'trust',&amp;#10;    items : 'data/trust.csv',&amp;#10;    textHeight : 0.025,&amp;#10;    font : '&quot;Times New Roman&quot;',&amp;#10;    randomize : false,&amp;#10;    size : [1, 1],&amp;#10;    pos : [0, -0.08],&amp;#10;    style : 'dark',&amp;#10;    //responseColor : 'black',&amp;#10;    itemPadding : 0.025&amp;#10;});&amp;#10;// Fix the text colour 'cos GUI wont' do it&amp;#10;//form.responseColor = 'black';&amp;#10;// Make the broken scrollbar invisible&amp;#10;trust._scrollbar.size = [0,0];&amp;#10;trust._scrollbar.markerColor = 'black';&amp;#10;trust._scrollbar.lineColor = 'black';&amp;#10;trust._scrollbar.fillColor = 'black';&amp;#10;// THIS IS A NON-GENERIC HACK&amp;#10;trust._visual.responseStims[6].color = 'black';&amp;#10;trust._visual.responseStims[7].color = 'black';" valType="extendedCode"/>
+        <Param name="Begin JS Routine" updates="constant" val="let aid_text = condition ? &quot;dimmed&quot; : &quot;colored&quot;;&amp;#10;text_2.text = &quot;Cast your mind back to the trials on which you were provided with the &quot; + aid_text +&quot; aid&quot;;&amp;#10;&amp;#10;button_3.fillColor = 'darkgrey';&amp;#10;button_3.font = 'Times New Roman'&amp;#10;&amp;#10;button_3_callback = function() {&amp;#10;    &amp;#10;    if (trust.formComplete()) {&amp;#10;        console.log('hurr');&amp;#10;        continueRoutine = false;&amp;#10;    } else {&amp;#10;        console.log('durr');&amp;#10;        continueRoutine = true;&amp;#10;    }&amp;#10;}&amp;#10;&amp;#10;&amp;#10;trust.setAutoDraw(true);" valType="extendedCode"/>
+        <Param name="Begin Routine" updates="constant" val="text_2.text = " valType="extendedCode"/>
+        <Param name="Code Type" updates="None" val="JS" valType="str"/>
+        <Param name="Each Frame" updates="constant" val="" valType="extendedCode"/>
+        <Param name="Each JS Frame" updates="constant" val="if (trust.formComplete()) {&amp;#10;    button_3.fillColor = 'darkblue';&amp;#10;} else {&amp;#10;    button_3.fillColor = 'darkgrey';&amp;#10;}" valType="extendedCode"/>
+        <Param name="End Experiment" updates="constant" val="" valType="extendedCode"/>
+        <Param name="End JS Experiment" updates="constant" val="" valType="extendedCode"/>
+        <Param name="End JS Routine" updates="constant" val="trust.addDataToExp(psychoJS.experiment, 'rows');&amp;#10;&amp;#10;&amp;#10;trust._scrollbar.setAutoDraw(false);&amp;#10;for (let i = 0; i &lt; trust._items.length; ++i) {&amp;#10;    &amp;#10;    var ts = trust._visual.textStims[i];&amp;#10;    if (ts) {&amp;#10;        ts.setAutoDraw(false);&amp;#10;    }&amp;#10;    var rs = trust._visual.responseStims[i];&amp;#10;    if (rs) {&amp;#10;        rs.reset();&amp;#10;        rs.setAutoDraw(false);&amp;#10;    }&amp;#10;}&amp;#10;// clear textboxes&amp;#10;trust._visual.responseStims[6].clear();&amp;#10;trust._visual.responseStims[7].clear();&amp;#10;trust.hide();&amp;#10;trust.setAutoDraw(false);" valType="extendedCode"/>
+        <Param name="End Routine" updates="constant" val="" valType="extendedCode"/>
+        <Param name="disabled" updates="None" val="False" valType="bool"/>
+        <Param name="name" updates="None" val="code_2" valType="code"/>
+      </CodeComponent>
+      <TextComponent name="text_2">
+        <Param name="color" updates="constant" val="white" valType="color"/>
+        <Param name="colorSpace" updates="constant" val="rgb" valType="str"/>
+        <Param name="contrast" updates="constant" val="1" valType="num"/>
+        <Param name="disabled" updates="None" val="False" valType="bool"/>
+        <Param name="durationEstim" updates="None" val="" valType="code"/>
+        <Param name="flip" updates="constant" val="None" valType="str"/>
+        <Param name="font" updates="constant" val="Open Sans" valType="str"/>
+        <Param name="languageStyle" updates="None" val="LTR" valType="str"/>
+        <Param name="letterHeight" updates="constant" val="0.03" valType="num"/>
+        <Param name="name" updates="None" val="text_2" valType="code"/>
+        <Param name="opacity" updates="constant" val="" valType="num"/>
+        <Param name="ori" updates="constant" val="0" valType="num"/>
+        <Param name="pos" updates="constant" val="(0, 0.45)" valType="list"/>
+        <Param name="saveStartStop" updates="None" val="True" valType="bool"/>
+        <Param name="startEstim" updates="None" val="" valType="code"/>
+        <Param name="startType" updates="None" val="time (s)" valType="str"/>
+        <Param name="startVal" updates="None" val="0.0" valType="code"/>
+        <Param name="stopType" updates="None" val="duration (s)" valType="str"/>
+        <Param name="stopVal" updates="constant" val="" valType="code"/>
+        <Param name="syncScreenRefresh" updates="None" val="True" valType="bool"/>
+        <Param name="text" updates="constant" val="Yadda" valType="str"/>
+        <Param name="units" updates="None" val="from exp settings" valType="str"/>
+        <Param name="wrapWidth" updates="constant" val="" valType="num"/>
+      </TextComponent>
+      <ButtonComponent name="button_3">
+        <Param name="anchor" updates="constant" val="center" valType="str"/>
+        <Param name="bold" updates="constant" val="True" valType="bool"/>
+        <Param name="borderColor" updates="constant" val="None" valType="color"/>
+        <Param name="borderWidth" updates="constant" val="0" valType="num"/>
+        <Param name="callback" updates="constant" val="button_3_callback()" valType="extendedCode"/>
+        <Param name="color" updates="constant" val="white" valType="color"/>
+        <Param name="colorSpace" updates="constant" val="rgb" valType="str"/>
+        <Param name="contrast" updates="constant" val="1" valType="num"/>
+        <Param name="disabled" updates="None" val="False" valType="bool"/>
+        <Param name="durationEstim" updates="None" val="" valType="code"/>
+        <Param name="fillColor" updates="constant" val="darkgrey" valType="color"/>
+        <Param name="font" updates="constant" val="&quot;Times New Roman&quot;" valType="str"/>
+        <Param name="forceEndRoutine" updates="constant" val="False" valType="bool"/>
+        <Param name="italic" updates="constant" val="False" valType="bool"/>
+        <Param name="letterHeight" updates="constant" val="0.03" valType="num"/>
+        <Param name="name" updates="None" val="button_3" valType="code"/>
+        <Param name="oncePerClick" updates="constant" val="True" valType="bool"/>
+        <Param name="opacity" updates="constant" val="" valType="num"/>
+        <Param name="ori" updates="constant" val="0" valType="num"/>
+        <Param name="padding" updates="constant" val="" valType="num"/>
+        <Param name="pos" updates="constant" val="(0.5, -0.45)" valType="list"/>
+        <Param name="save" updates="None" val="every click" valType="str"/>
+        <Param name="saveStartStop" updates="None" val="True" valType="bool"/>
+        <Param name="size" updates="constant" val="[0.35,0.1]" valType="list"/>
+        <Param name="startEstim" updates="None" val="" valType="code"/>
+        <Param name="startType" updates="None" val="time (s)" valType="str"/>
+        <Param name="startVal" updates="None" val="0" valType="code"/>
+        <Param name="stopType" updates="None" val="duration (s)" valType="str"/>
+        <Param name="stopVal" updates="constant" val="" valType="code"/>
+        <Param name="syncScreenRefresh" updates="None" val="True" valType="bool"/>
+        <Param name="text" updates="constant" val="Click here to continue" valType="str"/>
+        <Param name="timeRelativeTo" updates="constant" val="button onset" valType="str"/>
+        <Param name="units" updates="None" val="from exp settings" valType="str"/>
+      </ButtonComponent>
+    </Routine>
   </Routines>
   <Flow>
     <Routine name="init_qs"/>
@@ -750,6 +829,19 @@
     <LoopTerminator name="trials"/>
     <Routine name="debrief"/>
     <LoopTerminator name="phases"/>
+    <LoopInitiator loopType="TrialHandler" name="conditions">
+      <Param name="Selected rows" updates="None" val="" valType="str"/>
+      <Param name="conditions" updates="None" val="None" valType="str"/>
+      <Param name="conditionsFile" updates="None" val="$para.CONDITIONS" valType="file"/>
+      <Param name="endPoints" updates="None" val="[0, 1]" valType="num"/>
+      <Param name="isTrials" updates="None" val="False" valType="bool"/>
+      <Param name="loopType" updates="None" val="sequential" valType="str"/>
+      <Param name="nReps" updates="None" val="1" valType="num"/>
+      <Param name="name" updates="None" val="conditions" valType="code"/>
+      <Param name="random seed" updates="None" val="" valType="code"/>
+    </LoopInitiator>
+    <Routine name="trust_qs"/>
+    <LoopTerminator name="conditions"/>
     <Routine name="outro"/>
   </Flow>
 </PsychoPy2experiment>

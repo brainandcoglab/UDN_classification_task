@@ -65,6 +65,10 @@ const phasesLoopScheduler = new Scheduler(psychoJS);
 flowScheduler.add(phasesLoopBegin(phasesLoopScheduler));
 flowScheduler.add(phasesLoopScheduler);
 flowScheduler.add(phasesLoopEnd);
+const conditionsLoopScheduler = new Scheduler(psychoJS);
+flowScheduler.add(conditionsLoopBegin(conditionsLoopScheduler));
+flowScheduler.add(conditionsLoopScheduler);
+flowScheduler.add(conditionsLoopEnd);
 flowScheduler.add(outroRoutineBegin());
 flowScheduler.add(outroRoutineEachFrame());
 flowScheduler.add(outroRoutineEnd());
@@ -77,9 +81,10 @@ psychoJS.start({
   expName: expName,
   expInfo: expInfo,
   resources: [
-    {'name': 'data/bg.png', 'path': 'data/bg.png'},
+    {'name': 'data/SWAT.csv', 'path': 'data/SWAT.csv'},
+    {'name': 'data/trust.csv', 'path': 'data/trust.csv'},
     {'name': 'data/initial_qs.csv', 'path': 'data/initial_qs.csv'},
-    {'name': 'data/SWAT.csv', 'path': 'data/SWAT.csv'}
+    {'name': 'data/bg.png', 'path': 'data/bg.png'}
   ]
 });
 
@@ -139,6 +144,10 @@ var debrief_form;
 var texts;
 var debrief_text;
 var button_2;
+var trust_qsClock;
+var trust;
+var text_2;
+var button_3;
 var outroClock;
 var outro_text;
 var key_resp_5;
@@ -455,6 +464,50 @@ async function experimentInit() {
     size: [0.35, 0.1]
   });
   button_2.clock = new util.Clock();
+  
+  // Initialize components for Routine "trust_qs"
+  trust_qsClock = new util.Clock();
+  trust = new visual.Form({
+      win : psychoJS.window, name:'trust',
+      items : 'data/trust.csv',
+      textHeight : 0.025,
+      font : '"Times New Roman"',
+      randomize : false,
+      size : [1, 1],
+      pos : [0, -0.08],
+      style : 'dark',
+      //responseColor : 'black',
+      itemPadding : 0.025
+  });
+  // Fix the text colour 'cos GUI wont' do it
+  //form.responseColor = 'black';
+  // Make the broken scrollbar invisible
+  trust._scrollbar.size = [0,0];
+  trust._scrollbar.markerColor = 'black';
+  trust._scrollbar.lineColor = 'black';
+  trust._scrollbar.fillColor = 'black';
+  // THIS IS A NON-GENERIC HACK
+  trust._visual.responseStims[6].color = 'black';
+  trust._visual.responseStims[7].color = 'black';
+  text_2 = new visual.TextStim({
+    win: psychoJS.window,
+    name: 'text_2',
+    text: 'Yadda',
+    font: 'Open Sans',
+    units: undefined, 
+    pos: [0, 0.45], height: 0.03,  wrapWidth: undefined, ori: 0.0,
+    color: new util.Color('white'),  opacity: undefined,
+    depth: -1.0 
+  });
+  
+  button_3 = new visual.ButtonStim({
+    win: psychoJS.window,
+    name: 'button_3',
+    text: 'Click here to continue',
+    pos: [0.5, (- 0.45)], letterHeight: 0.03,
+    size: [0.35, 0.1]
+  });
+  button_3.clock = new util.Clock();
   
   // Initialize components for Routine "outro"
   outroClock = new util.Clock();
@@ -878,6 +931,44 @@ async function trialsLoopEnd() {
 
 async function phasesLoopEnd() {
   psychoJS.experiment.removeLoop(phases);
+
+  return Scheduler.Event.NEXT;
+}
+
+
+var conditions;
+function conditionsLoopBegin(conditionsLoopScheduler, snapshot) {
+  return async function() {
+    TrialHandler.fromSnapshot(snapshot); // update internal variables (.thisN etc) of the loop
+    
+    // set up handler to look after randomisation of conditions etc
+    conditions = new TrialHandler({
+      psychoJS: psychoJS,
+      nReps: 1, method: TrialHandler.Method.SEQUENTIAL,
+      extraInfo: expInfo, originPath: undefined,
+      trialList: para.CONDITIONS,
+      seed: undefined, name: 'conditions'
+    });
+    psychoJS.experiment.addLoop(conditions); // add the loop to the experiment
+    currentLoop = conditions;  // we're now the current loop
+    
+    // Schedule all the trials in the trialList:
+    for (const thisCondition of conditions) {
+      const snapshot = conditions.getSnapshot();
+      conditionsLoopScheduler.add(importConditions(snapshot));
+      conditionsLoopScheduler.add(trust_qsRoutineBegin(snapshot));
+      conditionsLoopScheduler.add(trust_qsRoutineEachFrame());
+      conditionsLoopScheduler.add(trust_qsRoutineEnd());
+      conditionsLoopScheduler.add(endLoopIteration(conditionsLoopScheduler, snapshot));
+    }
+    
+    return Scheduler.Event.NEXT;
+  }
+}
+
+
+async function conditionsLoopEnd() {
+  psychoJS.experiment.removeLoop(conditions);
 
   return Scheduler.Event.NEXT;
 }
@@ -1731,6 +1822,173 @@ function debriefRoutineEnd() {
 }
 
 
+var button_3_callback;
+var trust_qsComponents;
+function trust_qsRoutineBegin(snapshot) {
+  return async function () {
+    TrialHandler.fromSnapshot(snapshot); // ensure that .thisN vals are up to date
+    
+    //------Prepare to start Routine 'trust_qs'-------
+    t = 0;
+    trust_qsClock.reset(); // clock
+    frameN = -1;
+    continueRoutine = true; // until we're told otherwise
+    // update component parameters for each repeat
+    let aid_text = condition ? "dimmed" : "colored";
+    text_2.text = "Cast your mind back to the trials on which you were provided with the " + aid_text +" aid";
+    
+    button_3.fillColor = 'darkgrey';
+    button_3.font = 'Times New Roman'
+    
+    button_3_callback = function() {
+        
+        if (trust.formComplete()) {
+            console.log('hurr');
+            continueRoutine = false;
+        } else {
+            console.log('durr');
+            continueRoutine = true;
+        }
+    }
+    
+    
+    trust.setAutoDraw(true);
+    // keep track of which components have finished
+    trust_qsComponents = [];
+    trust_qsComponents.push(text_2);
+    trust_qsComponents.push(button_3);
+    
+    for (const thisComponent of trust_qsComponents)
+      if ('status' in thisComponent)
+        thisComponent.status = PsychoJS.Status.NOT_STARTED;
+    return Scheduler.Event.NEXT;
+  }
+}
+
+
+function trust_qsRoutineEachFrame() {
+  return async function () {
+    //------Loop for each frame of Routine 'trust_qs'-------
+    // get current time
+    t = trust_qsClock.getTime();
+    frameN = frameN + 1;// number of completed frames (so 0 is the first frame)
+    // update/draw components on each frame
+    if (trust.formComplete()) {
+        button_3.fillColor = 'darkblue';
+    } else {
+        button_3.fillColor = 'darkgrey';
+    }
+    
+    // *text_2* updates
+    if (t >= 0.0 && text_2.status === PsychoJS.Status.NOT_STARTED) {
+      // keep track of start time/frame for later
+      text_2.tStart = t;  // (not accounting for frame time here)
+      text_2.frameNStart = frameN;  // exact frame index
+      
+      text_2.setAutoDraw(true);
+    }
+
+    
+    // *button_3* updates
+    if (t >= 0 && button_3.status === PsychoJS.Status.NOT_STARTED) {
+      // keep track of start time/frame for later
+      button_3.tStart = t;  // (not accounting for frame time here)
+      button_3.frameNStart = frameN;  // exact frame index
+      
+      button_3.setAutoDraw(true);
+    }
+
+    if (button_3.status === PsychoJS.Status.STARTED) {
+      // check whether button_3 has been pressed
+      if (button_3.isClicked) {
+        if (!button_3.wasClicked) {
+          // store time of first click
+          button_3.timesOn.push(button_3.clock.getTime());
+          // store time clicked until
+          button_3.timesOff.push(button_3.clock.getTime());
+        } else {
+          // update time clicked until;
+          button_3.timesOff[button_3.timesOff.length - 1] = button_3.clock.getTime();
+        }
+        if (!button_3.wasClicked) {
+          button_3_callback();
+        }
+        // if button_3 is still clicked next frame, it is not a new click
+        button_3.wasClicked = true;
+      } else {
+        // if button_3 is clicked next frame, it is a new click
+        button_3.wasClicked = false
+      }
+    } else {
+      // keep clock at 0 if button_3 hasn't started / has finished
+      button_3.clock.reset();
+      // if button_3 is clicked next frame, it is a new click
+      button_3.wasClicked = false;
+    }
+    // check for quit (typically the Esc key)
+    if (psychoJS.experiment.experimentEnded || psychoJS.eventManager.getKeys({keyList:['escape']}).length > 0) {
+      return quitPsychoJS('The [Escape] key was pressed. Goodbye!', false);
+    }
+    
+    // check if the Routine should terminate
+    if (!continueRoutine) {  // a component has requested a forced-end of Routine
+      return Scheduler.Event.NEXT;
+    }
+    
+    continueRoutine = false;  // reverts to True if at least one component still running
+    for (const thisComponent of trust_qsComponents)
+      if ('status' in thisComponent && thisComponent.status !== PsychoJS.Status.FINISHED) {
+        continueRoutine = true;
+        break;
+      }
+    
+    // refresh the screen if continuing
+    if (continueRoutine) {
+      return Scheduler.Event.FLIP_REPEAT;
+    } else {
+      return Scheduler.Event.NEXT;
+    }
+  };
+}
+
+
+function trust_qsRoutineEnd() {
+  return async function () {
+    //------Ending Routine 'trust_qs'-------
+    for (const thisComponent of trust_qsComponents) {
+      if (typeof thisComponent.setAutoDraw === 'function') {
+        thisComponent.setAutoDraw(false);
+      }
+    }
+    trust.addDataToExp(psychoJS.experiment, 'rows');
+    
+    
+    trust._scrollbar.setAutoDraw(false);
+    for (let i = 0; i < trust._items.length; ++i) {
+        
+        var ts = trust._visual.textStims[i];
+        if (ts) {
+            ts.setAutoDraw(false);
+        }
+        var rs = trust._visual.responseStims[i];
+        if (rs) {
+            rs.reset();
+            rs.setAutoDraw(false);
+        }
+    }
+    // clear textboxes
+    trust._visual.responseStims[6].clear();
+    trust._visual.responseStims[7].clear();
+    trust.hide();
+    trust.setAutoDraw(false);
+    // the Routine "trust_qs" was not non-slip safe, so reset the non-slip timer
+    routineTimer.reset();
+    
+    return Scheduler.Event.NEXT;
+  };
+}
+
+
 var _key_resp_5_allKeys;
 var outroComponents;
 function outroRoutineBegin(snapshot) {
@@ -1895,6 +2153,8 @@ async function quitPsychoJS(message, isCompleted) {
   if (psychoJS.experiment.isEntryEmpty()) {
     psychoJS.experiment.nextEntry();
   }
+  
+  
   
   
   

@@ -1,0 +1,9 @@
+itemText,type,options
+I believe the aid is a competent performer,radio,"1,2,3,4,5"
+I trust the aid,radio,"1,2,3,4,5"
+I have confidence in the advice given by the aid,radio,"1,2,3,4,5"
+I can depend on the aid,radio,"1,2,3,4,5"
+I can rely on the aid to behave in consistent ways,radio,"1,2,3,4,5"
+I can rely on the aid to do its best every time I take its advice,radio,"1,2,3,4,5"
+"On trials you completed with assistance from the aid, how frequently did you think the aid was correct?",free_text,"e.g. 100%, 50%..."
+"On trials you completed without the aid, how frequently did you think you were correct?",free_text,"e.g. 100%, 50%..."
