@@ -72,5 +72,6 @@ A little more stable on chrome.
 * [X] Fix all buttons using PIXI onclick override
 * [X] Show example in trust questions
 * [X] Increase SWAT text size
+* [ ] Display overall accuracy, and quick info on final screen
 * [ ] Highlight overlay style
 * [ ] Enforce full-screen for final release
