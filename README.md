@@ -63,10 +63,14 @@ A little more stable on chrome.
 * [X] Add reminder of which colour is which for highlight
 * [X] Ensure we don't bail out before random lines are chosen
 * [X] Slow waterfall plot scroll somewhat
-* [ ] Add questionnaires:
+* [X] Add questionnaires:
     * [X] SWAT
-    * [ ] machine trust score 
+    * [X] machine trust score 
     * [X] Gaming questions <- still need to make the button only work if filled in
 * [X] Test colour-blindness friendliness - part of questionnaire? Yes, just ask are you colourblind. Prolific can ask if you have normal or corrected-to-normal (includes you can see colour).
-* [ ] Enforce full-screen for final release
 * [X] Change to Space to continue rather than any key to avoid accidents
+* [X] Fix all buttons using PIXI onclick override
+* [ ] Show example in trust questions
+* [ ] Increase SWAT text size
+* [ ] Highlight overlay style
+* [ ] Enforce full-screen for final release

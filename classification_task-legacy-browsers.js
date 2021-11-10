@@ -137,6 +137,10 @@ var debrief_form;
 var texts;
 var debrief_text;
 var button_2;
+var trust_insClock;
+var key_resp_3;
+var text_3;
+var button_4;
 var trust_qsClock;
 var trust;
 var text_2;
@@ -458,6 +462,30 @@ async function experimentInit() {
   });
   button_2.clock = new util.Clock();
   
+  // Initialize components for Routine "trust_ins"
+  trust_insClock = new util.Clock();
+  key_resp_3 = new core.Keyboard({psychoJS: psychoJS, clock: new util.Clock(), waitForStart: true});
+  
+  text_3 = new visual.TextStim({
+    win: psychoJS.window,
+    name: 'text_3',
+    text: 'Any text\n\nincluding line breaks',
+    font: '"Times New Roman"',
+    units: undefined, 
+    pos: [0, 0.2], height: 0.04,  wrapWidth: undefined, ori: 0.0,
+    color: new util.Color('white'),  opacity: undefined,
+    depth: -2.0 
+  });
+  
+  button_4 = new visual.ButtonStim({
+    win: psychoJS.window,
+    name: 'button_4',
+    text: 'Click here to continue',
+    pos: [0.5, (- 0.45)], letterHeight: 0.03,
+    size: [0.35, 0.1]
+  });
+  button_4.clock = new util.Clock();
+  
   // Initialize components for Routine "trust_qs"
   trust_qsClock = new util.Clock();
   trust = new visual.Form({
@@ -528,7 +556,6 @@ async function experimentInit() {
 var t;
 var frameN;
 var continueRoutine;
-var button_callback;
 var init_qsComponents;
 function init_qsRoutineBegin(snapshot) {
   return async function () {
@@ -542,16 +569,6 @@ function init_qsRoutineBegin(snapshot) {
     // update component parameters for each repeat
     button.fillColor = 'darkgrey';
     button.font = 'Times New Roman'
-    
-    button_callback = function() {
-        
-        if (form.formComplete()) {
-            continueRoutine = false;
-        } else {
-            continueRoutine = true;
-        }
-    }
-    
     form.setAutoDraw(true);
     // keep track of which components have finished
     init_qsComponents = [];
@@ -576,6 +593,10 @@ function init_qsRoutineEachFrame() {
     // update/draw components on each frame
     if (form.formComplete()) {
         button.fillColor = 'darkblue';
+        if (typeof button._pixi !== 'undefined') {
+            button._pixi.interactive = true;
+            button._pixi.click = function(ev) { continueRoutine = false; }
+        }
     } else {
         button.fillColor = 'darkgrey';
     }
@@ -601,9 +622,7 @@ function init_qsRoutineEachFrame() {
           // update time clicked until;
           button.timesOff[button.timesOff.length - 1] = button.clock.getTime();
         }
-        if (!button.wasClicked) {
-          button_callback();
-        }
+        null;
         // if button is still clicked next frame, it is not a new click
         button.wasClicked = true;
       } else {
@@ -955,6 +974,9 @@ function conditionsLoopBegin(conditionsLoopScheduler, snapshot) {
       const snapshot = conditions.getSnapshot();
     
       conditionsLoopScheduler.add(importConditions(snapshot));
+      conditionsLoopScheduler.add(trust_insRoutineBegin(snapshot));
+      conditionsLoopScheduler.add(trust_insRoutineEachFrame());
+      conditionsLoopScheduler.add(trust_insRoutineEnd());
       conditionsLoopScheduler.add(trust_qsRoutineBegin(snapshot));
       conditionsLoopScheduler.add(trust_qsRoutineEachFrame());
       conditionsLoopScheduler.add(trust_qsRoutineEnd());
@@ -1657,7 +1679,6 @@ function feedbackRoutineEnd() {
 }
 
 
-var button_callback_2;
 var debriefComponents;
 function debriefRoutineBegin(snapshot) {
   return async function () {
@@ -1672,14 +1693,6 @@ function debriefRoutineBegin(snapshot) {
     button_2.fillColor = 'darkgrey';
     button_2.font = 'Times New Roman'
     
-    button_callback_2 = function() {
-        
-        if (debrief_form.formComplete()) {
-            continueRoutine = false;
-        } else {
-            continueRoutine = true;
-        }
-    }
     debrief_form.setAutoDraw(true);
     
     for(var i = 0; i < texts.length; i++) {
@@ -1710,6 +1723,10 @@ function debriefRoutineEachFrame() {
     // update/draw components on each frame
     if (debrief_form.formComplete()) {
         button_2.fillColor = 'darkblue';
+        if (typeof button_2._pixi !== 'undefined') {
+            button_2._pixi.interactive = true;
+            button_2._pixi.click = function(ev) { continueRoutine = false; }
+        }
     } else {
         button_2.fillColor = 'darkgrey';
     }
@@ -1745,9 +1762,7 @@ function debriefRoutineEachFrame() {
           // update time clicked until;
           button_2.timesOff[button_2.timesOff.length - 1] = button_2.clock.getTime();
         }
-        if (!button_2.wasClicked) {
-          button_callback_2();
-        }
+        null;
         // if button_2 is still clicked next frame, it is not a new click
         button_2.wasClicked = true;
       } else {
@@ -1826,7 +1841,199 @@ function debriefRoutineEnd() {
 }
 
 
-var button_3_callback;
+var _key_resp_3_allKeys;
+var trust_insComponents;
+function trust_insRoutineBegin(snapshot) {
+  return async function () {
+    TrialHandler.fromSnapshot(snapshot); // ensure that .thisN vals are up to date
+    
+    //------Prepare to start Routine 'trust_ins'-------
+    t = 0;
+    trust_insClock.reset(); // clock
+    frameN = -1;
+    continueRoutine = true; // until we're told otherwise
+    // update component parameters for each repeat
+    key_resp_3.keys = undefined;
+    key_resp_3.rt = undefined;
+    _key_resp_3_allKeys = [];
+    let rem_lines = [0.21,0.29,0.63,0.84];
+    
+    let active_band = 1;
+    let band = bands[active_band];
+    band.setLines(rem_lines, [1,0,1,1]);
+    condition ? band.setLowlight(true, 0) : band.setHighlight(true, 0);
+    band.active = 1;
+    band.rectangle.opacity = 1.0 - band.active;
+    band.rectangle._needUpdate = true;
+    band.setAutoDraw(true);
+    
+    button_4.fillColor = 'darkblue';
+    button_4.font = 'Times New Roman'
+    
+    let aid_text = condition ? "dimmed" : "colored overlay";
+    text_3.text = `Cast your mind back to the trials on which you were provided with the ` + aid_text +` aid (as seen below).
+    On the next page, please answer some questions on how you felt about this aid.`;
+    // keep track of which components have finished
+    trust_insComponents = [];
+    trust_insComponents.push(key_resp_3);
+    trust_insComponents.push(text_3);
+    trust_insComponents.push(button_4);
+    
+    trust_insComponents.forEach( function(thisComponent) {
+      if ('status' in thisComponent)
+        thisComponent.status = PsychoJS.Status.NOT_STARTED;
+       });
+    return Scheduler.Event.NEXT;
+  }
+}
+
+
+function trust_insRoutineEachFrame() {
+  return async function () {
+    //------Loop for each frame of Routine 'trust_ins'-------
+    // get current time
+    t = trust_insClock.getTime();
+    frameN = frameN + 1;// number of completed frames (so 0 is the first frame)
+    // update/draw components on each frame
+    
+    // *key_resp_3* updates
+    if (t >= 0.0 && key_resp_3.status === PsychoJS.Status.NOT_STARTED) {
+      // keep track of start time/frame for later
+      key_resp_3.tStart = t;  // (not accounting for frame time here)
+      key_resp_3.frameNStart = frameN;  // exact frame index
+      
+      // keyboard checking is just starting
+      psychoJS.window.callOnFlip(function() { key_resp_3.clock.reset(); });  // t=0 on next screen flip
+      psychoJS.window.callOnFlip(function() { key_resp_3.start(); }); // start on screen flip
+      psychoJS.window.callOnFlip(function() { key_resp_3.clearEvents(); });
+    }
+
+    if (key_resp_3.status === PsychoJS.Status.STARTED) {
+      let theseKeys = key_resp_3.getKeys({keyList: ['space'], waitRelease: false});
+      _key_resp_3_allKeys = _key_resp_3_allKeys.concat(theseKeys);
+      if (_key_resp_3_allKeys.length > 0) {
+        key_resp_3.keys = _key_resp_3_allKeys[_key_resp_3_allKeys.length - 1].name;  // just the last key pressed
+        key_resp_3.rt = _key_resp_3_allKeys[_key_resp_3_allKeys.length - 1].rt;
+        // a response ends the routine
+        continueRoutine = false;
+      }
+    }
+    
+    // Update uniforms
+    for(var i = 0; i < bands.length; i++) {
+        var band = bands[i];
+        band.uniforms.frameN = frameN;
+    }
+    
+    button_4.fillColor = 'darkblue';
+    if (typeof button_4._pixi !== 'undefined') {
+        button_4._pixi.interactive = true;
+        button_4._pixi.click = function(ev) { continueRoutine = false; }
+    }
+    
+    // *text_3* updates
+    if (t >= 0.0 && text_3.status === PsychoJS.Status.NOT_STARTED) {
+      // keep track of start time/frame for later
+      text_3.tStart = t;  // (not accounting for frame time here)
+      text_3.frameNStart = frameN;  // exact frame index
+      
+      text_3.setAutoDraw(true);
+    }
+
+    
+    // *button_4* updates
+    if (t >= 0 && button_4.status === PsychoJS.Status.NOT_STARTED) {
+      // keep track of start time/frame for later
+      button_4.tStart = t;  // (not accounting for frame time here)
+      button_4.frameNStart = frameN;  // exact frame index
+      
+      button_4.setAutoDraw(true);
+    }
+
+    if (button_4.status === PsychoJS.Status.STARTED) {
+      // check whether button_4 has been pressed
+      if (button_4.isClicked) {
+        if (!button_4.wasClicked) {
+          // store time of first click
+          button_4.timesOn.push(button_4.clock.getTime());
+          // store time clicked until
+          button_4.timesOff.push(button_4.clock.getTime());
+        } else {
+          // update time clicked until;
+          button_4.timesOff[button_4.timesOff.length - 1] = button_4.clock.getTime();
+        }
+        if (!button_4.wasClicked) {
+          // end routine when button_4 is clicked
+          continueRoutine = false;
+          null;
+        }
+        // if button_4 is still clicked next frame, it is not a new click
+        button_4.wasClicked = true;
+      } else {
+        // if button_4 is clicked next frame, it is a new click
+        button_4.wasClicked = false
+      }
+    } else {
+      // keep clock at 0 if button_4 hasn't started / has finished
+      button_4.clock.reset();
+      // if button_4 is clicked next frame, it is a new click
+      button_4.wasClicked = false;
+    }
+    // check for quit (typically the Esc key)
+    if (psychoJS.experiment.experimentEnded || psychoJS.eventManager.getKeys({keyList:['escape']}).length > 0) {
+      return quitPsychoJS('The [Escape] key was pressed. Goodbye!', false);
+    }
+    
+    // check if the Routine should terminate
+    if (!continueRoutine) {  // a component has requested a forced-end of Routine
+      return Scheduler.Event.NEXT;
+    }
+    
+    continueRoutine = false;  // reverts to True if at least one component still running
+    trust_insComponents.forEach( function(thisComponent) {
+      if ('status' in thisComponent && thisComponent.status !== PsychoJS.Status.FINISHED) {
+        continueRoutine = true;
+      }
+    });
+    
+    // refresh the screen if continuing
+    if (continueRoutine) {
+      return Scheduler.Event.FLIP_REPEAT;
+    } else {
+      return Scheduler.Event.NEXT;
+    }
+  };
+}
+
+
+function trust_insRoutineEnd() {
+  return async function () {
+    //------Ending Routine 'trust_ins'-------
+    trust_insComponents.forEach( function(thisComponent) {
+      if (typeof thisComponent.setAutoDraw === 'function') {
+        thisComponent.setAutoDraw(false);
+      }
+    });
+    psychoJS.experiment.addData('key_resp_3.keys', key_resp_3.keys);
+    if (typeof key_resp_3.keys !== 'undefined') {  // we had a response
+        psychoJS.experiment.addData('key_resp_3.rt', key_resp_3.rt);
+        routineTimer.reset();
+        }
+    
+    key_resp_3.stop();
+    for(var i = 0; i < bands.length; i++) {
+        let band = bands[i];
+        band.active = false;
+        band.setAutoDraw(false);
+    }
+    // the Routine "trust_ins" was not non-slip safe, so reset the non-slip timer
+    routineTimer.reset();
+    
+    return Scheduler.Event.NEXT;
+  };
+}
+
+
 var trust_qsComponents;
 function trust_qsRoutineBegin(snapshot) {
   return async function () {
@@ -1838,23 +2045,11 @@ function trust_qsRoutineBegin(snapshot) {
     frameN = -1;
     continueRoutine = true; // until we're told otherwise
     // update component parameters for each repeat
-    let aid_text = condition ? "dimmed" : "colored";
-    text_2.text = "Cast your mind back to the trials on which you were provided with the " + aid_text +" aid";
+    let aid_text = condition ? "dimmed" : "colored overlay";
+    text_2.text = "With regard to the " + aid_text +" aid:";
     
     button_3.fillColor = 'darkgrey';
     button_3.font = 'Times New Roman'
-    
-    button_3_callback = function() {
-        
-        if (trust.formComplete()) {
-            console.log('hurr');
-            continueRoutine = false;
-        } else {
-            console.log('durr');
-            continueRoutine = true;
-        }
-    }
-    
     
     trust.setAutoDraw(true);
     // keep track of which components have finished
@@ -1880,9 +2075,18 @@ function trust_qsRoutineEachFrame() {
     // update/draw components on each frame
     if (trust.formComplete()) {
         button_3.fillColor = 'darkblue';
+        if (typeof button_3._pixi !== 'undefined') {
+            button_3._pixi.interactive = true;
+            button_3._pixi.click = function(ev) { continueRoutine = false; }
+        }
     } else {
         button_3.fillColor = 'darkgrey';
     }
+    //grr._needUpdate = true;
+    //grr._pixi.interactive = true;
+    //grr._pixi.click = function(ev) { console.log("clicked"); }
+    
+    
     
     // *text_2* updates
     if (t >= 0.0 && text_2.status === PsychoJS.Status.NOT_STARTED) {
@@ -1915,9 +2119,7 @@ function trust_qsRoutineEachFrame() {
           // update time clicked until;
           button_3.timesOff[button_3.timesOff.length - 1] = button_3.clock.getTime();
         }
-        if (!button_3.wasClicked) {
-          button_3_callback();
-        }
+        null;
         // if button_3 is still clicked next frame, it is not a new click
         button_3.wasClicked = true;
       } else {
@@ -2159,6 +2361,8 @@ async function quitPsychoJS(message, isCompleted) {
   if (psychoJS.experiment.isEntryEmpty()) {
     psychoJS.experiment.nextEntry();
   }
+  
+  
   
   
   
