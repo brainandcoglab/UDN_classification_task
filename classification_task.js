@@ -81,8 +81,8 @@ psychoJS.start({
   expName: expName,
   expInfo: expInfo,
   resources: [
-    {'name': 'data/trust.csv', 'path': 'data/trust.csv'},
     {'name': 'data/initial_qs.csv', 'path': 'data/initial_qs.csv'},
+    {'name': 'data/trust.csv', 'path': 'data/trust.csv'},
     {'name': 'data/bg.png', 'path': 'data/bg.png'},
     {'name': 'data/SWAT.csv', 'path': 'data/SWAT.csv'}
   ]
@@ -137,6 +137,7 @@ var image;
 var key_resp;
 var lookup_table_left;
 var lookup_table_right;
+var acc_sum;
 var bands;
 var feedbackClock;
 var feedback_text;
@@ -357,6 +358,9 @@ async function experimentInit() {
   psychoJS.experiment.addData('usingWebGL', webgl);
   psychoJS.experiment.nextEntry();
   
+  // for showing participant accuracy
+  acc_sum = 0;
+  
   bands = [
       new band.Band(
           psychoJS.window,
@@ -543,7 +547,7 @@ async function experimentInit() {
   outro_text = new visual.TextStim({
     win: psychoJS.window,
     name: 'outro_text',
-    text: 'Thank you very much for participating!',
+    text: '',
     font: '"Times New Roman"',
     units: undefined, 
     pos: [0, 0], height: 0.04,  wrapWidth: undefined, ori: 0.0,
@@ -1578,6 +1582,7 @@ function trialRoutineEnd() {
             break;
         case 3: // TEST PHASE
             feedback_text.text = ""; // No feedback on test
+            acc_sum += key_resp.corr;
             break;
     }
     
@@ -2202,11 +2207,19 @@ function outroRoutineBegin(snapshot) {
     outroClock.reset(); // clock
     frameN = -1;
     continueRoutine = true; // until we're told otherwise
-    routineTimer.add(1.000000);
     // update component parameters for each repeat
     key_resp_5.keys = undefined;
     key_resp_5.rt = undefined;
     _key_resp_5_allKeys = [];
+    
+    let accuracy  = acc_sum / para.RUN_ORDER[3].length;
+    
+    outro_text.text = `Thank you very much for participating!
+    
+    For your interest, your accuracy at test was ` + accuracy .toFixed(2)+ `%
+    In this task, we were interested in assessing the relative merits of different ways of overlaying visual assistance to help with learning and decision making.
+    
+    Please press any key to complete the experiment.`;
     // keep track of which components have finished
     outroComponents = [];
     outroComponents.push(outro_text);
@@ -2237,10 +2250,6 @@ function outroRoutineEachFrame() {
       outro_text.setAutoDraw(true);
     }
 
-    frameRemains = 0.0 + 1.0 - psychoJS.window.monitorFramePeriod * 0.75;  // most of one frame period left
-    if (outro_text.status === PsychoJS.Status.STARTED && t >= frameRemains) {
-      outro_text.setAutoDraw(false);
-    }
     
     // *key_resp_5* updates
     if (t >= 0.0 && key_resp_5.status === PsychoJS.Status.NOT_STARTED) {
@@ -2253,11 +2262,6 @@ function outroRoutineEachFrame() {
       psychoJS.window.callOnFlip(function() { key_resp_5.start(); }); // start on screen flip
       psychoJS.window.callOnFlip(function() { key_resp_5.clearEvents(); });
     }
-
-    frameRemains = 0.0 + 1.0 - psychoJS.window.monitorFramePeriod * 0.75;  // most of one frame period left
-    if (key_resp_5.status === PsychoJS.Status.STARTED && t >= frameRemains) {
-      key_resp_5.status = PsychoJS.Status.FINISHED;
-  }
 
     if (key_resp_5.status === PsychoJS.Status.STARTED) {
       let theseKeys = key_resp_5.getKeys({keyList: [], waitRelease: false});
@@ -2288,7 +2292,7 @@ function outroRoutineEachFrame() {
       }
     
     // refresh the screen if continuing
-    if (continueRoutine && routineTimer.getTime() > 0) {
+    if (continueRoutine) {
       return Scheduler.Event.FLIP_REPEAT;
     } else {
       return Scheduler.Event.NEXT;
@@ -2314,6 +2318,9 @@ function outroRoutineEnd() {
     key_resp_5.stop();
     psychoJS.experiment.addData('globalClockTime', globalClock.getTime());
     psychoJS.experiment.nextEntry();
+    // the Routine "outro" was not non-slip safe, so reset the non-slip timer
+    routineTimer.reset();
+    
     return Scheduler.Event.NEXT;
   };
 }
@@ -2355,6 +2362,8 @@ async function quitPsychoJS(message, isCompleted) {
   if (psychoJS.experiment.isEntryEmpty()) {
     psychoJS.experiment.nextEntry();
   }
+  
+  
   
   
   
