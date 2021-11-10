@@ -74,9 +74,9 @@ psychoJS.start({
   expInfo: expInfo,
   resources: [
     {'name': 'data/trust.csv', 'path': 'data/trust.csv'},
+    {'name': 'data/initial_qs.csv', 'path': 'data/initial_qs.csv'},
     {'name': 'data/bg.png', 'path': 'data/bg.png'},
-    {'name': 'data/SWAT.csv', 'path': 'data/SWAT.csv'},
-    {'name': 'data/initial_qs.csv', 'path': 'data/initial_qs.csv'}
+    {'name': 'data/SWAT.csv', 'path': 'data/SWAT.csv'}
   ]
 });
 
@@ -99,7 +99,8 @@ async function updateInfo() {
 
   // add info from the URL:
   util.addInfoFromUrl(expInfo);
-  
+  psychoJS.setRedirectUrls('https://app.prolific.co/submissions/complete?cc=72A96484', '');
+
   return Scheduler.Event.NEXT;
 }
 
