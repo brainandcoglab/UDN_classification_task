@@ -443,7 +443,7 @@ async function experimentInit() {
               text: funcs[i](j),
               font: '"Times New Roman"',
               units: undefined, 
-              pos: [-0.35 + j*0.8, 0.13 - i * 0.18], height: 0.02,  wrapWidth: 0.3, ori: 0.0,
+              pos: [-0.35 + j*0.8, 0.13 - i * 0.18], height: 0.023,  wrapWidth: 0.3, ori: 0.0,
               color: new util.Color('white'),  opacity: undefined,
               depth: 3.0 
           });

@@ -70,7 +70,7 @@ A little more stable on chrome.
 * [X] Test colour-blindness friendliness - part of questionnaire? Yes, just ask are you colourblind. Prolific can ask if you have normal or corrected-to-normal (includes you can see colour).
 * [X] Change to Space to continue rather than any key to avoid accidents
 * [X] Fix all buttons using PIXI onclick override
-* [ ] Show example in trust questions
-* [ ] Increase SWAT text size
+* [X] Show example in trust questions
+* [X] Increase SWAT text size
 * [ ] Highlight overlay style
 * [ ] Enforce full-screen for final release
