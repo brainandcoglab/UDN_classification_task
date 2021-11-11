@@ -17,7 +17,7 @@ export const N_LINES = 4; // How many lines/band define a ship
 export const N_NOISE = 1; // How many lines/band will be random noise on normal trials
 export const P_CATCH = 0.1; // Proportion of catch trials
 export const N_PRACTICE_TRIALS = 8; // How many trials total of friend + foe
-export const N_TRIALS = 66; // How many trials total of high/lowlight (not including catch trials)
+export const N_TRIALS = 60; // How many trials total of high/lowlight (not including catch trials)
 
 export const MIN_DISTANCE = 0.1/3; // Minimum distance between lines
 
