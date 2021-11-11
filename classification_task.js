@@ -81,9 +81,9 @@ psychoJS.start({
   expName: expName,
   expInfo: expInfo,
   resources: [
-    {'name': 'data/initial_qs.csv', 'path': 'data/initial_qs.csv'},
-    {'name': 'data/trust.csv', 'path': 'data/trust.csv'},
     {'name': 'data/bg.png', 'path': 'data/bg.png'},
+    {'name': 'data/trust.csv', 'path': 'data/trust.csv'},
+    {'name': 'data/initial_qs.csv', 'path': 'data/initial_qs.csv'},
     {'name': 'data/SWAT.csv', 'path': 'data/SWAT.csv'}
   ]
 });
@@ -503,7 +503,7 @@ async function experimentInit() {
   trust = new visual.Form({
       win : psychoJS.window, name:'trust',
       items : 'data/trust.csv',
-      textHeight : 0.025,
+      fontSize : 0.025,
       font : '"Times New Roman"',
       randomize : false,
       size : [1, 1],
