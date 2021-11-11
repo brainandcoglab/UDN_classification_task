@@ -51,6 +51,7 @@ function Axis(window, pos, size=[1.0, 1.0], nticks=6, range=[0,1], tick_height=0
 function Lines(window, pos, size, lines, is_signal) {
     this.lines = lines;
     this.is_signal = is_signal;
+    this.overlays = [];
     this.rects = [];
     this.border = []; // prevent lines appearing off the edge of screens
     let linew = 0.03;
@@ -101,6 +102,23 @@ function Lines(window, pos, size, lines, is_signal) {
         })(line._updateIfNeeded, this);
         line._updateIfNeeded = newupdate;
         this.rects.push(line);
+        let overlay = new visual.ShapeStim({
+            "win": window,
+            "name": "overlay",
+            "size": [linew*0.7, size[1]*0.98],
+            "vertices": jl.RECT_VERTICES, 
+            "ori": 0.0, 
+            "pos": [zero + x, pos[1]],
+            "lineWidth": 3.0,
+            "closeShape": true,
+            "colorSpace": "rgb",
+            "lineColor": new util.Color('darkred'),
+            "fillColor": null,
+            "opacity": 0.0,
+            "depth": -3.0,
+            "interpolate": true
+        });
+        this.overlays.push(overlay);
     }
     
     this.setLines = function(pos, size, lines, is_signal) {
@@ -110,15 +128,20 @@ function Lines(window, pos, size, lines, is_signal) {
             let x = this.lines[i] / size[0];
             let zero = pos[0] - size[0] / 2.0;
             this.rects[i].pos = [zero + x, pos[1]];
+            this.overlays[i].pos = this.rects[i].pos;
         }
     };
     this.setAutoDraw = function(b) {
         for (var i = 0; i < this.rects.length; i++) {
             this.rects[i].setAutoDraw(b);
         }
+        for (var i = 0; i < this.overlays.length; i++) {
+            this.overlays[i].setAutoDraw(b);
+        }
         for (var i = 0; i < this.border.length; i++) {
             this.border[i].setAutoDraw(b);
         }
+        
     };
 }
 
@@ -173,8 +196,11 @@ function Band(window, pos, size=[1.0, 0.2], lines, is_signal, nticks, range) {
     this.setHighlight = function(b, v) {
         for(var i = 0; i < this.lines.is_signal.length; i++) {
             if (b && this.lines.is_signal[i]) {
+                this.lines.overlays[i].opacity = 1.0;
                 this.lines.rects[i].fillColor = v ? "red" : "blue";
+                this.lines.overlays[i].lineColor = v ? new util.Color('#ff6969') : new util.Color('#4b7ccc');
             } else {
+                this.lines.overlays[i].opacity = 0.0;
                 this.lines.rects[i].fillColor = "green";
             }
         }

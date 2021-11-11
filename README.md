@@ -73,5 +73,5 @@ A little more stable on chrome.
 * [X] Show example in trust questions
 * [X] Increase SWAT text size
 * [X] Display overall accuracy, and quick info on final screen
-* [ ] Highlight overlay style
+* [X] Highlight overlay style
 * [ ] Enforce full-screen for final release
