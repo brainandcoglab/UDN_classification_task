@@ -117,6 +117,20 @@ let signatures = function(n_lines, mindist) {
         vessel_signatures[0][i] = vessel_signatures[0][i].sort(function(a, b){return a-b});
         vessel_signatures[1][i] = vessel_signatures[1][i].sort(function(a, b){return a-b});
     }
+    // This time, swap most extreme values on same side between friend/foe
+    // Should prevent reliance on a side
+    let side = util.shuffle([0, n_lines-1]);
+    for (var i = 0; i < 2; i++) {
+        let z = side[i];
+        let tmp = vessel_signatures[0][i][z]; // zthmost friend
+        // zthmost friend = zthmost foe
+        vessel_signatures[0][i][z] = vessel_signatures[1][i][z];
+        // zthmost foe = zthmost friend
+        vessel_signatures[1][i][z] = tmp;
+        // sort
+        vessel_signatures[0][i] = vessel_signatures[0][i].sort(function(a, b){return a-b});
+        vessel_signatures[1][i] = vessel_signatures[1][i].sort(function(a, b){return a-b});
+    }
 
     return [sorted, vessel_signatures];
 };
