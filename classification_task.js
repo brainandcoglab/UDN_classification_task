@@ -81,10 +81,10 @@ psychoJS.start({
   expName: expName,
   expInfo: expInfo,
   resources: [
-    {'name': 'data/bg.png', 'path': 'data/bg.png'},
     {'name': 'data/trust.csv', 'path': 'data/trust.csv'},
+    {'name': 'data/SWAT.csv', 'path': 'data/SWAT.csv'},
     {'name': 'data/initial_qs.csv', 'path': 'data/initial_qs.csv'},
-    {'name': 'data/SWAT.csv', 'path': 'data/SWAT.csv'}
+    {'name': 'data/bg.png', 'path': 'data/bg.png'}
   ]
 });
 
@@ -2218,7 +2218,7 @@ function outroRoutineBegin(snapshot) {
     
     outro_text.text = `Thank you very much for participating!
     
-    For your interest, your accuracy at test was ` + accuracy .toFixed(2)+ `%.
+    For your interest, your accuracy at test was ` + (100 * accuracy).toFixed(2)+ `%.
     In this task, we were interested in assessing the relative merits of different ways of overlaying visual assistance to help with learning and decision making.
     
     Please press any key to complete the experiment.`;

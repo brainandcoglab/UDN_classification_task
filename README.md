@@ -75,3 +75,4 @@ A little more stable on chrome.
 * [X] Display overall accuracy, and quick info on final screen
 * [X] Highlight overlay style
 * [X] Enforce full-screen for final release
+* [X] Fix final screen percentage
