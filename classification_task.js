@@ -2026,6 +2026,8 @@ function trust_insRoutineEnd() {
         let band = bands[i];
         band.active = false;
         band.setAutoDraw(false);
+        band.setHighlight(false);
+        band.setLowlight(false);
     }
     // the Routine "trust_ins" was not non-slip safe, so reset the non-slip timer
     routineTimer.reset();
@@ -2216,7 +2218,7 @@ function outroRoutineBegin(snapshot) {
     
     outro_text.text = `Thank you very much for participating!
     
-    For your interest, your accuracy at test was ` + accuracy .toFixed(2)+ `%
+    For your interest, your accuracy at test was ` + accuracy .toFixed(2)+ `%.
     In this task, we were interested in assessing the relative merits of different ways of overlaying visual assistance to help with learning and decision making.
     
     Please press any key to complete the experiment.`;

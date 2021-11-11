@@ -305,7 +305,7 @@
         <Param name="Before JS Experiment" updates="constant" val="" valType="extendedCode"/>
         <Param name="Begin Experiment" updates="constant" val="" valType="extendedCode"/>
         <Param name="Begin JS Experiment" updates="constant" val="" valType="extendedCode"/>
-        <Param name="Begin JS Routine" updates="constant" val="&amp;#10;let accuracy  = acc_sum / para.RUN_ORDER[3].length;&amp;#10;&amp;#10;outro_text.text = `Thank you very much for participating!&amp;#10;&amp;#10;For your interest, your accuracy at test was ` + accuracy .toFixed(2)+ `%&amp;#10;In this task, we were interested in assessing the relative merits of different ways of overlaying visual assistance to help with learning and decision making.&amp;#10;&amp;#10;Please press any key to complete the experiment.`;" valType="extendedCode"/>
+        <Param name="Begin JS Routine" updates="constant" val="&amp;#10;let accuracy  = acc_sum / para.RUN_ORDER[3].length;&amp;#10;&amp;#10;outro_text.text = `Thank you very much for participating!&amp;#10;&amp;#10;For your interest, your accuracy at test was ` + accuracy .toFixed(2)+ `%.&amp;#10;In this task, we were interested in assessing the relative merits of different ways of overlaying visual assistance to help with learning and decision making.&amp;#10;&amp;#10;Please press any key to complete the experiment.`;" valType="extendedCode"/>
         <Param name="Begin Routine" updates="constant" val="&amp;#10;let accuracy  = acc_sum / para.RUN_ORDER[3].length;&amp;#10;&amp;#10;outro_text.text = `Thank you very much for participating!&amp;#10;&amp;#10;For your interest, your accuracy at test was ` + accuracy .toFixed(2);+" valType="extendedCode"/>
         <Param name="Code Type" updates="None" val="JS" valType="str"/>
         <Param name="Each Frame" updates="constant" val="" valType="extendedCode"/>
@@ -832,7 +832,7 @@
         <Param name="Each JS Frame" updates="constant" val="// Update uniforms&amp;#10;for(var i = 0; i &lt; bands.length; i++) {&amp;#10;    var band = bands[i];&amp;#10;    band.uniforms.frameN = frameN;&amp;#10;}&amp;#10;&amp;#10;button_4.fillColor = 'darkblue';&amp;#10;if (typeof button_4._pixi !== 'undefined') {&amp;#10;    button_4._pixi.interactive = true;&amp;#10;    button_4._pixi.click = function(ev) { continueRoutine = false; }&amp;#10;}" valType="extendedCode"/>
         <Param name="End Experiment" updates="constant" val="" valType="extendedCode"/>
         <Param name="End JS Experiment" updates="constant" val="" valType="extendedCode"/>
-        <Param name="End JS Routine" updates="constant" val="for(var i = 0; i &lt; bands.length; i++) {&amp;#10;    let band = bands[i];&amp;#10;    band.active = false;&amp;#10;    band.setAutoDraw(false);&amp;#10;}" valType="extendedCode"/>
+        <Param name="End JS Routine" updates="constant" val="for(var i = 0; i &lt; bands.length; i++) {&amp;#10;    let band = bands[i];&amp;#10;    band.active = false;&amp;#10;    band.setAutoDraw(false);&amp;#10;    band.setHighlight(false);&amp;#10;    band.setLowlight(false);&amp;#10;}" valType="extendedCode"/>
         <Param name="End Routine" updates="constant" val="" valType="extendedCode"/>
         <Param name="disabled" updates="None" val="False" valType="bool"/>
         <Param name="name" updates="None" val="code_3" valType="code"/>
