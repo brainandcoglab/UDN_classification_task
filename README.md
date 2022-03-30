@@ -11,6 +11,7 @@ This branch will implement all changes required for two follow-up experiments - 
 
 ### Required
 
+* [ ] Get condition from URL parameters (it should appear in expInfo object)
 * [ ] Implement fading condition
 * [ ] Enforce rapid SWAT response
 * [X] Decide on way to split conditions: For now I'll go with splitting into different groups in Prolific because I can pass conditions as URL parameters - and I'm pretty sure I can prevent people starting more than one of the experiments. Could also integrate something else - either look at complete Pavlovia data or run a service hosted somewhere that manages things - but somewhat fragile and unnecessary.
@@ -24,3 +25,9 @@ This branch will implement all changes required for two follow-up experiments - 
 * [ ] Waterfall plot style updates?
 * [ ] Other random lines in background?
 * [ ] Better highlight colour
+
+### To discuss
+
+* Number of lines?
+* Are we using monochromatic highlight?
+* Catch trials?
