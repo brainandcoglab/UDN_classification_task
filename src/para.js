@@ -46,9 +46,21 @@ export const PHASES = [
     {phase: 3}  // Test
 ];
 
+// This script is initialized before expInfo object anyway,
+// So will have to get URL parameters directly like so
+var url = new URL(window.location.href);
+var c = url.searchParams.get("condition"); // integer from 0 to 3
+
 export const CONDITIONS = [
     {condition: 0},
-    {condition: 1}
+    {condition: 1},
+    {condition: 2}
+]
+
+// This was previously used as within-subjects conditions, now it is support/unsupport
+export const SUPPORT_STATUS = [
+    {supported: 0},
+    {supported: 1}
 ]
 
 const errstring = 'Experiment run order generation failed, please contact experimenter!';

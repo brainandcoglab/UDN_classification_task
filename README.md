@@ -7,11 +7,14 @@ This branch will implement all changes required for two follow-up experiments - 
 - Need to do some config to ensure this branch is the ["default" on Pavlovia](https://discourse.psychopy.org/t/ability-to-choose-a-different-branch-for-piloting-on-pavlovia/16202/4)
 - Followups: monolight, fading to uniformative light
 
+- Don't think FPS is that accurate - it gets recorded initially, but not over entire exp.
+
 ## TODO
 
 ### Required
 
 * [ ] Get condition from URL parameters (it should appear in expInfo object)
+    * Okay, so looks like that's initialised once we get past first screen. Should be okay?
 * [ ] Implement fading condition
 * [ ] Enforce rapid SWAT response
 * [X] Decide on way to split conditions: For now I'll go with splitting into different groups in Prolific because I can pass conditions as URL parameters - and I'm pretty sure I can prevent people starting more than one of the experiments. Could also integrate something else - either look at complete Pavlovia data or run a service hosted somewhere that manages things - but somewhat fragile and unnecessary.
