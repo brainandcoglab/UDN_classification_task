@@ -214,6 +214,23 @@ function Band(window, pos, size=[1.0, 0.2], lines, is_signal, nticks, range) {
             }
         }
     };
+
+    // Toggle the selected support condition on or off
+    this.toggleSupport = function(binary, condition, vessel) {
+        
+        // Because each condition has its own toggle we have to pass it on
+        switch(condition) {
+            case "HIGHLIGHT":
+                this.setHighlight(binary, vessel)
+                break;
+            case "LOWLIGHT":
+                this.setLowlight(binary, vessel)
+                break;
+            case "FADING":
+                console.log("NOT IMPLEMENTED")
+                break;
+        }
+    }
         
     this.setAutoDraw = function(b) {
         this.lines.setAutoDraw(b);
