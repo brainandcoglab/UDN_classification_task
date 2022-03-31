@@ -79,7 +79,7 @@ for (var canary = 0; !practice_run_order; canary++) {
     }
     practice_signatures = practice_sort_sig[1];
     let practice_sorted_lines = practice_sort_sig[0];  // sorted list of all lines (practice)
-    practice_run_order = gen.run_order(N_PRACTICE_TRIALS, P_CATCH, N_NOISE, practice_signatures, practice_sorted_lines, MIN_DISTANCE, HIGHLIGHT);
+    practice_run_order = gen.run_order(N_PRACTICE_TRIALS, P_CATCH, N_NOISE, practice_signatures, practice_sorted_lines, MIN_DISTANCE, SUPPORTED);
 }
 export const PRACTICE_SIGNATURES = practice_signatures;
 
@@ -98,9 +98,9 @@ for (var canary = 0; !baseline_run_order || !training_run_order || !test_run_ord
     }
     signatures = sort_sig[1];
     let sorted_lines = sort_sig[0];
-    baseline_run_order = gen.run_order(N_TRIALS, P_CATCH, N_NOISE, signatures, sorted_lines, MIN_DISTANCE, HIGHLIGHT);
-    training_run_order = gen.run_order(N_TRIALS, P_CATCH, N_NOISE, signatures, sorted_lines, MIN_DISTANCE, HIGHLIGHT);
-    test_run_order = gen.run_order(N_TRIALS, P_CATCH, N_NOISE, signatures, sorted_lines, MIN_DISTANCE, HIGHLIGHT);
+    baseline_run_order = gen.run_order(N_TRIALS, P_CATCH, N_NOISE, signatures, sorted_lines, MIN_DISTANCE, SUPPORTED);
+    training_run_order = gen.run_order(N_TRIALS, P_CATCH, N_NOISE, signatures, sorted_lines, MIN_DISTANCE, SUPPORTED);
+    test_run_order = gen.run_order(N_TRIALS, P_CATCH, N_NOISE, signatures, sorted_lines, MIN_DISTANCE, SUPPORTED);
 }
 export const VESSEL_SIGNATURES = signatures;
 
