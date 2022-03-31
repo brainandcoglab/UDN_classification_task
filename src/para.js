@@ -35,9 +35,9 @@ export const DURATION_MAP = {
     '3': 10,
 };
 
-// Decide which will be highlight / lowlight
-export const HIGHLIGHT = Math.round(Math.random());
-export const LOWLIGHT = 1 - HIGHLIGHT;
+// Decide which will be supported / unsupported
+export const SUPPORTED = Math.round(Math.random());
+export const UNSUPPORTED = 1 - SUPPORTED;
 
 export const PHASES = [
     {phase: 0}, // Practice
@@ -49,13 +49,15 @@ export const PHASES = [
 // This script is initialized before expInfo object anyway,
 // So will have to get URL parameters directly like so
 var url = new URL(window.location.href);
-var c = url.searchParams.get("condition"); // integer from 0 to 3
+var c = url.searchParams.get("condition"); // integer from 0 to 2
 
+// Need to ensure that this works too
 export const CONDITIONS = [
-    {condition: 0},
-    {condition: 1},
-    {condition: 2}
+    "HIGHLIGHT",
+    "LOWLIGHT",
+    "FADING",
 ]
+export const CONDITION = CONDITIONS[c];
 
 // This was previously used as within-subjects conditions, now it is support/unsupport
 export const SUPPORT_STATUS = [
