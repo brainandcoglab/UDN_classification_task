@@ -1053,6 +1053,9 @@ function tuteRoutineBegin(snapshot) {
                 let band = bands[i];
                 band.active = 0;
                 band.rectangle.opacity = 1.0 - band.active;
+                if (para.DEBUG_ENABLED) {
+                    band.toggleSupport(true, para.CONDITION, 0);
+                }
                 band.rectangle._needUpdate = true;
                 band.setAutoDraw(true);
             }

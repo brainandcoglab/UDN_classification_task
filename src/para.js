@@ -21,6 +21,8 @@ export const N_TRIALS = 60; // How many trials total of high/lowlight (not inclu
 
 export const MIN_DISTANCE = 0.1/3; // Minimum distance between lines
 
+export const DEBUG_ENABLED = true; // Show condition in practice at start
+
 // Which keypress should respond to which vessel
 export const VESSEL_MAP = {
     '0': 'a', // Friend
