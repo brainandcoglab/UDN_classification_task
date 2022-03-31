@@ -57,10 +57,10 @@ const phasesLoopScheduler = new Scheduler(psychoJS);
 flowScheduler.add(phasesLoopBegin(phasesLoopScheduler));
 flowScheduler.add(phasesLoopScheduler);
 flowScheduler.add(phasesLoopEnd);
-const conditionsLoopScheduler = new Scheduler(psychoJS);
-flowScheduler.add(conditionsLoopBegin(conditionsLoopScheduler));
-flowScheduler.add(conditionsLoopScheduler);
-flowScheduler.add(conditionsLoopEnd);
+const support_statusLoopScheduler = new Scheduler(psychoJS);
+flowScheduler.add(support_statusLoopBegin(support_statusLoopScheduler));
+flowScheduler.add(support_statusLoopScheduler);
+flowScheduler.add(support_statusLoopEnd);
 flowScheduler.add(outroRoutineBegin());
 flowScheduler.add(outroRoutineEachFrame());
 flowScheduler.add(outroRoutineEnd());
@@ -957,34 +957,34 @@ async function phasesLoopEnd() {
 }
 
 
-var conditions;
-function conditionsLoopBegin(conditionsLoopScheduler, snapshot) {
+var support_status;
+function support_statusLoopBegin(support_statusLoopScheduler, snapshot) {
   return async function() {
     TrialHandler.fromSnapshot(snapshot); // update internal variables (.thisN etc) of the loop
     
     // set up handler to look after randomisation of conditions etc
-    conditions = new TrialHandler({
+    support_status = new TrialHandler({
       psychoJS: psychoJS,
       nReps: 1, method: TrialHandler.Method.SEQUENTIAL,
       extraInfo: expInfo, originPath: undefined,
-      trialList: para.CONDITIONS,
-      seed: undefined, name: 'conditions'
+      trialList: para.SUPPORT_STATUS,
+      seed: undefined, name: 'support_status'
     });
-    psychoJS.experiment.addLoop(conditions); // add the loop to the experiment
-    currentLoop = conditions;  // we're now the current loop
+    psychoJS.experiment.addLoop(support_status); // add the loop to the experiment
+    currentLoop = support_status;  // we're now the current loop
     
     // Schedule all the trials in the trialList:
-    conditions.forEach(function() {
-      const snapshot = conditions.getSnapshot();
+    support_status.forEach(function() {
+      const snapshot = support_status.getSnapshot();
     
-      conditionsLoopScheduler.add(importConditions(snapshot));
-      conditionsLoopScheduler.add(trust_insRoutineBegin(snapshot));
-      conditionsLoopScheduler.add(trust_insRoutineEachFrame());
-      conditionsLoopScheduler.add(trust_insRoutineEnd());
-      conditionsLoopScheduler.add(trust_qsRoutineBegin(snapshot));
-      conditionsLoopScheduler.add(trust_qsRoutineEachFrame());
-      conditionsLoopScheduler.add(trust_qsRoutineEnd());
-      conditionsLoopScheduler.add(endLoopIteration(conditionsLoopScheduler, snapshot));
+      support_statusLoopScheduler.add(importConditions(snapshot));
+      support_statusLoopScheduler.add(trust_insRoutineBegin(snapshot));
+      support_statusLoopScheduler.add(trust_insRoutineEachFrame());
+      support_statusLoopScheduler.add(trust_insRoutineEnd());
+      support_statusLoopScheduler.add(trust_qsRoutineBegin(snapshot));
+      support_statusLoopScheduler.add(trust_qsRoutineEachFrame());
+      support_statusLoopScheduler.add(trust_qsRoutineEnd());
+      support_statusLoopScheduler.add(endLoopIteration(support_statusLoopScheduler, snapshot));
     });
     
     return Scheduler.Event.NEXT;
@@ -992,8 +992,8 @@ function conditionsLoopBegin(conditionsLoopScheduler, snapshot) {
 }
 
 
-async function conditionsLoopEnd() {
-  psychoJS.experiment.removeLoop(conditions);
+async function support_statusLoopEnd() {
+  psychoJS.experiment.removeLoop(support_status);
 
   return Scheduler.Event.NEXT;
 }
@@ -1378,12 +1378,11 @@ function trialRoutineBegin(snapshot) {
         case 2: // TRAINING PHASE
             lookup_left = "Friend\n(Press A)";
             lookup_right = "Foe\n(Press L)";
-            if (active_band == para.HIGHLIGHT) {
+            if (active_band == para.SUPPORTED) {
                 lookup_left = "Friend\n(Blue)\n(Press A)";
                 lookup_right = "Foe\n(Red)\n(Press L)";  
             }
-            bands[para.HIGHLIGHT].setHighlight(true, vessel);
-            bands[para.LOWLIGHT].setLowlight(true);
+            bands[para.SUPPORTED].toggleSupport(true, para.CONDITION, vessel);
             break;
         case 3: // TEST PHASE
             lookup_left = "Friend\n(Press A)";
@@ -1578,8 +1577,7 @@ function trialRoutineEnd() {
         case 1: // BASELINE PHASE
             break;
         case 2: // TRAINING PHASE
-            bands[para.HIGHLIGHT].setHighlight(false);
-            bands[para.LOWLIGHT].setLowlight(false);
+            bands[para.SUPPORTED].toggleSupport(false, para.CONDITION, vessel);
             break;
         case 3: // TEST PHASE
             feedback_text.text = ""; // No feedback on test
@@ -1866,7 +1864,7 @@ function trust_insRoutineBegin(snapshot) {
     let active_band = 1;
     let band = bands[active_band];
     band.setLines(rem_lines, [1,0,1,1]);
-    condition ? band.setLowlight(true, 0) : band.setHighlight(true, 0);
+    supported ? band.toggleSupport(false, para.CONDITION, 0) : band.toggleSupport(true, para.CONDITION, 0);
     band.active = 1;
     band.rectangle.opacity = 1.0 - band.active;
     band.rectangle._needUpdate = true;
@@ -1875,8 +1873,8 @@ function trust_insRoutineBegin(snapshot) {
     button_4.fillColor = 'darkblue';
     button_4.font = 'Times New Roman'
     
-    let aid_text = condition ? "dimmed" : "colored overlay";
-    text_3.text = `Cast your mind back to the trials on which you were provided with the ` + aid_text +` aid (as seen below).
+    let aid_text = supported ? "supported" : "unsupported";
+    text_3.text = `Cast your mind back to the trials on which you were provided with the ` + aid_text +` band (as seen below).
     On the next page, please answer some questions on how you felt about this aid.`;
     // keep track of which components have finished
     trust_insComponents = [];
@@ -2052,8 +2050,8 @@ function trust_qsRoutineBegin(snapshot) {
     frameN = -1;
     continueRoutine = true; // until we're told otherwise
     // update component parameters for each repeat
-    let aid_text = condition ? "dimmed" : "colored overlay";
-    text_2.text = "With regard to the " + aid_text +" aid:";
+    let aid_text = supported ? "supported" : "unsupported";
+    text_2.text = "With regard to the " + aid_text +" band:";
     
     button_3.fillColor = 'darkgrey';
     button_3.font = 'Times New Roman'
