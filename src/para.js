@@ -19,6 +19,9 @@ export const P_CATCH = 0.1; // Proportion of catch trials
 export const N_PRACTICE_TRIALS = 8; // How many trials total of friend + foe
 export const N_TRIALS = 60; // How many trials total of high/lowlight (not including catch trials)
 
+export const N_SUPPORTED_TRIALS = N_TRIALS / 2; // how many trials per support
+
+
 export const MIN_DISTANCE = 0.1/3; // Minimum distance between lines
 
 export const DEBUG_ENABLED = true; // Show condition in practice at start

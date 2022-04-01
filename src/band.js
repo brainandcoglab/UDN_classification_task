@@ -87,8 +87,8 @@ function Lines(window, pos, size, lines, is_signal) {
             "pos": [zero + x, pos[1]],
             "lineWidth": 0.0,
             "colorSpace": "rgb",
-            "lineColor": "green",
-            "fillColor": "green",
+            "lineColor": new util.Color('green'),
+            "fillColor": new util.Color('green'),
             "opacity": 1.0,
             "depth": (-2.0),
             "interpolate": false
@@ -205,6 +205,31 @@ function Band(window, pos, size=[1.0, 0.2], lines, is_signal, nticks, range) {
             }
         }
     };
+    this.setFade = function(b, v, p) {
+
+        // define these so we can get the array easily
+        let red = new util.Color('red')
+        let green = new util.Color('green');
+        let blue = new util.Color('blue')
+        // Fade opacity (this is the easy bit)
+        let o = jl.interp1d(1, 0, p);
+
+        // rgb transition function is just 3 1d interpolations
+        let c = jl.interpRGB(v ? red.rgb255 : blue.rgb255, green.rgb255, p);
+        let fill = new util.Color(c, util.Color.COLOR_SPACE.RGB255);
+        
+        for(var i = 0; i < this.lines.is_signal.length; i++) {
+            if (b && this.lines.is_signal[i]) {
+                this.lines.overlays[i].opacity = o;
+                //this.lines.rects[i].fillColor = fill;
+                this.lines.overlays[i].fillColor = v ? new util.Color('#ff6969') : new util.Color('#4b7cff');
+                this.lines.overlays[i].lineColor = v ? new util.Color('#ff6969') : new util.Color('#4b7cff');
+            } else {
+                this.lines.overlays[i].opacity = 0.0;
+                this.lines.rects[i].fillColor = "green";
+            }
+        }
+    }
     this.setLowlight = function(b) {
         for(var i = 0; i < this.lines.is_signal.length; i++) {
             if (b && !this.lines.is_signal[i]) {
@@ -216,7 +241,7 @@ function Band(window, pos, size=[1.0, 0.2], lines, is_signal, nticks, range) {
     };
 
     // Toggle the selected support condition on or off
-    this.toggleSupport = function(binary, condition, vessel) {
+    this.toggleSupport = function(binary, condition, vessel, proportion) {
         
         // Because each condition has its own toggle we have to pass it on
         switch(condition) {
@@ -224,10 +249,10 @@ function Band(window, pos, size=[1.0, 0.2], lines, is_signal, nticks, range) {
                 this.setHighlight(binary, vessel)
                 break;
             case "LOWLIGHT":
-                this.setLowlight(binary, vessel)
+                this.setLowlight(binary)
                 break;
             case "FADING":
-                console.log("NOT IMPLEMENTED")
+                this.setFade(binary, vessel, proportion)
                 break;
         }
     }

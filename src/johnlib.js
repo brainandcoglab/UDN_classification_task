@@ -61,6 +61,19 @@ function getvalleft(i,outa) {
     return 1 - logn((outa+1) - i, outa+1)
 }
 
+function interp1d(a, b, prop) {
+    let diff = b - a;
+    return diff * prop + a;   
+}
+
+function interpRGB(a, b, prop) {
+    var ret = [];
+    for(var i = 0; i < 3; i++) {
+        ret.push(interp1d(a[i], b[i], prop));
+    }
+    return ret;
+}
+
 export {
     arange,
     repeat,
@@ -69,5 +82,7 @@ export {
     float_compare,
     getvalleft,
     getvalright,
-    logn
+    logn,
+    interp1d,
+    interpRGB
 };
