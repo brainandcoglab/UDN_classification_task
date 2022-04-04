@@ -73,10 +73,10 @@ psychoJS.start({
   expName: expName,
   expInfo: expInfo,
   resources: [
-    {'name': 'data/trust.csv', 'path': 'data/trust.csv'},
-    {'name': 'data/SWAT.csv', 'path': 'data/SWAT.csv'},
+    {'name': 'data/bg.png', 'path': 'data/bg.png'},
     {'name': 'data/initial_qs.csv', 'path': 'data/initial_qs.csv'},
-    {'name': 'data/bg.png', 'path': 'data/bg.png'}
+    {'name': 'data/SWAT.csv', 'path': 'data/SWAT.csv'},
+    {'name': 'data/trust.csv', 'path': 'data/trust.csv'}
   ]
 });
 
@@ -130,6 +130,7 @@ var key_resp;
 var lookup_table_left;
 var lookup_table_right;
 var acc_sum;
+var supported_count;
 var bands;
 var feedbackClock;
 var feedback_text;
@@ -352,6 +353,10 @@ async function experimentInit() {
   
   // for showing participant accuracy
   acc_sum = 0;
+  
+  // track how many supported trials we've done
+  // mainly just to decide on how much to fade
+  supported_count = 0;
   
   bands = [
       new band.Band(
@@ -1052,7 +1057,7 @@ function tuteRoutineBegin(snapshot) {
                 band.active = 0;
                 band.rectangle.opacity = 1.0 - band.active;
                 if (para.DEBUG_ENABLED) {
-                    band.toggleSupport(true, para.CONDITION, 0);
+                    band.toggleSupport(true, para.CONDITION, 0, 0);
                 }
                 band.rectangle._needUpdate = true;
                 band.setAutoDraw(true);
@@ -1144,6 +1149,13 @@ function tuteRoutineEachFrame() {
     for(var i = 0; i < bands.length; i++) {
         var band = bands[i];
         band.uniforms.frameN = frameN;
+    }
+    
+    let proportion = (frameN % 100) / 100;
+    if (para.DEBUG_ENABLED) {
+        bands[1].toggleSupport(true, para.CONDITION, 1, proportion);
+        //bands[1].rectangle._needUpdate = true;
+        //bands[1].setAutoDraw(true);
     }
     
     // *polygon* updates
@@ -1382,10 +1394,15 @@ function trialRoutineBegin(snapshot) {
             lookup_left = "Friend\n(Press A)";
             lookup_right = "Foe\n(Press L)";
             if (active_band == para.SUPPORTED) {
+                if (!catch_trial)  { // Don't increment on catch trials
+                    supported_count++; // increment supported counter
+                }
                 lookup_left = "Friend\n(Blue)\n(Press A)";
                 lookup_right = "Foe\n(Red)\n(Press L)";  
             }
-            bands[para.SUPPORTED].toggleSupport(true, para.CONDITION, vessel);
+            // get proportion for fading support
+            let proportion = supported_count / para.N_SUPPORTED_TRIALS;
+            bands[para.SUPPORTED].toggleSupport(true, para.CONDITION, vessel, proportion);
             break;
         case 3: // TEST PHASE
             lookup_left = "Friend\n(Press A)";
@@ -1867,7 +1884,7 @@ function trust_insRoutineBegin(snapshot) {
     let active_band = 1;
     let band = bands[active_band];
     band.setLines(rem_lines, [1,0,1,1]);
-    supported ? band.toggleSupport(false, para.CONDITION, 0) : band.toggleSupport(true, para.CONDITION, 0);
+    supported ? band.toggleSupport(false, para.CONDITION, 0, 0) : band.toggleSupport(true, para.CONDITION, 0, 0);
     band.active = 1;
     band.rectangle.opacity = 1.0 - band.active;
     band.rectangle._needUpdate = true;
