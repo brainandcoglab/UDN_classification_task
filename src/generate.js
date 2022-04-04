@@ -129,11 +129,11 @@ let run_order = function(n_ff_trials, p_catch, n_noise, signatures, sorted, mind
 
     var run_order = [];
     for (var i = 0; i < n_ff_trials/2; i ++) {
-        run_order.push({vessel: 0, highlight_pos: highlight}); // friend
-        run_order.push({vessel: 1, highlight_pos: highlight}); // foe
+        run_order.push({vessel: 0, highlight_pos: highlight, catch_trial: false}); // friend
+        run_order.push({vessel: 1, highlight_pos: highlight, catch_trial: false}); // foe
     }
     for (var i = 0; i < n_catch_trials; i ++) {
-        run_order.push({vessel: -1, highlight_pos: highlight}); // catch
+        run_order.push({vessel: -1, highlight_pos: highlight, catch_trial: true}); // catch
     }
     // Shuffle
     run_order = util.shuffle(run_order);
@@ -149,7 +149,6 @@ let run_order = function(n_ff_trials, p_catch, n_noise, signatures, sorted, mind
         if (vessel < 0) { // catch trial
             vessel = Math.round(Math.random()); // Choose vessel at random
             run_order[i]['vessel'] = vessel; // Replace it in the run order
-            run_order[i]['catch_trial'] = true; // indicate explicitly this is a catch trial
             var lines_trial = trial_lines(vessel, active_band, signatures, 0, sorted, distfn); // Do it with no noise
         } else {
             var lines_trial = trial_lines(vessel, active_band, signatures, n_noise, sorted, distfn);
