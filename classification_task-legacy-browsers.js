@@ -177,6 +177,12 @@ async function experimentInit() {
   // THIS IS A NON-GENERIC HACK
   form._visual.responseStims[1].color = 'black';
   form._visual.responseStims[2].color = 'black';
+  form._visual.responseStims[1].autofocus = true;
+  form._visual.responseStims[2].autofocus = false;
+  
+  // Can't figure out how to get tab working...
+  //console.log(form._visual.responseStims[1])
+  
   button = new visual.ButtonStim({
     win: psychoJS.window,
     name: 'button',
@@ -579,6 +585,26 @@ function init_qsRoutineBegin(snapshot) {
     button.fillColor = 'darkgrey';
     button.font = 'Times New Roman'
     form.setAutoDraw(true);
+    
+    
+    
+    /*
+    
+    // Create a style attribute:
+    const att = document.createAttribute("tabindex");
+    // Set the value of the style attribute:
+    att.value = "0";
+    //console.log(form._visual.responseStims[1])
+    form._visual.responseStims[1]._pixi._dom_input.attributes.setNamedItem(att)
+    
+    
+    const att2 = document.createAttribute("tabindex");
+    // Set the value of the style attribute:
+    att2.value = "1";
+    //console.log(form._visual.responseStims[1])
+    form._visual.responseStims[2]._pixi._dom_input.attributes.setNamedItem(att2)
+    
+    */
     // keep track of which components have finished
     init_qsComponents = [];
     init_qsComponents.push(button);
