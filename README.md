@@ -13,9 +13,8 @@ This branch will implement all changes required for two follow-up experiments - 
 
 ### Required
 
-* [ ] Get condition from URL parameters (it should appear in expInfo object)
-    * Okay, so looks like that's initialised once we get past first screen. Should be okay?
-* [ ] Implement fading condition
+* [X] Get condition from URL parameters - obtained in para.js
+* [ ] Implement fading condition - More or less implemented - I think I need to test whether the increment per trial works.
 * [ ] Enforce rapid SWAT response
 * [X] Decide on way to split conditions: For now I'll go with splitting into different groups in Prolific because I can pass conditions as URL parameters - and I'm pretty sure I can prevent people starting more than one of the experiments. Could also integrate something else - either look at complete Pavlovia data or run a service hosted somewhere that manages things - but somewhat fragile and unnecessary.
 
@@ -34,3 +33,10 @@ This branch will implement all changes required for two follow-up experiments - 
 * Number of lines?
 * Are we using monochromatic highlight?
 * Catch trials?
+* It's hard w/o lookup - maybe don't switch pattern after practice?
+* Fading of highlight occurs on every supported trial. But this means it isn't necesarrily even across the classifications. Should I have an independent fade for both classifications instead, perhaps?
+* Several options for fading appearance.
+
+### Issues
+
+* On startup the wrong field is selected... Also tab doesn't work
