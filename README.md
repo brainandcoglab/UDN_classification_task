@@ -39,4 +39,5 @@ This branch will implement all changes required for two follow-up experiments - 
 
 ### Issues
 
-* On startup the wrong field is selected... Also tab doesn't work
+* On startup the wrong field is selected... Also tab doesn't work. following this up - it's always the last text entry that's highlighted. Annoying.
+    * Okay, I made the first field focused. However, the tab thing is a little harder. It's because of this "substitution" thing that happens, see [psychojs source](https://github.com/psychopy/psychojs/blob/main/src/visual/TextInput.js). If you disable the code in the substituteText setter you can prevent the DOM input from being hidden (which also prevents the field being tabbed to). However, doing this seems to break other visual stuff which relies on the substitution. I think the purpose of this substitution is to allow canvas stuff to appear over the top of a field? Which, sure okay that's cool, but I think the fact accessibility is broken is a way bigger issue... Anyway, maybe there's a good way to fix but not really the biggest deal.
