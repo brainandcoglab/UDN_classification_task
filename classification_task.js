@@ -82,9 +82,9 @@ psychoJS.start({
   expInfo: expInfo,
   resources: [
     {'name': 'data/bg.png', 'path': 'data/bg.png'},
-    {'name': 'data/initial_qs.csv', 'path': 'data/initial_qs.csv'},
     {'name': 'data/SWAT.csv', 'path': 'data/SWAT.csv'},
-    {'name': 'data/trust.csv', 'path': 'data/trust.csv'}
+    {'name': 'data/trust.csv', 'path': 'data/trust.csv'},
+    {'name': 'data/initial_qs.csv', 'path': 'data/initial_qs.csv'}
   ]
 });
 
@@ -425,6 +425,9 @@ async function experimentInit() {
       depth: 0.0,
       opacity: 0.0
   });
+  
+  
+  
   // Fix the text colour 'cos GUI wont' do it
   //form.responseColor = 'black';
   // Make the broken scrollbar invisible
@@ -1730,12 +1733,12 @@ function debriefRoutineBegin(snapshot) {
     debriefClock.reset(); // clock
     frameN = -1;
     continueRoutine = true; // until we're told otherwise
+    routineTimer.add(120.000000);
     // update component parameters for each repeat
     button_2.fillColor = 'darkgrey';
     button_2.font = 'Times New Roman'
     
     debrief_form.setAutoDraw(true);
-    
     for(var i = 0; i < texts.length; i++) {
         let t = texts[i];   
         t.setAutoDraw(true);
@@ -1780,6 +1783,10 @@ function debriefRoutineEachFrame() {
       debrief_text.setAutoDraw(true);
     }
 
+    frameRemains = 0.0 + 120 - psychoJS.window.monitorFramePeriod * 0.75;  // most of one frame period left
+    if (debrief_text.status === PsychoJS.Status.STARTED && t >= frameRemains) {
+      debrief_text.setAutoDraw(false);
+    }
     
     // *button_2* updates
     if (t >= 0 && button_2.status === PsychoJS.Status.NOT_STARTED) {
@@ -1790,6 +1797,10 @@ function debriefRoutineEachFrame() {
       button_2.setAutoDraw(true);
     }
 
+    frameRemains = 0 + 120 - psychoJS.window.monitorFramePeriod * 0.75;  // most of one frame period left
+    if (button_2.status === PsychoJS.Status.STARTED && t >= frameRemains) {
+      button_2.setAutoDraw(false);
+    }
     if (button_2.status === PsychoJS.Status.STARTED) {
       // check whether button_2 has been pressed
       if (button_2.isClicked) {
@@ -1801,6 +1812,10 @@ function debriefRoutineEachFrame() {
         } else {
           // update time clicked until;
           button_2.timesOff[button_2.timesOff.length - 1] = button_2.clock.getTime();
+        }
+        if (!button_2.wasClicked) {
+          // end routine when button_2 is clicked
+          continueRoutine = false;
         }
         null;
         // if button_2 is still clicked next frame, it is not a new click
@@ -1833,7 +1848,7 @@ function debriefRoutineEachFrame() {
       }
     
     // refresh the screen if continuing
-    if (continueRoutine) {
+    if (continueRoutine && routineTimer.getTime() > 0) {
       return Scheduler.Event.FLIP_REPEAT;
     } else {
       return Scheduler.Event.NEXT;
@@ -1871,10 +1886,6 @@ function debriefRoutineEnd() {
     }
     debrief_form.hide();
     debrief_form.setAutoDraw(false);
-    
-        
-    // the Routine "debrief" was not non-slip safe, so reset the non-slip timer
-    routineTimer.reset();
     
     return Scheduler.Event.NEXT;
   };
