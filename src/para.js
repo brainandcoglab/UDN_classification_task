@@ -23,7 +23,7 @@ export const N_SUPPORTED_TRIALS = N_TRIALS / 2; // how many trials per support
 
 export const MIN_DISTANCE = 0.1/3; // Minimum distance between lines
 
-export const DEBUG_ENABLED = false; // Show condition in practice at start
+export const DEBUG_ENABLED = true; // Show condition in practice at start
 
 // Which keypress should respond to which vessel
 export const RESPONSE_MAP = {
@@ -69,6 +69,9 @@ export const SUPPORT_STATUS = [
 // Hard code a single position
 export const LINE_POSITIONS = [0.21,0.29,0.63,0.84];
 export const ACTIVE_BAND = 0;
+
+export const INITIAL_INTENSITY = 1.0;
+export const INCREMENT = 0.03;
 
 // Set apparent range on bands
 export const BAND_RANGES = [

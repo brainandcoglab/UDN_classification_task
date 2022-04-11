@@ -9,7 +9,7 @@
     <Param name="Enable Escape" updates="None" val="True" valType="bool"/>
     <Param name="Experiment info" updates="None" val="{'participant': '', 'session': '001'}" valType="code"/>
     <Param name="Force stereo" updates="None" val="True" valType="bool"/>
-    <Param name="Full-screen window" updates="None" val="True" valType="bool"/>
+    <Param name="Full-screen window" updates="None" val="False" valType="bool"/>
     <Param name="HTML path" updates="None" val="" valType="str"/>
     <Param name="Incomplete URL" updates="None" val="" valType="str"/>
     <Param name="Monitor" updates="None" val="testMonitor" valType="str"/>
@@ -76,7 +76,7 @@
         <Param name="startType" updates="None" val="time (s)" valType="str"/>
         <Param name="startVal" updates="None" val="0.0" valType="code"/>
         <Param name="stopType" updates="None" val="duration (s)" valType="str"/>
-        <Param name="stopVal" updates="constant" val="$para.DURATION_MAP[phase]" valType="code"/>
+        <Param name="stopVal" updates="constant" val="" valType="code"/>
         <Param name="syncScreenRefresh" updates="None" val="True" valType="bool"/>
         <Param name="texture resolution" updates="constant" val="128" valType="num"/>
         <Param name="units" updates="None" val="from exp settings" valType="str"/>
@@ -94,7 +94,7 @@
         <Param name="startType" updates="None" val="time (s)" valType="str"/>
         <Param name="startVal" updates="None" val="0.0" valType="code"/>
         <Param name="stopType" updates="None" val="duration (s)" valType="str"/>
-        <Param name="stopVal" updates="constant" val="$para.DURATION_MAP[phase]" valType="code"/>
+        <Param name="stopVal" updates="constant" val="" valType="code"/>
         <Param name="store" updates="constant" val="last key" valType="str"/>
         <Param name="storeCorrect" updates="constant" val="False" valType="bool"/>
         <Param name="syncScreenRefresh" updates="constant" val="True" valType="bool"/>
@@ -118,7 +118,7 @@
         <Param name="startType" updates="None" val="time (s)" valType="str"/>
         <Param name="startVal" updates="None" val="0.0" valType="code"/>
         <Param name="stopType" updates="None" val="duration (s)" valType="str"/>
-        <Param name="stopVal" updates="constant" val="$para.DURATION_MAP[phase]" valType="code"/>
+        <Param name="stopVal" updates="constant" val="" valType="code"/>
         <Param name="syncScreenRefresh" updates="None" val="True" valType="bool"/>
         <Param name="text" updates="constant" val="&lt;insert lookup text here&gt;&amp;#10;&amp;#10;&lt;Friend frequencies&gt;&amp;#10;&amp;#10;&lt;Foe frequencies&gt;&amp;#10;&amp;#10;0123456789" valType="str"/>
         <Param name="units" updates="None" val="from exp settings" valType="str"/>
@@ -143,7 +143,7 @@
         <Param name="startType" updates="None" val="time (s)" valType="str"/>
         <Param name="startVal" updates="None" val="0.0" valType="code"/>
         <Param name="stopType" updates="None" val="duration (s)" valType="str"/>
-        <Param name="stopVal" updates="constant" val="$para.DURATION_MAP[phase]" valType="code"/>
+        <Param name="stopVal" updates="constant" val="" valType="code"/>
         <Param name="syncScreenRefresh" updates="None" val="True" valType="bool"/>
         <Param name="text" updates="constant" val="Any text&amp;#10;&amp;#10;including line breaks" valType="str"/>
         <Param name="units" updates="None" val="from exp settings" valType="str"/>
@@ -153,15 +153,15 @@
         <Param name="Before Experiment" updates="constant" val="" valType="extendedCode"/>
         <Param name="Before JS Experiment" updates="constant" val="// Random util functions that don't fit elsewhere&amp;#10;import * as jl from &quot;./src/johnlib.js&quot;&amp;#10;// Generative functions (trials orders, line positions, etc)&amp;#10;import * as gen from &quot;./src/generate.js&quot;&amp;#10;// Band objects&amp;#10;import * as band from &quot;./src/band.js&quot;&amp;#10;// Inital parameters&amp;#10;import * as para from &quot;./src/para.js&quot;&amp;#10;// PIXI&amp;#10;import * as PIXI from &quot;./lib/pixi-legacy.min.js&quot;" valType="extendedCode"/>
         <Param name="Begin Experiment" updates="constant" val="" valType="extendedCode"/>
-        <Param name="Begin JS Experiment" updates="constant" val="// set text align&amp;#10;lookup_table_left.setAlignHoriz('center');&amp;#10;lookup_table_right.setAlignHoriz('center');&amp;#10;&amp;#10;window.PIXI = PIXI;&amp;#10;window.psychoJS = psychoJS;&amp;#10;&amp;#10;// track how many supported trials we've done&amp;#10;// mainly just to decide on how much to fade&amp;#10;supported_count = 0;&amp;#10;&amp;#10;bands = [&amp;#10;    new band.Band(&amp;#10;        psychoJS.window,&amp;#10;        [-0.01, 0.24], // pos&amp;#10;        [para.WIDTH, 0.2], // size&amp;#10;        para.LINE_POSITIONS,&amp;#10;        jl.repeat(1, para.N_LINES),&amp;#10;        para.NTICKS_TOP,  para.BAND_RANGES[0],&amp;#10;    ),&amp;#10;    new band.Band(&amp;#10;        psychoJS.window,&amp;#10;        [-0.01, -0.17], // pos&amp;#10;        [para.WIDTH, 0.2], // size&amp;#10;        para.LINE_POSITIONS,&amp;#10;        jl.repeat(1, para.N_LINES),&amp;#10;        para.NTICKS_BOTTOM,&amp;#10;        para.BAND_RANGES[1],&amp;#10;    )&amp;#10;];" valType="extendedCode"/>
-        <Param name="Begin JS Routine" updates="constant" val="image.setAutoDraw(true);&amp;#10;&amp;#10;bands[para.ACTIVE_BAND].setLines(para.LINE_POSITIONS, [1,1,1,1]);&amp;#10;&amp;#10;var lookup_left = &quot;Visible\n(Press A)&quot;;&amp;#10;var lookup_right = &quot;Not visible\n(Press L)&quot;;&amp;#10;&amp;#10;// Set active band&amp;#10;for(var i = 0; i &lt; bands.length; i++) {&amp;#10;    let band = bands[i];   &amp;#10;    band.active = para.ACTIVE_BAND == i;&amp;#10;    band.rectangle.opacity = 1.0 - band.active;&amp;#10;    band.rectangle._needUpdate = true;&amp;#10;    band.setAutoDraw(true);&amp;#10;}&amp;#10;&amp;#10;lookup_table_left.text = lookup_left;&amp;#10;lookup_table_right.text = lookup_right;" valType="extendedCode"/>
+        <Param name="Begin JS Experiment" updates="constant" val="// set text align&amp;#10;lookup_table_left.setAlignHoriz('center');&amp;#10;lookup_table_right.setAlignHoriz('center');&amp;#10;&amp;#10;window.PIXI = PIXI;&amp;#10;window.psychoJS = psychoJS;&amp;#10;&amp;#10;// track how many supported trials we've done&amp;#10;// mainly just to decide on how much to fade&amp;#10;supported_count = 0;&amp;#10;&amp;#10;bands = [&amp;#10;    new band.Band(&amp;#10;        psychoJS.window,&amp;#10;        [-0.01, 0.24], // pos&amp;#10;        [para.WIDTH, 0.2], // size&amp;#10;        para.LINE_POSITIONS,&amp;#10;        jl.repeat(1, para.N_LINES),&amp;#10;        para.NTICKS_TOP,  para.BAND_RANGES[0],&amp;#10;    ),&amp;#10;    new band.Band(&amp;#10;        psychoJS.window,&amp;#10;        [-0.01, -0.17], // pos&amp;#10;        [para.WIDTH, 0.2], // size&amp;#10;        para.LINE_POSITIONS,&amp;#10;        jl.repeat(1, para.N_LINES),&amp;#10;        para.NTICKS_BOTTOM,&amp;#10;        para.BAND_RANGES[1],&amp;#10;    )&amp;#10;];&amp;#10;&amp;#10;&amp;#10;slider = new visual.Slider({&amp;#10;    win: psychoJS.window, name: 'slider',&amp;#10;    size: [(para.WIDTH - 0.2), 0.08], pos: [(- 0.01), (- 0.17)], units: 'height',&amp;#10;    labels: [0.0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1.0], ticks: [0.0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1.0],&amp;#10;    granularity: 0.0, style: [&quot;RATING&quot;],&amp;#10;    color: new util.Color('LightGray'), markerColor: new util.Color('Red'), lineColor: new util.Color('White'), &amp;#10;    fontFamily: 'Open Sans', bold: true, italic: false, depth: -5, &amp;#10;    flip: false,&amp;#10;});" valType="extendedCode"/>
+        <Param name="Begin JS Routine" updates="constant" val="image.setAutoDraw(true);&amp;#10;&amp;#10;bands[para.ACTIVE_BAND].setLines(para.LINE_POSITIONS, [1,1,1,1]);&amp;#10;&amp;#10;var lookup_left = &quot;Visible\n(Press A)&quot;;&amp;#10;var lookup_right = &quot;Not visible\n(Press L)&quot;;&amp;#10;&amp;#10;// Set active band&amp;#10;for(var i = 0; i &lt; 1; i++) {&amp;#10;    let band = bands[i];   &amp;#10;    band.active = para.ACTIVE_BAND == i;&amp;#10;    band.rectangle.opacity = 1.0 - band.active;&amp;#10;    band.rectangle._needUpdate = true;&amp;#10;    band.setAutoDraw(true);&amp;#10;}&amp;#10;// TODO: allow this to be set before?&amp;#10;// So, I will actually use a run order, but it'll be randomized&amp;#10;bands[para.ACTIVE_BAND].toggleSupport(true, &quot;FADING&quot;,trials.thisN%2, 1.0);&amp;#10;&amp;#10;lookup_table_left.text = lookup_left;&amp;#10;lookup_table_right.text = lookup_right;&amp;#10;&amp;#10;if (para.DEBUG_ENABLED) {&amp;#10;    slider.setRating(para.INITIAL_INTENSITY);&amp;#10;    slider.setMarkerPos(para.INITIAL_INTENSITY);&amp;#10;    slider._needUpdate = true;&amp;#10;    slider.setAutoDraw(true);&amp;#10;} else {&amp;#10;    slider.setAutoDraw(false);&amp;#10;}" valType="extendedCode"/>
         <Param name="Begin Routine" updates="constant" val="" valType="extendedCode"/>
         <Param name="Code Type" updates="None" val="JS" valType="str"/>
         <Param name="Each Frame" updates="constant" val="" valType="extendedCode"/>
-        <Param name="Each JS Frame" updates="constant" val="// Update uniforms&amp;#10;for(var i = 0; i &lt; bands.length; i++) {&amp;#10;    var band = bands[i];&amp;#10;    band.uniforms.frameN = frameN;&amp;#10;}" valType="extendedCode"/>
+        <Param name="Each JS Frame" updates="constant" val="// Update uniforms&amp;#10;for(var i = 0; i &lt; bands.length; i++) {&amp;#10;    var band = bands[i];&amp;#10;    band.uniforms.frameN = frameN;&amp;#10;}&amp;#10;&amp;#10;let rating = slider.getRating();&amp;#10;if (typeof rating === 'undefined') {&amp;#10;    rating = para.INITIAL_INTENSITY;&amp;#10;}&amp;#10;var band = bands[para.ACTIVE_BAND];&amp;#10;band.toggleSupport(true, &quot;FADING&quot;, trials.thisN%2, 1-rating);&amp;#10;&amp;#10;band.rectangle._needUpdate = true;&amp;#10;band.xaxis.scalebar._needUpdate = true;&amp;#10;//band.setAutoDraw(true);&amp;#10;&amp;#10;" valType="extendedCode"/>
         <Param name="End Experiment" updates="constant" val="" valType="extendedCode"/>
         <Param name="End JS Experiment" updates="constant" val="" valType="extendedCode"/>
-        <Param name="End JS Routine" updates="constant" val="image.setAutoDraw(false);&amp;#10;for(var i = 0; i &lt; bands.length; i++) {&amp;#10;    let band = bands[i];&amp;#10;    band.active = false;&amp;#10;    band.setAutoDraw(false);&amp;#10;}" valType="extendedCode"/>
+        <Param name="End JS Routine" updates="constant" val="image.setAutoDraw(false);&amp;#10;for(var i = 0; i &lt; 1; i++) {&amp;#10;    let band = bands[i];&amp;#10;    band.active = false;&amp;#10;    band.setAutoDraw(false);&amp;#10;}&amp;#10;bands[para.ACTIVE_BAND].toggleSupport(false, &quot;FADING&quot;, 0, 0.8);&amp;#10;slider.setAutoDraw(false);" valType="extendedCode"/>
         <Param name="End Routine" updates="constant" val="" valType="extendedCode"/>
         <Param name="disabled" updates="None" val="False" valType="bool"/>
         <Param name="name" updates="None" val="bands" valType="code"/>
@@ -238,6 +238,23 @@
         <Param name="storeCorrect" updates="constant" val="False" valType="bool"/>
         <Param name="syncScreenRefresh" updates="constant" val="True" valType="bool"/>
       </KeyboardComponent>
+      <CodeComponent name="intro_2">
+        <Param name="Before Experiment" updates="constant" val="" valType="extendedCode"/>
+        <Param name="Before JS Experiment" updates="constant" val="" valType="extendedCode"/>
+        <Param name="Begin Experiment" updates="constant" val="" valType="extendedCode"/>
+        <Param name="Begin JS Experiment" updates="constant" val="if(para.DEBUG_ENABLED) {&amp;#10;    text.text += `\n\n***DEBUG ENABLED***&amp;#10;    Use bottom band slider to adjust highlight alpha.&amp;#10;    Advancing to next trial will change friend/foe colours.&amp;#10;    `;&amp;#10;}" valType="extendedCode"/>
+        <Param name="Begin JS Routine" updates="constant" val="" valType="extendedCode"/>
+        <Param name="Begin Routine" updates="constant" val="" valType="extendedCode"/>
+        <Param name="Code Type" updates="None" val="JS" valType="str"/>
+        <Param name="Each Frame" updates="constant" val="" valType="extendedCode"/>
+        <Param name="Each JS Frame" updates="constant" val="" valType="extendedCode"/>
+        <Param name="End Experiment" updates="constant" val="" valType="extendedCode"/>
+        <Param name="End JS Experiment" updates="constant" val="" valType="extendedCode"/>
+        <Param name="End JS Routine" updates="constant" val="" valType="extendedCode"/>
+        <Param name="End Routine" updates="constant" val="" valType="extendedCode"/>
+        <Param name="disabled" updates="None" val="False" valType="bool"/>
+        <Param name="name" updates="None" val="intro_2" valType="code"/>
+      </CodeComponent>
     </Routine>
     <Routine name="outro">
       <TextComponent name="outro_text">

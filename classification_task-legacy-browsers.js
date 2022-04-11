@@ -25,7 +25,7 @@ const psychoJS = new PsychoJS({
 
 // open window:
 psychoJS.openWindow({
-  fullscr: true,
+  fullscr: false,
   color: new util.Color('black'),
   units: 'height',
   waitBlanking: true
@@ -100,6 +100,7 @@ var lookup_table_left;
 var lookup_table_right;
 var supported_count;
 var bands;
+var slider;
 var feedbackClock;
 var feedback_text;
 var outroClock;
@@ -123,6 +124,12 @@ async function experimentInit() {
   
   key_resp_2 = new core.Keyboard({psychoJS: psychoJS, clock: new util.Clock(), waitForStart: true});
   
+  if(para.DEBUG_ENABLED) {
+      text.text += `\n\n***DEBUG ENABLED***
+      Use bottom band slider to adjust highlight alpha.
+      Advancing to next trial will change friend/foe colours.
+      `;
+  }
   // Initialize components for Routine "trial"
   trialClock = new util.Clock();
   image = new visual.ImageStim({
@@ -188,6 +195,17 @@ async function experimentInit() {
           para.BAND_RANGES[1],
       )
   ];
+  
+  
+  slider = new visual.Slider({
+      win: psychoJS.window, name: 'slider',
+      size: [(para.WIDTH - 0.2), 0.08], pos: [(- 0.01), (- 0.17)], units: 'height',
+      labels: [0.0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1.0], ticks: [0.0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1.0],
+      granularity: 0.0, style: ["RATING"],
+      color: new util.Color('LightGray'), markerColor: new util.Color('Red'), lineColor: new util.Color('White'), 
+      fontFamily: 'Open Sans', bold: true, italic: false, depth: -5, 
+      flip: false,
+  });
   // Initialize components for Routine "feedback"
   feedbackClock = new util.Clock();
   feedback_text = new visual.TextStim({
@@ -453,16 +471,28 @@ function trialRoutineBegin(snapshot) {
     var lookup_right = "Not visible\n(Press L)";
     
     // Set active band
-    for(var i = 0; i < bands.length; i++) {
+    for(var i = 0; i < 1; i++) {
         let band = bands[i];   
         band.active = para.ACTIVE_BAND == i;
         band.rectangle.opacity = 1.0 - band.active;
         band.rectangle._needUpdate = true;
         band.setAutoDraw(true);
     }
+    // TODO: allow this to be set before?
+    // So, I will actually use a run order, but it'll be randomized
+    bands[para.ACTIVE_BAND].toggleSupport(true, "FADING",trials.thisN%2, 1.0);
     
     lookup_table_left.text = lookup_left;
     lookup_table_right.text = lookup_right;
+    
+    if (para.DEBUG_ENABLED) {
+        slider.setRating(para.INITIAL_INTENSITY);
+        slider.setMarkerPos(para.INITIAL_INTENSITY);
+        slider._needUpdate = true;
+        slider.setAutoDraw(true);
+    } else {
+        slider.setAutoDraw(false);
+    }
     // keep track of which components have finished
     trialComponents = [];
     trialComponents.push(image);
@@ -479,7 +509,7 @@ function trialRoutineBegin(snapshot) {
 }
 
 
-var frameRemains;
+var rating;
 function trialRoutineEachFrame() {
   return async function () {
     //------Loop for each frame of Routine 'trial'-------
@@ -497,10 +527,6 @@ function trialRoutineEachFrame() {
       image.setAutoDraw(true);
     }
 
-    frameRemains = 0.0 + para.DURATION_MAP[phase] - psychoJS.window.monitorFramePeriod * 0.75;  // most of one frame period left
-    if (image.status === PsychoJS.Status.STARTED && t >= frameRemains) {
-      image.setAutoDraw(false);
-    }
     
     // *key_resp* updates
     if (t >= 0.0 && key_resp.status === PsychoJS.Status.NOT_STARTED) {
@@ -513,11 +539,6 @@ function trialRoutineEachFrame() {
       psychoJS.window.callOnFlip(function() { key_resp.start(); }); // start on screen flip
       psychoJS.window.callOnFlip(function() { key_resp.clearEvents(); });
     }
-
-    frameRemains = 0.0 + para.DURATION_MAP[phase] - psychoJS.window.monitorFramePeriod * 0.75;  // most of one frame period left
-    if (key_resp.status === PsychoJS.Status.STARTED && t >= frameRemains) {
-      key_resp.status = PsychoJS.Status.FINISHED;
-  }
 
     if (key_resp.status === PsychoJS.Status.STARTED) {
       let theseKeys = key_resp.getKeys({keyList: ['a', 'l'], waitRelease: false});
@@ -540,10 +561,6 @@ function trialRoutineEachFrame() {
       lookup_table_left.setAutoDraw(true);
     }
 
-    frameRemains = 0.0 + para.DURATION_MAP[phase] - psychoJS.window.monitorFramePeriod * 0.75;  // most of one frame period left
-    if (lookup_table_left.status === PsychoJS.Status.STARTED && t >= frameRemains) {
-      lookup_table_left.setAutoDraw(false);
-    }
     
     // *lookup_table_right* updates
     if (t >= 0.0 && lookup_table_right.status === PsychoJS.Status.NOT_STARTED) {
@@ -554,15 +571,24 @@ function trialRoutineEachFrame() {
       lookup_table_right.setAutoDraw(true);
     }
 
-    frameRemains = 0.0 + para.DURATION_MAP[phase] - psychoJS.window.monitorFramePeriod * 0.75;  // most of one frame period left
-    if (lookup_table_right.status === PsychoJS.Status.STARTED && t >= frameRemains) {
-      lookup_table_right.setAutoDraw(false);
-    }
     // Update uniforms
     for(var i = 0; i < bands.length; i++) {
         var band = bands[i];
         band.uniforms.frameN = frameN;
     }
+    
+    let rating = slider.getRating();
+    if (typeof rating === 'undefined') {
+        rating = para.INITIAL_INTENSITY;
+    }
+    var band = bands[para.ACTIVE_BAND];
+    band.toggleSupport(true, "FADING", trials.thisN%2, 1-rating);
+    
+    band.rectangle._needUpdate = true;
+    band.xaxis.scalebar._needUpdate = true;
+    //band.setAutoDraw(true);
+    
+    
     // check for quit (typically the Esc key)
     if (psychoJS.experiment.experimentEnded || psychoJS.eventManager.getKeys({keyList:['escape']}).length > 0) {
       return quitPsychoJS('The [Escape] key was pressed. Goodbye!', false);
@@ -606,11 +632,13 @@ function trialRoutineEnd() {
     
     key_resp.stop();
     image.setAutoDraw(false);
-    for(var i = 0; i < bands.length; i++) {
+    for(var i = 0; i < 1; i++) {
         let band = bands[i];
         band.active = false;
         band.setAutoDraw(false);
     }
+    bands[para.ACTIVE_BAND].toggleSupport(false, "FADING", 0, 0.8);
+    slider.setAutoDraw(false);
     // the Routine "trial" was not non-slip safe, so reset the non-slip timer
     routineTimer.reset();
     
@@ -644,6 +672,7 @@ function feedbackRoutineBegin(snapshot) {
 }
 
 
+var frameRemains;
 function feedbackRoutineEachFrame() {
   return async function () {
     //------Loop for each frame of Routine 'feedback'-------
@@ -868,6 +897,8 @@ async function quitPsychoJS(message, isCompleted) {
   if (psychoJS.experiment.isEntryEmpty()) {
     psychoJS.experiment.nextEntry();
   }
+  
+  
   
   
   
