@@ -17,27 +17,26 @@ export const N_LINES = 4; // How many lines/band define a ship
 export const N_NOISE = 1; // How many lines/band will be random noise on normal trials
 export const P_CATCH = 0.1; // Proportion of catch trials
 export const N_PRACTICE_TRIALS = 8; // How many trials total of friend + foe
-export const N_TRIALS = 60; // How many trials total of high/lowlight (not including catch trials)
+export const N_TRIALS = 10; // How many trials total of high/lowlight (not including catch trials)
 
 export const N_SUPPORTED_TRIALS = N_TRIALS / 2; // how many trials per support
 
-
 export const MIN_DISTANCE = 0.1/3; // Minimum distance between lines
 
-export const DEBUG_ENABLED = true; // Show condition in practice at start
+export const DEBUG_ENABLED = false; // Show condition in practice at start
 
 // Which keypress should respond to which vessel
-export const VESSEL_MAP = {
-    '0': 'a', // Friend
-    '1': 'l', // Foe
+export const RESPONSE_MAP = {
+    '0': 'a', // Visible
+    '1': 'l', // Not visible
 };
 
 // Time to respond in seconds
 export const DURATION_MAP = {
     '0': 20,
-    '1': 10,
-    '2': 10,
-    '3': 10,
+    '1': 20,
+    '2': 20,
+    '3': 20,
 };
 
 // Decide which will be supported / unsupported
@@ -45,10 +44,8 @@ export const SUPPORTED = Math.round(Math.random());
 export const UNSUPPORTED = 1 - SUPPORTED;
 
 export const PHASES = [
-    {phase: 0}, // Practice
-    {phase: 1}, // Baseline
-    {phase: 2}, // Training
-    {phase: 3}  // Test
+    {phase: 0}, // Blue
+   // {phase: 1}, // Red
 ];
 
 // This script is initialized before expInfo object anyway,
@@ -56,11 +53,10 @@ export const PHASES = [
 var url = new URL(window.location.href);
 var c = url.searchParams.get("condition"); // integer from 0 to 2
 
-// Need to ensure that this works too
+// URL parameters for different fading styles
 export const CONDITIONS = [
-    "HIGHLIGHT",
-    "LOWLIGHT",
-    "FADING",
+    "TYPEA",
+    "TYPEB",
 ]
 export const CONDITION = CONDITIONS[c];
 
@@ -70,58 +66,15 @@ export const SUPPORT_STATUS = [
     {supported: 1}
 ]
 
-const errstring = 'Experiment run order generation failed, please contact experimenter!';
-let practice_signatures;
-let practice_run_order = false;
-for (var canary = 0; !practice_run_order; canary++) {
-    if (canary > 10000) {
-        alert(errstring)
-        throw errstring;
-    }
-    let practice_sort_sig = gen.signatures(N_LINES, MIN_DISTANCE);
-    if (!practice_sort_sig) {
-        continue;
-    }
-    practice_signatures = practice_sort_sig[1];
-    let practice_sorted_lines = practice_sort_sig[0];  // sorted list of all lines (practice)
-    practice_run_order = gen.run_order(N_PRACTICE_TRIALS, P_CATCH, N_NOISE, practice_signatures, practice_sorted_lines, MIN_DISTANCE, SUPPORTED);
-}
-export const PRACTICE_SIGNATURES = practice_signatures;
-
-let signatures;
-let baseline_run_order = false;
-let training_run_order = false;
-let test_run_order = false;
-for (var canary = 0; !baseline_run_order || !training_run_order || !test_run_order; canary++) {
-    if (canary > 10000) {
-        alert(errstring)
-        throw errstring;
-    }
-    let sort_sig = gen.signatures(N_LINES, MIN_DISTANCE);
-    if (!sort_sig) {
-        continue;
-    }
-    signatures = sort_sig[1];
-    let sorted_lines = sort_sig[0];
-    baseline_run_order = gen.run_order(N_TRIALS, P_CATCH, N_NOISE, signatures, sorted_lines, MIN_DISTANCE, SUPPORTED);
-    training_run_order = gen.run_order(N_TRIALS, P_CATCH, N_NOISE, signatures, sorted_lines, MIN_DISTANCE, SUPPORTED);
-    test_run_order = gen.run_order(N_TRIALS, P_CATCH, N_NOISE, signatures, sorted_lines, MIN_DISTANCE, SUPPORTED);
-}
-export const VESSEL_SIGNATURES = signatures;
-
-export const RUN_ORDER = [
-    practice_run_order,
-    baseline_run_order,
-    training_run_order,
-    test_run_order
-];
+// Hard code a single position
+export const LINE_POSITIONS = [0.21,0.29,0.63,0.84];
+export const ACTIVE_BAND = 0;
 
 // Set apparent range on bands
 export const BAND_RANGES = [
     [1,10],
     [100, 1000]
 ];
-
 
 // Number of major ticks on the x axis
 export const NTICKS_TOP = 10;
@@ -130,73 +83,7 @@ export const NTICKS_BOTTOM = 10;
 // Width of the bands in "height units" (1.0 = screen height)
 export const WIDTH = 1.0;
 
-// Generate text to be shown on lookup table
-export const PRACTICE_LOOKUP_TEXT = gen.lookup_text(PRACTICE_SIGNATURES, BAND_RANGES);
-export const LOOKUP_TEXT = gen.lookup_text(VESSEL_SIGNATURES, BAND_RANGES);
-
 const keypress_text = `
-Use the 'A' key to respond friend,
-Use the 'L' key to respond foe.
+Use the 'A' key to respond visible,
+Use the 'L' key to respond not visible.
 `;
-
-const debrief_text = 'Please select along each scale below to indicate your assessment of where the task you just performed falls along the continuum between the two descriptions.';
-
-
-export const practice_instructions = `
-You're now ready to begin the practice phase. You will be asked to classify an unknown vessel with the assistance of lookup tables to the left and right of the console.
-Some signals may not be associated with any ship classification, so be careful.
-Feedback will be provided on whether your classification was correct.
-
-` + keypress_text + `Press the 'space' key to begin.`;
-
-export const practice_debrief = `Great work, the practice phase is now complete!
-
-` + debrief_text;
-
-export const baseline_instructions = `
-In the next phase, you will again be asked to classify an unknown vessel with the assistance of lookup tables to the left and right of the console.
-The friend and foe signals in this phase are different from the practice phase.
-Feedback will be provided on whether your classification was correct. 
-
-` + keypress_text + `Press the 'space' key to begin.`;
-
-
-export const baseline_debrief = `Great work, this phase is now complete!
-
-` + debrief_text;
-
-export const training_instructions = `
-In the next phase, the lookup tables will be removed. However, you will be given assistance in classifying the vessel with two different tools.
-One tool will highlight signals associated with foe ships in red, and friend ships in blue. The other tool will dim all signals that are not associated with friend or foe ships.
-
-` + keypress_text + `Press the 'space' key to begin.`;
-
-
-export const training_debrief = `Great work, this phase is now complete!
-
-` + debrief_text;
-
-export const test_instructions = `
-Well done, there is now only one final phase remaining. In this phase, you will not be given any assistance to classify vessels, or any feedback as to whether you were correct.
-Please try your best.
-
-` + keypress_text + `Press the 'space' key to begin.`;
-
-
-export const test_debrief = `Great work, this phase is now complete!
-
-` + debrief_text;
-
-export const instructions = [
-    practice_instructions,
-    baseline_instructions,
-    training_instructions,
-    test_instructions
-];
-
-export const debrief = [
-    practice_debrief,
-    baseline_debrief,
-    training_debrief,
-    test_debrief
-];
