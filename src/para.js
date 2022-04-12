@@ -17,13 +17,13 @@ export const N_LINES = 4; // How many lines/band define a ship
 export const N_NOISE = 1; // How many lines/band will be random noise on normal trials
 export const P_CATCH = 0.1; // Proportion of catch trials
 export const N_PRACTICE_TRIALS = 8; // How many trials total of friend + foe
-export const N_TRIALS = 10; // How many trials total of high/lowlight (not including catch trials)
+export const N_TRIALS = 20; // Trials per increment
 
 export const N_SUPPORTED_TRIALS = N_TRIALS / 2; // how many trials per support
 
 export const MIN_DISTANCE = 0.1/3; // Minimum distance between lines
 
-export const DEBUG_ENABLED = true; // Show condition in practice at start
+export const DEBUG_ENABLED = false; // Show condition in practice at start
 
 // Which keypress should respond to which vessel
 export const RESPONSE_MAP = {
@@ -45,8 +45,18 @@ export const UNSUPPORTED = 1 - SUPPORTED;
 
 export const PHASES = [
     {phase: 0}, // Blue
-   // {phase: 1}, // Red
+    {phase: 1}, // Red
 ];
+
+var from = 0.1;
+var to = 0.2;
+var increment = 0.01;
+
+export const RUN_ORDER = [
+    gen.calibrations(from, to, increment, N_TRIALS),
+    gen.calibrations(from, to, increment, N_TRIALS)
+];
+console.log(RUN_ORDER)
 
 // This script is initialized before expInfo object anyway,
 // So will have to get URL parameters directly like so

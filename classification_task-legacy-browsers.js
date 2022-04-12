@@ -114,7 +114,7 @@ async function experimentInit() {
   text = new visual.TextStim({
     win: psychoJS.window,
     name: 'text',
-    text: 'Welcome to the perceptual calibration task. You will be presented with a SONAR time frequency plot on which multiple green lines will appear. In addition, a visual support will be provided. Your only task is to report whether you can see the support or not. Respond "A" for yes, "L" for no.\n\nPlease press the \'space\' key to begin.',
+    text: 'Welcome to the perceptual calibration task. You will be presented with a SONAR time frequency plot on which multiple green lines will appear. In addition, a differently coloured highlight may be overlaid on each of the lines. Your task is to report whether you can see the highlight. Respond "A" for yes, "L" for no.\n\nPlease press the \'space\' key to begin.',
     font: '"Times New Roman"',
     units: undefined, 
     pos: [0, 0], height: 0.04,  wrapWidth: undefined, ori: 0.0,
@@ -407,9 +407,9 @@ function trialsLoopBegin(trialsLoopScheduler, snapshot) {
     // set up handler to look after randomisation of conditions etc
     trials = new TrialHandler({
       psychoJS: psychoJS,
-      nReps: para.N_TRIALS, method: TrialHandler.Method.SEQUENTIAL,
+      nReps: 1, method: TrialHandler.Method.SEQUENTIAL,
       extraInfo: expInfo, originPath: undefined,
-      trialList: undefined,
+      trialList: para.RUN_ORDER[phase],
       seed: undefined, name: 'trials'
     });
     psychoJS.experiment.addLoop(trials); // add the loop to the experiment
@@ -449,6 +449,7 @@ async function phasesLoopEnd() {
 
 
 var _key_resp_allKeys;
+var colour;
 var trialComponents;
 function trialRoutineBegin(snapshot) {
   return async function () {
@@ -467,8 +468,8 @@ function trialRoutineBegin(snapshot) {
     
     bands[para.ACTIVE_BAND].setLines(para.LINE_POSITIONS, [1,1,1,1]);
     
-    var lookup_left = "Visible\n(Press A)";
-    var lookup_right = "Not visible\n(Press L)";
+    var lookup_left = "Highlight\npresent\n(Press A)";
+    var lookup_right = "Highlight\nabsent\n(Press L)";
     
     // Set active band
     for(var i = 0; i < 1; i++) {
@@ -480,7 +481,12 @@ function trialRoutineBegin(snapshot) {
     }
     // TODO: allow this to be set before?
     // So, I will actually use a run order, but it'll be randomized
-    bands[para.ACTIVE_BAND].toggleSupport(true, "FADING",trials.thisN%2, 1.0);
+    
+    var colour = phase;
+    if (para.DEBUG_ENABLED) {
+        colour = trials.thisN%2;
+    }
+    bands[para.ACTIVE_BAND].toggleSupport(true, "FADING",colour, 1-intensity);
     
     lookup_table_left.text = lookup_left;
     lookup_table_right.text = lookup_right;
@@ -577,16 +583,18 @@ function trialRoutineEachFrame() {
         band.uniforms.frameN = frameN;
     }
     
-    let rating = slider.getRating();
-    if (typeof rating === 'undefined') {
-        rating = para.INITIAL_INTENSITY;
-    }
-    var band = bands[para.ACTIVE_BAND];
-    band.toggleSupport(true, "FADING", trials.thisN%2, 1-rating);
+    if (para.DEBUG_ENABLED) {
+        let rating = slider.getRating();
+        if (typeof rating === 'undefined') {
+            rating = para.INITIAL_INTENSITY;
+        }
+        var band = bands[para.ACTIVE_BAND];
+        band.toggleSupport(true, "FADING", trials.thisN%2, 1-rating);
     
-    band.rectangle._needUpdate = true;
-    band.xaxis.scalebar._needUpdate = true;
-    //band.setAutoDraw(true);
+        band.rectangle._needUpdate = true;
+        band.xaxis.scalebar._needUpdate = true;
+        //band.setAutoDraw(true);
+    }
     
     
     // check for quit (typically the Esc key)
@@ -637,7 +645,7 @@ function trialRoutineEnd() {
         band.active = false;
         band.setAutoDraw(false);
     }
-    bands[para.ACTIVE_BAND].toggleSupport(false, "FADING", 0, 0.8);
+    bands[para.ACTIVE_BAND].toggleSupport(false, "FADING", phase, intensity);
     slider.setAutoDraw(false);
     // the Routine "trial" was not non-slip safe, so reset the non-slip timer
     routineTimer.reset();
@@ -657,7 +665,7 @@ function feedbackRoutineBegin(snapshot) {
     feedbackClock.reset(); // clock
     frameN = -1;
     continueRoutine = true; // until we're told otherwise
-    routineTimer.add(1.000000);
+    routineTimer.add(0.400000);
     // update component parameters for each repeat
     // keep track of which components have finished
     feedbackComponents = [];
@@ -690,7 +698,7 @@ function feedbackRoutineEachFrame() {
       feedback_text.setAutoDraw(true);
     }
 
-    frameRemains = 0.0 + 1.0 - psychoJS.window.monitorFramePeriod * 0.75;  // most of one frame period left
+    frameRemains = 0.0 + 0.4 - psychoJS.window.monitorFramePeriod * 0.75;  // most of one frame period left
     if (feedback_text.status === PsychoJS.Status.STARTED && t >= frameRemains) {
       feedback_text.setAutoDraw(false);
     }
