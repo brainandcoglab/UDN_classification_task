@@ -49,8 +49,8 @@ export const PHASES = [
 ];
 
 var from = 0.1;
-var to = 0.2;
-var increment = 0.01;
+var to = 0.3;
+var increment = 0.02;
 
 export const RUN_ORDER = [
     gen.calibrations(from, to, increment, N_TRIALS),
