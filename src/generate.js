@@ -121,6 +121,19 @@ let signatures = function(n_lines, mindist) {
     return [sorted, vessel_signatures];
 };
 
+let calibrations = function (from, to, increment, trial_n) {
+
+    var run_order = [];
+    var val = from;
+    while (val < to) {
+        for (var i = 0; i < trial_n; i ++) {
+            run_order.push({intensity: val});
+        }
+        val += increment;
+    }
+    return util.shuffle(run_order);
+}
+
 // Generate run order
 let run_order = function(n_ff_trials, p_catch, n_noise, signatures, sorted, mindist, highlight) {
     // Calculate how many catch trials need to be added
@@ -187,5 +200,6 @@ export {
     trial_lines,
     signatures,
     run_order,
+    calibrations,
     lookup_text
 };
