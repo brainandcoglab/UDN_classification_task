@@ -82,9 +82,9 @@ psychoJS.start({
   expInfo: expInfo,
   resources: [
     {'name': 'data/bg.png', 'path': 'data/bg.png'},
-    {'name': 'data/SWAT.csv', 'path': 'data/SWAT.csv'},
     {'name': 'data/trust.csv', 'path': 'data/trust.csv'},
-    {'name': 'data/initial_qs.csv', 'path': 'data/initial_qs.csv'}
+    {'name': 'data/initial_qs.csv', 'path': 'data/initial_qs.csv'},
+    {'name': 'data/SWAT.csv', 'path': 'data/SWAT.csv'}
   ]
 });
 
@@ -1412,6 +1412,8 @@ function trialRoutineBegin(snapshot) {
             lookup_right = para.PRACTICE_LOOKUP_TEXT[1][active_band];
             break;
         case 1: // BASELINE PHASE
+            lookup_left = "Friend\n(Press A)";
+            lookup_right = "Foe\n(Press L)";
             break;
         case 2: // TRAINING PHASE
             lookup_left = "Friend\n(Press A)";
