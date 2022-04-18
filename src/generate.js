@@ -122,18 +122,19 @@ let signatures = function(n_lines, mindist) {
 };
 
 // Generate run order
-let run_order = function(n_ff_trials, p_catch, n_noise, signatures, sorted, mindist, highlight) {
+let run_order = function(n_ff_trials, p_catch, n_noise, signatures, sorted, mindist, supported) {
+
     // Calculate how many catch trials need to be added
     // (In order to make at least p_catch of total trials catch)
     var n_catch_trials = Math.ceil((p_catch * n_ff_trials) / (1 - p_catch));
 
     var run_order = [];
     for (var i = 0; i < n_ff_trials/2; i ++) {
-        run_order.push({vessel: 0, highlight_pos: highlight, catch_trial: false}); // friend
-        run_order.push({vessel: 1, highlight_pos: highlight, catch_trial: false}); // foe
+        run_order.push({vessel: 0, supported_pos: supported, catch_trial: false}); // friend
+        run_order.push({vessel: 1, supported_pos: supported, catch_trial: false}); // foe
     }
     for (var i = 0; i < n_catch_trials; i ++) {
-        run_order.push({vessel: -1, highlight_pos: highlight, catch_trial: true}); // catch
+        run_order.push({vessel: -1, supported_pos: supported, catch_trial: true}); // catch
     }
     // Shuffle
     run_order = util.shuffle(run_order);
