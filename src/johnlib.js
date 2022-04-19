@@ -78,6 +78,27 @@ function factorial(n) {
     return n > 1 ? factorial(n - 1) * n : 1;
 }
 
+// Create, without replacements, all combinations with the parameters n and k
+function combinations_recursive(n, k, _r, _arr, _ret) {
+    let end = _arr.length == k - 1;
+    for (var i = _r; i < n; i++) {
+        if (end) {
+            _ret.push(_arr.concat([i]))
+        } else {
+            combinations_recursive(n, k, i+1, _arr.concat([i]), _ret);
+        }
+    }
+    return _ret;
+}
+
+function combinations(n, k) {
+    let r = 0;
+    let ret = [];
+    let arr = [];
+
+    return combinations_recursive(n, k, r, arr, ret);
+}
+
 export {
     arange,
     repeat,
@@ -89,5 +110,6 @@ export {
     logn,
     interp1d,
     interpRGB,
-    factorial
+    factorial,
+    combinations
 };
