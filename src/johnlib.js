@@ -74,6 +74,10 @@ function interpRGB(a, b, prop) {
     return ret;
 }
 
+function factorial(n) {
+    return n > 1 ? factorial(n - 1) * n : 1;
+}
+
 export {
     arange,
     repeat,
@@ -84,5 +88,6 @@ export {
     getvalright,
     logn,
     interp1d,
-    interpRGB
+    interpRGB,
+    factorial
 };
