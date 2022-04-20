@@ -205,23 +205,11 @@ function Band(window, pos, size=[1.0, 0.2], lines, is_signal, nticks, range) {
             }
         }
     };
-    this.setFade = function(b, v, p) {
-
-        // define these so we can get the array easily
-        let red = new util.Color('red')
-        let green = new util.Color('green');
-        let blue = new util.Color('blue')
-        // Fade opacity (this is the easy bit)
-        let o = jl.interp1d(1, 0, p);
-
-        // rgb transition function is just 3 1d interpolations
-        let c = jl.interpRGB(v ? red.rgb255 : blue.rgb255, green.rgb255, p);
-        let fill = new util.Color(c, util.Color.COLOR_SPACE.RGB255);
+    this.setFade = function(b, v, o) {
         
         for(var i = 0; i < this.lines.is_signal.length; i++) {
             if (b && this.lines.is_signal[i]) {
                 this.lines.overlays[i].opacity = o;
-                //this.lines.rects[i].fillColor = fill;
                 this.lines.overlays[i].fillColor = v ? new util.Color('#ff6969') : new util.Color('#4b7cff');
                 this.lines.overlays[i].lineColor = v ? new util.Color('#ff6969') : new util.Color('#4b7cff');
             } else {
@@ -241,7 +229,7 @@ function Band(window, pos, size=[1.0, 0.2], lines, is_signal, nticks, range) {
     };
 
     // Toggle the selected support condition on or off
-    this.toggleSupport = function(binary, condition, vessel, proportion) {
+    this.toggleSupport = function(binary, condition, vessel, alpha) {
         
         // Because each condition has its own toggle we have to pass it on
         switch(condition) {
@@ -252,7 +240,7 @@ function Band(window, pos, size=[1.0, 0.2], lines, is_signal, nticks, range) {
                 this.setLowlight(binary)
                 break;
             case "FADING":
-                this.setFade(binary, vessel, proportion)
+                this.setFade(binary, vessel, alpha)
                 break;
         }
     }

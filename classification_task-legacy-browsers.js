@@ -74,8 +74,8 @@ psychoJS.start({
   expInfo: expInfo,
   resources: [
     {'name': 'data/bg.png', 'path': 'data/bg.png'},
-    {'name': 'data/trust.csv', 'path': 'data/trust.csv'},
     {'name': 'data/initial_qs.csv', 'path': 'data/initial_qs.csv'},
+    {'name': 'data/trust.csv', 'path': 'data/trust.csv'},
     {'name': 'data/SWAT.csv', 'path': 'data/SWAT.csv'}
   ]
 });
@@ -1427,7 +1427,9 @@ function trialRoutineBegin(snapshot) {
             }
             // get proportion for fading support
             let proportion = supported_count / para.N_SUPPORTED_TRIALS;
-            bands[para.SUPPORTED].toggleSupport(true, para.CONDITION, vessel, proportion);
+            // Four intensity blocks
+            let idx = Math.floor(proportion * 4);
+            bands[para.SUPPORTED].toggleSupport(true, para.CONDITION, vessel, para.FADING_LEVELS[idx]);
             break;
         case 3: // TEST PHASE
             lookup_left = "Friend\n(Press A)";
