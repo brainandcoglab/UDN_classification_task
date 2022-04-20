@@ -13,65 +13,10 @@ function float_compare_mindistance(min = 0.1/3) {
     };
 }
 
-// Decide on which lines should be present on a given trial.
-let trial_lines = function(vessel, band, signatures, n_noise, sorted, distfn) {
-    let lines = []; // Actual line positions
-    let is_signal = []; // Whether they're signal (1) or not (0)
-
-    let n_lines = signatures[0][0].length; // get from signatures
-    let line_choices = jl.arange(n_lines);
-
-    // copy sorted list so we can add to it
-    let sorted_clone = Object.assign([], sorted);
-    // Initially, we fill in random lines (according to spacing rules)
-    for (var i = 0; i < n_lines; i++) {
-        is_signal.push(0);
-    }
-    // Now, if we are presenting signal, randomly select which lines we want
-    // We still preserve the quadrant spacing rule
-    if (vessel >= 0) {
-        // Random shuffle to select (N_LINES - N_NOISE) lines
-        let signals = util.shuffle(line_choices);
-        for(var i = 0; i < n_lines; i++) {
-            let l = signals[i]; // index of chosen signal line
-            if ( i < n_lines - n_noise ) {
-                // insert in appropriate location
-                lines[l] = signatures[vessel][band][l]; 
-                is_signal[l] = 1;
-            } else {
-                let canary = 0;
-                while(true) {
-                    canary++;
-                    if (canary > 1000) {
-                        return false;
-                    }
-                    // This simply puts the random noise on the SAME side that the signature is biased towards (updated)
-                    var left = vessel ? 0.5 : 0.0;
-                    var spacing = 0.5;
-                    let val = (left + (Math.random() * spacing)) * 0.9 + 0.05;
-                    // run binary search
-                    let bs = jl.binary_search(sorted_clone, val, distfn);
-                    if (bs >= 0) {
-                        continue; // value is either already used, or too close to an existing value
-                    } else {
-                        // add to sorted array
-                        let idx = (-bs) - 1;
-                        sorted_clone.splice(idx, 0, val);
-                        // push into vessel signatures
-                        lines[l] = (val).toFixed(3);
-                        break;
-                    }
-                }  
-            }
-         }
-    }
-    return [lines, is_signal];
-}
-
 // Choose lines to be vessel signatures at top and bottom
 // Ensure one line for each quadrant
 // TODO: Ensure set distance from other lines
-let signatures = function(n_lines, mindist) {
+function signatures(n_lines, mindist) {
     let sorted = []; // sorted list of all lines
     let vessel_signatures = [
         // T    B
@@ -118,52 +63,119 @@ let signatures = function(n_lines, mindist) {
         vessel_signatures[1][i] = vessel_signatures[1][i].sort(function(a, b){return a-b});
     }
 
-    return [sorted, vessel_signatures];
+    let noise = [];
+    // Create pool of noise lines obeying the same rules
+    let canary = 0;
+    while(noise.length < n_lines * 4) {
+        canary++;
+        if (canary > 1000) {
+            break;
+        }
+        // This simply puts the random noise on the SAME side that the signature is biased towards (updated)
+        var left = 0;
+        var spacing = 1;
+        let val = (left + (Math.random() * spacing)) * 0.9 + 0.05;
+        // run binary search
+        let bs = jl.binary_search(sorted, val, distfn);
+        if (bs >= 0) {
+            continue; // value is either already used, or too close to an existing value
+        } else {
+            noise.push((val).toFixed(3));
+            // add to sorted array
+            let idx = (-bs) - 1;
+            sorted.splice(idx, 0, val);
+        }
+    }
+    if (noise.length < n_lines * 4) return false; // bail out if not enough noise lines
+    noise = util.sort(noise);
+
+    return [noise, vessel_signatures];
 };
 
-// Generate run order
-let run_order = function(n_ff_trials, p_catch, n_noise, signatures, sorted, mindist, supported) {
+// Given signatures, generate an appropriate pool of random noise obeying the same rules
+
+// IN PROGRESS: Better run order construction
+function run_order(n_trials, n_lines, n_noise, p_catch, signatures, noise, supported) {
+    
+    // Calculate number of possible noise combinations, forms the basis of a block
+    const n_combinations = jl.factorial(n_lines) / jl.factorial(n_noise) * jl.factorial(n_lines - n_noise) 
 
     // Calculate how many catch trials need to be added
     // (In order to make at least p_catch of total trials catch)
-    var n_catch_trials = Math.ceil((p_catch * n_ff_trials) / (1 - p_catch));
+    // We're doing it on a per-block basis here so results could vary a bit from per-phase
+    const n_catch_trials = Math.ceil((p_catch * n_combinations) / (1 - p_catch));
 
-    var run_order = [];
-    for (var i = 0; i < n_ff_trials/2; i ++) {
-        run_order.push({vessel: 0, supported_pos: supported, catch_trial: false}); // friend
-        run_order.push({vessel: 1, supported_pos: supported, catch_trial: false}); // foe
-    }
-    for (var i = 0; i < n_catch_trials; i ++) {
-        run_order.push({vessel: -1, supported_pos: supported, catch_trial: true}); // catch
-    }
-    // Shuffle
-    run_order = util.shuffle(run_order);
+    // Define bands and vessels to make calculations clear
+    const N_BANDS = 2;
+    const N_VESSELS = 2; 
+    
+    // Calculate block size based upon all of the above
+    const block_size = N_BANDS * N_VESSELS * (n_catch_trials + n_combinations);
 
-    let distfn = float_compare_mindistance(mindist);
+    // Create trial combinations, we can then randomize within each block
 
-    // Decide whether we start on top or bottom band
-    var startBand = Math.round(Math.random());
-    for (var i = 0; i < run_order.length; i++) {
-        let active_band = (startBand+i) % 2;
-        run_order[i]['active_band'] = active_band;
-        let vessel = run_order[i]['vessel'];
-        if (vessel < 0) { // catch trial
-            vessel = Math.round(Math.random()); // Choose vessel at random
-            run_order[i]['vessel'] = vessel; // Replace it in the run order
-            var lines_trial = trial_lines(vessel, active_band, signatures, 0, sorted, distfn); // Do it with no noise
-        } else {
-            var lines_trial = trial_lines(vessel, active_band, signatures, n_noise, sorted, distfn);
+    // First off, get every noise location combination
+    let combinations_short = jl.combinations(n_lines, n_noise);
+    
+    // Next, let's create the run order.
+    // We'll need these combinations for both vessels, then catch trials
+    // Then continue until we're > n_trials, and trim from there if needed.
+    // We can fill in the real / random noise lines afterwards, they've already been generated.
+    
+    let blocks = []
+    // Continue until we have a sufficient number of trials
+    while (block_size * blocks.length < n_trials) {
+        let run_order = [];
+        for (var i = 0; i < combinations_short.length; i++) {
+            var is_signal = jl.repeat(1, n_lines);
+            for (const idx of combinations_short[i]) {
+                is_signal[idx] = 0;
+            }
+            // Push both vessel types
+            run_order.push({vessel: 0, is_signal: is_signal, supported_pos: supported, catch_trial: false}); // friend
+            run_order.push({vessel: 1, is_signal: is_signal, supported_pos: supported, catch_trial: false}); // foe
         }
-        if (!lines_trial) {
-            return false; // pass failure through
+        // Add catch trials per block - iterate through vessels
+        for (var i = 0; i < n_catch_trials; i ++) {
+            run_order.push({vessel: i % 2, is_signal: jl.repeat(1, n_lines), supported_pos: supported, catch_trial: true}); // catch
         }
-        run_order[i]['lines'] = lines_trial[0];
-        run_order[i]['is_signal'] = lines_trial[1];
+        // Shuffle within block
+        run_order = util.shuffle(run_order);
+
+        // Go through and assign band
+        var startBand = Math.round(Math.random());
+        for (var i = 0; i < run_order.length; i++) {
+            let active_band = (startBand+i) % 2;
+            run_order[i]['active_band'] = active_band;
+            let vessel = run_order[i]['vessel'];
+
+            // Get appropriate signal lines
+            var lines = signatures[vessel][active_band];
+            var is_signal = run_order[i]['is_signal'];
+            // Overkill for one line but if we scale beyond one this'll still work
+            var noise_shuffle = util.shuffle(noise);
+            for(var j = 0; j < is_signal.length; j++) {
+                if (is_signal[j] == 0) lines[j] = noise_shuffle[j];
+            }
+            run_order[i]['lines'] = lines;
+            
+        }
+        // Shuffle again (could change loop option in psychopy but easier doing this)
+        run_order = util.shuffle(run_order);
+        blocks.push(run_order)
     }
-    // Shuffle again (could change loop option in psychopy but easier doing this)
-    run_order = util.shuffle(run_order);
-    return run_order;
-};
+
+    // May need to trim last block
+    if (block_size * blocks.length > n_trials) {
+        // need to remove diff trials from last block
+        var diff = block_size * blocks.length - n_trials;
+        blocks[blocks.length-1].splice(block_size-(diff+1), block_size-1);
+    }
+
+    // Un-nest arrays
+    return blocks.flat();
+
+}
 
 
 // Generate text for the lookup table
@@ -185,7 +197,6 @@ let lookup_text = function(signatures, ranges) {
 }
 
 export {
-    trial_lines,
     signatures,
     run_order,
     lookup_text
