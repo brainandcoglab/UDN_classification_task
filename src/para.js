@@ -15,16 +15,20 @@ import * as band from "./band.js"
 
 export const N_LINES = 4; // How many lines/band define a ship
 export const N_NOISE = 1; // How many lines/band will be random noise on normal trials
-export const P_CATCH = 0.1; // Proportion of catch trials
+export const P_CATCH = 0.0; // Proportion of catch trials
 export const N_PRACTICE_TRIALS = 8; // How many trials total of friend + foe
-export const N_TRIALS = 60; // How many trials total of high/lowlight (not including catch trials)
+export const N_TRIALS = 5; // How many trials total of high/lowlight (not including catch trials)
 
 export const N_SUPPORTED_TRIALS = N_TRIALS / 2; // how many trials per support
 
+export const MIN_DISTANCE = 0.1/6; // Minimum distance between lines
 
-export const MIN_DISTANCE = 0.1/3; // Minimum distance between lines
+// Warn if parameters likely to cause failure
+var exp = Math.floor(0.9 / MIN_DISTANCE) + 1;
+var req = ((N_LINES * 4) + 10) * 2;
+if (exp < req) console.log('Signature generation failure likely: suggest you decrease mindist');
 
-export const DEBUG_ENABLED = true; // Show condition in practice at start
+export const DEBUG_ENABLED = false; // Show condition in practice at start
 
 // Which keypress should respond to which vessel
 export const VESSEL_MAP = {
@@ -78,13 +82,13 @@ for (var canary = 0; !practice_run_order; canary++) {
         alert(errstring)
         throw errstring;
     }
-    let practice_sort_sig = gen.signatures(N_LINES, MIN_DISTANCE);
-    if (!practice_sort_sig) {
+    let practice_lines = gen.signatures(N_LINES, MIN_DISTANCE);
+    if (!practice_lines) {
         continue;
     }
-    practice_signatures = practice_sort_sig[1];
-    let practice_sorted_lines = practice_sort_sig[0];  // sorted list of all lines (practice)
-    practice_run_order = gen.run_order(N_PRACTICE_TRIALS, P_CATCH, N_NOISE, practice_signatures, practice_sorted_lines, MIN_DISTANCE, SUPPORTED);
+    let practice_noise = practice_lines[0];
+    practice_signatures = practice_lines[1];
+    practice_run_order = gen.run_order(N_PRACTICE_TRIALS, N_LINES, N_NOISE, P_CATCH, practice_signatures, practice_noise, SUPPORTED);
 }
 export const PRACTICE_SIGNATURES = practice_signatures;
 
@@ -97,15 +101,15 @@ for (var canary = 0; !baseline_run_order || !training_run_order || !test_run_ord
         alert(errstring)
         throw errstring;
     }
-    let sort_sig = gen.signatures(N_LINES, MIN_DISTANCE);
-    if (!sort_sig) {
+    let lines = gen.signatures(N_LINES, MIN_DISTANCE);
+    if (!lines) {
         continue;
     }
-    signatures = sort_sig[1];
-    let sorted_lines = sort_sig[0];
-    baseline_run_order = gen.run_order(N_TRIALS, P_CATCH, N_NOISE, signatures, sorted_lines, MIN_DISTANCE, SUPPORTED);
-    training_run_order = gen.run_order(N_TRIALS, P_CATCH, N_NOISE, signatures, sorted_lines, MIN_DISTANCE, SUPPORTED);
-    test_run_order = gen.run_order(N_TRIALS, P_CATCH, N_NOISE, signatures, sorted_lines, MIN_DISTANCE, SUPPORTED);
+    signatures = lines[1];
+    let noise = lines[0];
+    baseline_run_order = gen.run_order(N_TRIALS, N_LINES, N_NOISE, P_CATCH, signatures, noise, SUPPORTED);
+    training_run_order = gen.run_order(N_TRIALS, N_LINES, N_NOISE, P_CATCH, signatures, noise, SUPPORTED);
+    test_run_order = gen.run_order(N_TRIALS, N_LINES, N_NOISE, P_CATCH, signatures, noise, SUPPORTED);
 }
 export const VESSEL_SIGNATURES = signatures;
 
