@@ -98,7 +98,7 @@ function signatures(n_lines, mindist) {
 function run_order(n_trials, n_lines, n_noise, p_catch, signatures, noise, supported) {
     
     // Calculate number of possible noise combinations, forms the basis of a block
-    const n_combinations = jl.factorial(n_lines) / jl.factorial(n_noise) * jl.factorial(n_lines - n_noise) 
+    const n_combinations = jl.factorial(n_lines) / (jl.factorial(n_noise) * jl.factorial(n_lines - n_noise))
 
     // Calculate how many catch trials need to be added
     // (In order to make at least p_catch of total trials catch)
@@ -128,48 +128,40 @@ function run_order(n_trials, n_lines, n_noise, p_catch, signatures, noise, suppo
         let run_order = [];
         for (var i = 0; i < combinations_short.length; i++) {
             var is_signal = jl.repeat(1, n_lines);
-            for (const idx of combinations_short[i]) {
-                is_signal[idx] = 0;
+            for (var idx = 0; idx < combinations_short[i].length; idx++) {
+                is_signal[combinations_short[i][idx]] = 0;
             }
-            // Push both vessel types
-            run_order.push({vessel: 0, is_signal: is_signal, supported_pos: supported, catch_trial: false}); // friend
-            run_order.push({vessel: 1, is_signal: is_signal, supported_pos: supported, catch_trial: false}); // foe
+            // Push both vessel types and bands
+            for(var band = 0; band < 2; band++) {
+                for(var vessel = 0; vessel < 2; vessel++) {
+                    var lines = Array.from(signatures[vessel][band]);
+                    // Overkill for one line but if we scale beyond one this'll still work
+                    var noise_shuffle = util.shuffle(noise);
+                    for(var j = 0; j < is_signal.length; j++) {
+                        if (is_signal[j] == 0) {
+                            lines[j] = noise_shuffle[j];
+                        }
+                    }
+                    run_order.push({vessel: vessel, active_band: band, lines: lines, is_signal: is_signal, supported_pos: supported, catch_trial: false}); // friend
+                }
+            }
         }
-        // Add catch trials per block - iterate through vessels
+        // Add catch trials per block
         for (var i = 0; i < n_catch_trials; i ++) {
-            run_order.push({vessel: i % 2, is_signal: jl.repeat(1, n_lines), supported_pos: supported, catch_trial: true}); // catch
+            var vessel = Math.round(Math.random());
+            var band = Math.round(Math.random());
+            var lines = Array.from(signatures[vessel][band]);
+            run_order.push({vessel: vessel, active_band: band, lines: lines, is_signal: jl.repeat(1, n_lines), supported_pos: supported, catch_trial: true});
         }
         // Shuffle within block
         run_order = util.shuffle(run_order);
-
-        // Go through and assign band
-        var startBand = Math.round(Math.random());
-        for (var i = 0; i < run_order.length; i++) {
-            let active_band = (startBand+i) % 2;
-            run_order[i]['active_band'] = active_band;
-            let vessel = run_order[i]['vessel'];
-
-            // Get appropriate signal lines
-            var lines = signatures[vessel][active_band];
-            var is_signal = run_order[i]['is_signal'];
-            // Overkill for one line but if we scale beyond one this'll still work
-            var noise_shuffle = util.shuffle(noise);
-            for(var j = 0; j < is_signal.length; j++) {
-                if (is_signal[j] == 0) lines[j] = noise_shuffle[j];
-            }
-            run_order[i]['lines'] = lines;
-            
-        }
-        // Shuffle again (could change loop option in psychopy but easier doing this)
-        run_order = util.shuffle(run_order);
         blocks.push(run_order)
     }
-
     // May need to trim last block
     if (block_size * blocks.length > n_trials) {
         // need to remove diff trials from last block
         var diff = block_size * blocks.length - n_trials;
-        blocks[blocks.length-1].splice(block_size-(diff+1), block_size-1);
+        blocks[blocks.length-1].splice(block_size-(diff), block_size-1);
     }
 
     // Un-nest arrays
