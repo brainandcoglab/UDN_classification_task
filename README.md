@@ -17,10 +17,10 @@ This branch will implement all changes required for two follow-up experiments - 
 * [X] Implement fading condition - More or less implemented - I think I need to test whether the increment per trial works.
 * [X] Enforce rapid SWAT response - would like something on screen, but a two minute timer exists.
 * [X] Decide on way to split conditions: For now I'll go with splitting into different groups in Prolific because I can pass conditions as URL parameters - and I'm pretty sure I can prevent people starting more than one of the experiments. Could also integrate something else - either look at complete Pavlovia data or run a service hosted somewhere that manages things - but somewhat fragile and unnecessary.
-* [ ] No lookup on baseline
+* [X] No lookup on baseline
+* [X] Ensure all combinations of lines for 64 trials?
 * [ ] Ensure text makes sense
 * [ ] Ensure fading cue works correctly, integrate results from calibration study
-* [ ] Ensure all combinations of lines for 64 trials?
 
 ### Desired (kept from main branch)
 
