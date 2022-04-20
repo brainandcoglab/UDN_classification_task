@@ -206,7 +206,6 @@ function Band(window, pos, size=[1.0, 0.2], lines, is_signal, nticks, range) {
         }
     };
     this.setFade = function(b, v, o) {
-        
         for(var i = 0; i < this.lines.is_signal.length; i++) {
             if (b && this.lines.is_signal[i]) {
                 this.lines.overlays[i].opacity = o;

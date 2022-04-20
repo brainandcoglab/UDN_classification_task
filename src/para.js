@@ -21,12 +21,12 @@ export const N_TRIALS = 64; // How many trials total of high/lowlight (not inclu
 
 export const N_SUPPORTED_TRIALS = N_TRIALS / 2; // how many trials per support
 
-export const MIN_DISTANCE = 0.1/6; // Minimum distance between lines
+export const MIN_DISTANCE = 0.1/3; // Minimum distance between lines
 
 export const FADING_LEVELS = [1.0, 0.7, 0.4, 0.134];
 
 // Warn if parameters likely to cause failure
-var exp = Math.floor(0.9 / MIN_DISTANCE) + 1;
+var exp = Math.floor(0.95 / MIN_DISTANCE) + 1;
 var req = ((N_LINES * 4) + 10) * 2;
 if (exp < req) console.log('Signature generation failure likely: suggest you decrease mindist');
 
@@ -109,12 +109,13 @@ for (var canary = 0; !baseline_run_order || !training_run_order || !test_run_ord
     }
     signatures = lines[1];
     let noise = lines[0];
+    console.log(noise)
+
     baseline_run_order = gen.run_order(N_TRIALS, N_LINES, N_NOISE, P_CATCH, signatures, noise, SUPPORTED);
     training_run_order = gen.run_order(N_TRIALS, N_LINES, N_NOISE, P_CATCH, signatures, noise, SUPPORTED);
     test_run_order = gen.run_order(N_TRIALS, N_LINES, N_NOISE, P_CATCH, signatures, noise, SUPPORTED);
 }
 export const VESSEL_SIGNATURES = signatures;
-
 export const RUN_ORDER = [
     practice_run_order,
     baseline_run_order,

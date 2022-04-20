@@ -1426,7 +1426,7 @@ function trialRoutineBegin(snapshot) {
                 lookup_right = "Foe\n(Red)\n(Press L)";  
             }
             // get proportion for fading support
-            let proportion = supported_count / para.N_SUPPORTED_TRIALS;
+            let proportion = (supported_count-1) / para.N_SUPPORTED_TRIALS;
             // Four intensity blocks
             let idx = Math.floor(proportion * 4);
             bands[para.SUPPORTED].toggleSupport(true, para.CONDITION, vessel, para.FADING_LEVELS[idx]);

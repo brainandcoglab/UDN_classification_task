@@ -27,8 +27,8 @@ function signatures(n_lines, mindist) {
     for (var i = 0; i < n_lines; i++) {
         for (var sig = 0; sig < 2; sig++) {
             // friend or foe...
-            var left = (sig ? jl.getvalright(i, n_lines) : jl.getvalleft(i, n_lines))  * 0.9 + 0.05;
-            var right = (sig ? jl.getvalright(i+1, n_lines) : jl.getvalleft(i+1, n_lines))  * 0.9 + 0.05;
+            var left = (sig ? jl.getvalright(i, n_lines) : jl.getvalleft(i, n_lines))  * 0.95 + 0.025;
+            var right = (sig ? jl.getvalright(i+1, n_lines) : jl.getvalleft(i+1, n_lines))  * 0.95 + 0.025;
             var spacing = right - left;
             for (var band = 0; band < 2; band++) {
                 let canary = 0;
@@ -74,7 +74,7 @@ function signatures(n_lines, mindist) {
         // This simply puts the random noise on the SAME side that the signature is biased towards (updated)
         var left = 0;
         var spacing = 1;
-        let val = (left + (Math.random() * spacing)) * 0.9 + 0.05;
+        let val = (left + (Math.random() * spacing)) * 0.95 + 0.025;
         // run binary search
         let bs = jl.binary_search(sorted, val, distfn);
         if (bs >= 0) {
@@ -82,8 +82,8 @@ function signatures(n_lines, mindist) {
         } else {
             noise.push((val).toFixed(3));
             // add to sorted array
-            let idx = (-bs) - 1;
-            sorted.splice(idx, 0, val);
+            //let idx = (-bs) - 1;
+            //sorted.splice(idx, 0, val);
         }
     }
     if (noise.length < n_lines * 4) return false; // bail out if not enough noise lines
