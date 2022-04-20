@@ -28,7 +28,6 @@ This branch will implement all changes required for two follow-up experiments - 
 * Changed number of trials per phase to 64, i.e., 4 blocks of 16 in which each possible configuration is seen
 * Confined area in which random line generation occurs
 * Allowed passing of condition as URL parameter (e.g. ?condition=[0|1|2])
-* 
 
 ### Desired (kept from main branch)
 
