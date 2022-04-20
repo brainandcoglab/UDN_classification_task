@@ -19,18 +19,22 @@ This branch will implement all changes required for two follow-up experiments - 
 * [X] Decide on way to split conditions: For now I'll go with splitting into different groups in Prolific because I can pass conditions as URL parameters - and I'm pretty sure I can prevent people starting more than one of the experiments. Could also integrate something else - either look at complete Pavlovia data or run a service hosted somewhere that manages things - but somewhat fragile and unnecessary.
 * [X] No lookup on baseline
 * [X] Ensure all combinations of lines for 64 trials?
-* [ ] Ensure text makes sense
-* [ ] Ensure fading cue works correctly, integrate results from calibration study
+* [X] Ensure text makes sense
+* [X] Ensure fading cue works correctly, integrate results from calibration study
+
+### Main updates
+
+* Fixed an issue in which overlay outline would not properly align with edges of other shapes
+* Changed number of trials per phase to 64, i.e., 4 blocks of 16 in which each possible configuration is seen
+* Confined area in which random line generation occurs
+* Allowed passing of condition as URL parameter (e.g. ?condition=[0|1|2])
+* 
 
 ### Desired (kept from main branch)
 
-* [ ] Check that band space available is possible ahead of time
+* [ ] Check that band space available is possible ahead of time - hard with constraints
 * [ ] Cooler lookup table
 * [ ] Seedable RNG? Have list of known good seeds from which a choice is made. Solves all issues.
-* [ ] Prettier "Off" condition
-* [ ] Waterfall plot style updates?
-* [ ] Other random lines in background?
-* [ ] Better highlight colour
 
 ### To discuss
 
