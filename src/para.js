@@ -16,8 +16,8 @@ import * as band from "./band.js"
 export const N_LINES = 4; // How many lines/band define a ship
 export const N_NOISE = 1; // How many lines/band will be random noise on normal trials
 export const P_CATCH = 0.0; // Proportion of catch trials
-export const N_PRACTICE_TRIALS = 8; // How many trials total of friend + foe
-export const N_TRIALS = 64; // How many trials total of high/lowlight (not including catch trials)
+export const N_PRACTICE_TRIALS = 4; // How many trials total of friend + foe
+export const N_TRIALS = 4; // How many trials total of high/lowlight (not including catch trials)
 
 export const N_SUPPORTED_TRIALS = N_TRIALS / 2; // how many trials per support
 
@@ -146,7 +146,7 @@ Use the 'A' key to respond friend,
 Use the 'L' key to respond foe.
 `;
 
-const debrief_text = 'Please select along each scale below to indicate your assessment of where the task you just performed falls along the continuum between the two descriptions.';
+const debrief_text = 'Please select along each scale below to indicate your assessment of where the task you just performed falls along the continuum between the two descriptions. You will automatically have to continue in 2 minutes.';
 
 
 export const practice_instructions = `

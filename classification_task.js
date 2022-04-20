@@ -81,9 +81,9 @@ psychoJS.start({
   expName: expName,
   expInfo: expInfo,
   resources: [
-    {'name': 'data/bg.png', 'path': 'data/bg.png'},
-    {'name': 'data/initial_qs.csv', 'path': 'data/initial_qs.csv'},
     {'name': 'data/trust.csv', 'path': 'data/trust.csv'},
+    {'name': 'data/initial_qs.csv', 'path': 'data/initial_qs.csv'},
+    {'name': 'data/bg.png', 'path': 'data/bg.png'},
     {'name': 'data/SWAT.csv', 'path': 'data/SWAT.csv'}
   ]
 });
@@ -1916,7 +1916,7 @@ function trust_insRoutineBegin(snapshot) {
     let active_band = 1;
     let band = bands[active_band];
     band.setLines(rem_lines, [1,0,1,1]);
-    supported ? band.toggleSupport(false, para.CONDITION, 0, 0) : band.toggleSupport(true, para.CONDITION, 0, 0);
+    supported ? band.toggleSupport(true, para.CONDITION, 0, 1) : band.toggleSupport(false, para.CONDITION, 0, 1);
     band.active = 1;
     band.rectangle.opacity = 1.0 - band.active;
     band.rectangle._needUpdate = true;

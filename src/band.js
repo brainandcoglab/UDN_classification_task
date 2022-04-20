@@ -76,6 +76,7 @@ function Lines(window, pos, size, lines, is_signal) {
         }));
     }
     this.filter = new PIXI.Filter(shaders.vertex_custom, shaders.fragment_line);
+    this.alpha_filter = new PIXI.filters.AlphaFilter(0.5);
     for (var i = 0; i < this.lines.length; i++) {
         let x = this.lines[i] / size[0];
         let line = new visual.ShapeStim({
@@ -105,11 +106,11 @@ function Lines(window, pos, size, lines, is_signal) {
         let overlay = new visual.ShapeStim({
             "win": window,
             "name": "overlay",
-            "size": [linew*0.7, size[1]*0.98],
+            "size": [linew*1.04, size[1]],
             "vertices": jl.RECT_VERTICES, 
             "ori": 0.0, 
             "pos": [zero + x, pos[1]],
-            "lineWidth": 3.0,
+            "lineWidth": 5.0,
             "closeShape": true,
             "colorSpace": "rgb",
             "lineColor": new util.Color('darkred'),
@@ -118,6 +119,15 @@ function Lines(window, pos, size, lines, is_signal) {
             "depth": -3.0,
             "interpolate": true
         });
+        overlay._alignment = 1.0;
+        let oupdate = (function(_super, parent) {
+            function extendedUpdate() {
+                _super.call(this);
+                this._pixi.filters = [parent.alpha_filter];
+            }
+            return extendedUpdate;
+        })(overlay._updateIfNeeded, this);
+        overlay._updateIfNeeded = oupdate;
         this.overlays.push(overlay);
     }
     
@@ -206,11 +216,16 @@ function Band(window, pos, size=[1.0, 0.2], lines, is_signal, nticks, range) {
         }
     };
     this.setFade = function(b, v, o) {
+        if (b) {
+            this.lines.alpha_filter.alpha = o;
+        } else {
+            this.lines.alpha_filter.alpha = 0.0;
+        }
         for(var i = 0; i < this.lines.is_signal.length; i++) {
             if (b && this.lines.is_signal[i]) {
-                this.lines.overlays[i].opacity = o;
+                this.lines.overlays[i].opacity = 1.0;
                 this.lines.overlays[i].fillColor = v ? new util.Color('#ff6969') : new util.Color('#4b7cff');
-                this.lines.overlays[i].lineColor = v ? new util.Color('#ff6969') : new util.Color('#4b7cff');
+                this.lines.overlays[i].lineColor = v ? new util.Color('#ff1010') : new util.Color('#1010ff');
             } else {
                 this.lines.overlays[i].opacity = 0.0;
                 this.lines.rects[i].fillColor = "green";
