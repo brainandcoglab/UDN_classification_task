@@ -161,7 +161,7 @@ export const practice_debrief = `Great work, the practice phase is now complete!
 ` + debrief_text;
 
 export const baseline_instructions = `
-In the next phase, you will again be asked to classify an unknown vessel with the assistance of lookup tables to the left and right of the console.
+In the next phase, you will again be asked to classify an unknown vessel, but without the assistance of lookup tables.
 The friend and foe signals in this phase are different from the practice phase.
 Feedback will be provided on whether your classification was correct. 
 
@@ -172,11 +172,23 @@ export const baseline_debrief = `Great work, this phase is now complete!
 
 ` + debrief_text;
 
-export const training_instructions = `
-In the next phase, the lookup tables will be removed. However, you will be given assistance in classifying the vessel with two different tools.
-One tool will highlight signals associated with foe ships in red, and friend ships in blue. The other tool will dim all signals that are not associated with friend or foe ships.
 
-` + keypress_text + `Press the 'space' key to begin.`;
+let assistance_text;
+switch(c) {
+    case 0:
+        assistance_text = "This tool will highlight signals associated with foe ships in red, and friend ships in blue."
+        break;
+    case 1:
+        assistance_text = "This tool will dim all signals that are not associated with friend or foe ships."
+        break;
+    case 2:
+        assistance_text = "This tool will highlight signals associated with foe ships in red, and friend ships in blue, but these colours will fade out over time."
+        break;
+}
+
+export const training_instructions = `
+In the next phase, on one of the bands you will be given a tool which will assist you in classifying the vessel.
+` + assistance_text + keypress_text + `Press the 'space' key to begin.`;
 
 
 export const training_debrief = `Great work, this phase is now complete!
