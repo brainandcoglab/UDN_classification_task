@@ -438,7 +438,7 @@ async function experimentInit() {
   
   // Functions for each response
   let time_load = function(side) {
-      return `${side?'Almost never':'Often'} have spare time. Interruptions or overlap among activities are ${side?'frequent':'infrequent'}.`;
+      return `${side?'Almost never':'Often'} have spare time.`;
   }
   let mental_effort = function(side) {
       return `Very ${side?'intense':'little'} concentration required. Activity is ${side?'complex':'almost automatic'}, and requires ${side?'total':'little'} attention.`;
