@@ -438,7 +438,7 @@ async function experimentInit() {
   
   // Functions for each response
   let time_load = function(side) {
-      return `${side?'Almost never':'Often'} have spare time.`;
+      return `${side?'Almost never':'Often'} have spare time. Interruptions or overlap among activities are ${side?'frequent':'infrequent'}.`;
   }
   let mental_effort = function(side) {
       return `Very ${side?'intense':'little'} concentration required. Activity is ${side?'complex':'almost automatic'}, and requires ${side?'total':'little'} attention.`;
@@ -998,7 +998,7 @@ function support_statusLoopBegin(support_statusLoopScheduler, snapshot) {
       psychoJS: psychoJS,
       nReps: 1, method: TrialHandler.Method.SEQUENTIAL,
       extraInfo: expInfo, originPath: undefined,
-      trialList: para.SUPPORT_STATUS,
+      trialList: undefined,
       seed: undefined, name: 'support_status'
     });
     psychoJS.experiment.addLoop(support_status); // add the loop to the experiment
@@ -1916,7 +1916,7 @@ function trust_insRoutineBegin(snapshot) {
     let active_band = 1;
     let band = bands[active_band];
     band.setLines(rem_lines, [1,0,1,1]);
-    supported ? band.toggleSupport(true, para.CONDITION, 0, 1) : band.toggleSupport(false, para.CONDITION, 0, 1);
+    band.toggleSupport(true, para.CONDITION, 0, 1);
     band.active = 1;
     band.rectangle.opacity = 1.0 - band.active;
     band.rectangle._needUpdate = true;
@@ -1925,7 +1925,7 @@ function trust_insRoutineBegin(snapshot) {
     button_4.fillColor = 'darkblue';
     button_4.font = 'Times New Roman'
     
-    let aid_text = supported ? "supported" : "unsupported";
+    let aid_text = "supported";
     text_3.text = `Cast your mind back to the trials on which you were provided with the ` + aid_text +` band (as seen below).
     On the next page, please answer some questions on how you felt about this aid.`;
     // keep track of which components have finished
@@ -2101,7 +2101,7 @@ function trust_qsRoutineBegin(snapshot) {
     frameN = -1;
     continueRoutine = true; // until we're told otherwise
     // update component parameters for each repeat
-    let aid_text = supported ? "supported" : "unsupported";
+    let aid_text = "supported";
     text_2.text = "With regard to the " + aid_text +" band:";
     
     button_3.fillColor = 'darkgrey';
