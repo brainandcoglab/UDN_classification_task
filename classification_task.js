@@ -81,10 +81,10 @@ psychoJS.start({
   expName: expName,
   expInfo: expInfo,
   resources: [
-    {'name': 'data/trust.csv', 'path': 'data/trust.csv'},
+    {'name': 'data/SWAT.csv', 'path': 'data/SWAT.csv'},
     {'name': 'data/initial_qs.csv', 'path': 'data/initial_qs.csv'},
     {'name': 'data/bg.png', 'path': 'data/bg.png'},
-    {'name': 'data/SWAT.csv', 'path': 'data/SWAT.csv'}
+    {'name': 'data/trust.csv', 'path': 'data/trust.csv'}
   ]
 });
 
@@ -275,7 +275,7 @@ async function experimentInit() {
   (Press the 'space' key to continue)`, [-0.35, 0.3], [0.8, 0.2]],
   
   [`You will be given 10 seconds on each trial to classify a vessel. Respond using the A key for friend, or L key for foe. You'll be told if you were correct or not.
-  Later on in the experiment, the lookup tables will be removed, and other types of assistance will be provided, but you'll learn more about that later.
+  Later on in the experiment, the lookup tables will be removed, and an alternative type of assistance will be provided, but you'll learn more about that later.
   
   (Press the 'space' key to continue)`, [0.0, 0.1], [0.8, 0.3]],
   
