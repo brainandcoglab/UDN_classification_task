@@ -22,6 +22,26 @@ This branch will implement all changes required for two follow-up experiments - 
 * [X] Ensure text makes sense
 * [X] Ensure fading cue works correctly, integrate results from calibration study
 
+### Piloting issues
+
+* [X] A or L key press instructions in lowlight refer to blue and red
+* [ ] Instructions for each condition and generally can be confusing
+* [ ] Canvas fallback if WebGL fails is not working correctly
+* [ ] Lowlighting cue confusing / hard to see
+* [ ] Not everyone clicked through to the end? Make sure instructions exist
+* [ ] People could still potentially wait during the "press space to continue" bits...
+* [ ] Some people found it excessively difficult 
+
+### Prelaunch checklist
+
+* [ ] Ensure automatic fullscreen
+* [ ] Sync hons2022 repository with Pavlovia
+* [ ] Ensure 8/64 trials
+* [ ] Ensure condition parameters are set up correctly
+* [ ] Ensure updated information sheet uploaded
+* [ ] Balance participant gender via Prolific
+
+
 ### Main updates
 
 * Fixed an issue in which overlay outline would not properly align with edges of other shapes

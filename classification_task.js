@@ -81,10 +81,10 @@ psychoJS.start({
   expName: expName,
   expInfo: expInfo,
   resources: [
-    {'name': 'data/SWAT.csv', 'path': 'data/SWAT.csv'},
     {'name': 'data/initial_qs.csv', 'path': 'data/initial_qs.csv'},
     {'name': 'data/bg.png', 'path': 'data/bg.png'},
-    {'name': 'data/trust.csv', 'path': 'data/trust.csv'}
+    {'name': 'data/trust.csv', 'path': 'data/trust.csv'},
+    {'name': 'data/SWAT.csv', 'path': 'data/SWAT.csv'}
   ]
 });
 
@@ -1422,8 +1422,10 @@ function trialRoutineBegin(snapshot) {
                 if (!catch_trial)  { // Don't increment on catch trials
                     supported_count++; // increment supported counter
                 }
-                lookup_left = "Friend\n(Blue)\n(Press A)";
-                lookup_right = "Foe\n(Red)\n(Press L)";  
+                if(para.CONDITION != "LOWLIGHT") {
+                    lookup_left = "Friend\n(Blue)\n(Press A)";
+                    lookup_right = "Foe\n(Red)\n(Press L)";  
+                }
             }
             // get proportion for fading support
             let proportion = (supported_count-1) / para.N_SUPPORTED_TRIALS;
