@@ -180,6 +180,13 @@ async function experimentInit() {
   
   form._visual.responseStims[1].autofocus = true;
   form._visual.responseStims[2].autofocus = false;
+  
+  
+  // Check if we're using WebGL
+  if(psychoJS.window._renderer.type != PIXI.RENDERER_TYPE.WEBGL) {
+    throw "WebGL must be enabled to run this task. Please enable WebGL and try again."
+  }
+  
   button = new visual.ButtonStim({
     win: psychoJS.window,
     name: 'button',

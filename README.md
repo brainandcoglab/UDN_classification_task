@@ -26,9 +26,13 @@ This branch will implement all changes required for two follow-up experiments - 
 
 * [X] A or L key press instructions in lowlight refer to blue and red
 * [X] Instructions for each condition and generally can be confusing
-* [ ] Canvas fallback if WebGL fails is not working correctly
+* [X] Canvas fallback if WebGL fails is not working correctly - actually it works, but the lines are visible beyond their border... I just set webgl as a requirement, too much work to ensure fallback works.
 * [X] Lowlighting cue confusing / hard to see
 * [ ] Not everyone clicked through to the end? Make sure instructions exist
+
+### Possible other issues:
+
+* [ ] Things don't all update correctly on resize
 * [ ] People could still potentially wait during the "press space to continue" bits...
 * [ ] Some people found it excessively difficult 
 
