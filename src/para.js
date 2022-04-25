@@ -17,7 +17,7 @@ export const N_LINES = 4; // How many lines/band define a ship
 export const N_NOISE = 1; // How many lines/band will be random noise on normal trials
 export const P_CATCH = 0.0; // Proportion of catch trials
 export const N_PRACTICE_TRIALS = 2; // How many trials total of friend + foe
-export const N_TRIALS = 2; // How many trials total of high/lowlight (not including catch trials)
+export const N_TRIALS = 4; // How many trials total of high/lowlight (not including catch trials)
 
 export const N_SUPPORTED_TRIALS = N_TRIALS / 2; // how many trials per support
 
@@ -179,15 +179,17 @@ switch(c) {
         assistance_text = "This tool will highlight signals associated with foe ships in red, and friend ships in blue."
         break;
     case '1':
-        assistance_text = "This tool will dim all signals that are not associated with friend or foe ships."
+        assistance_text = "This tool will dim any signals that are not associated with friend or foe ships."
         break;
     case '2':
         assistance_text = "This tool will highlight signals associated with foe ships in red, and friend ships in blue, but these colours will fade out over time."
         break;
 }
 
+var which = SUPPORTED ? "lower" : "upper";
+
 export const training_instructions = `
-In the next phase, on one of the bands you will be given a tool which will assist you in classifying the vessel.
+In the next phase, on the ` + which + ` band, you will be given a tool which will assist you in classifying the vessel.
 ` + assistance_text + keypress_text + `Press the 'space' key to begin.`;
 
 
