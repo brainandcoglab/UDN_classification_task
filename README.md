@@ -25,9 +25,9 @@ This branch will implement all changes required for two follow-up experiments - 
 ### Piloting issues
 
 * [X] A or L key press instructions in lowlight refer to blue and red
-* [ ] Instructions for each condition and generally can be confusing
+* [X] Instructions for each condition and generally can be confusing
 * [ ] Canvas fallback if WebGL fails is not working correctly
-* [ ] Lowlighting cue confusing / hard to see
+* [X] Lowlighting cue confusing / hard to see
 * [ ] Not everyone clicked through to the end? Make sure instructions exist
 * [ ] People could still potentially wait during the "press space to continue" bits...
 * [ ] Some people found it excessively difficult 
