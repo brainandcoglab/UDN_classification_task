@@ -28,7 +28,7 @@ This branch will implement all changes required for two follow-up experiments - 
 * [X] Instructions for each condition and generally can be confusing
 * [X] Canvas fallback if WebGL fails is not working correctly - actually it works, but the lines are visible beyond their border... I just set webgl as a requirement, too much work to ensure fallback works.
 * [X] Lowlighting cue confusing / hard to see
-* [ ] Not everyone clicked through to the end? Make sure instructions exist
+* [X] Not everyone clicked through to the end? Make sure instructions exist - should be okay, added timer to final screen
 
 ### Possible other issues:
 

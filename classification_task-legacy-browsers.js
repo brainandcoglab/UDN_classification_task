@@ -2276,6 +2276,7 @@ function outroRoutineBegin(snapshot) {
     outroClock.reset(); // clock
     frameN = -1;
     continueRoutine = true; // until we're told otherwise
+    routineTimer.add(120.000000);
     // update component parameters for each repeat
     key_resp_5.keys = undefined;
     key_resp_5.rt = undefined;
@@ -2320,6 +2321,10 @@ function outroRoutineEachFrame() {
       outro_text.setAutoDraw(true);
     }
 
+    frameRemains = 0.0 + 120 - psychoJS.window.monitorFramePeriod * 0.75;  // most of one frame period left
+    if (outro_text.status === PsychoJS.Status.STARTED && t >= frameRemains) {
+      outro_text.setAutoDraw(false);
+    }
     
     // *key_resp_5* updates
     if (t >= 0.0 && key_resp_5.status === PsychoJS.Status.NOT_STARTED) {
@@ -2332,6 +2337,11 @@ function outroRoutineEachFrame() {
       psychoJS.window.callOnFlip(function() { key_resp_5.start(); }); // start on screen flip
       psychoJS.window.callOnFlip(function() { key_resp_5.clearEvents(); });
     }
+
+    frameRemains = 0.0 + 120 - psychoJS.window.monitorFramePeriod * 0.75;  // most of one frame period left
+    if (key_resp_5.status === PsychoJS.Status.STARTED && t >= frameRemains) {
+      key_resp_5.status = PsychoJS.Status.FINISHED;
+  }
 
     if (key_resp_5.status === PsychoJS.Status.STARTED) {
       let theseKeys = key_resp_5.getKeys({keyList: [], waitRelease: false});
@@ -2362,7 +2372,7 @@ function outroRoutineEachFrame() {
     });
     
     // refresh the screen if continuing
-    if (continueRoutine) {
+    if (continueRoutine && routineTimer.getTime() > 0) {
       return Scheduler.Event.FLIP_REPEAT;
     } else {
       return Scheduler.Event.NEXT;
@@ -2388,9 +2398,6 @@ function outroRoutineEnd() {
     key_resp_5.stop();
     psychoJS.experiment.addData('globalClockTime', globalClock.getTime());
     psychoJS.experiment.nextEntry();
-    // the Routine "outro" was not non-slip safe, so reset the non-slip timer
-    routineTimer.reset();
-    
     return Scheduler.Event.NEXT;
   };
 }
