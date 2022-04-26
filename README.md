@@ -40,7 +40,7 @@ This branch will implement all changes required for two follow-up experiments - 
 
 * [ ] Ensure automatic fullscreen
 * [ ] Sync hons2022 repository with Pavlovia
-* [ ] Ensure 8/64 trials
+* [ ] Ensure 8/64 trials, 65-80 per group
 * [ ] Ensure condition parameters are set up correctly
 * [ ] Ensure updated information sheet uploaded
 * [ ] Balance participant gender via Prolific
@@ -53,6 +53,7 @@ This branch will implement all changes required for two follow-up experiments - 
 * Changed number of trials per phase to 64, i.e., 4 blocks of 16 in which each possible configuration is seen
 * Confined area in which random line generation occurs
 * Allowed passing of condition as URL parameter (e.g. ?condition=[0|1|2])
+* Updated initial questions to include colour temp. software question
 
 ### Desired (kept from main branch)
 
