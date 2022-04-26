@@ -44,6 +44,7 @@ This branch will implement all changes required for two follow-up experiments - 
 * [ ] Ensure condition parameters are set up correctly
 * [ ] Ensure updated information sheet uploaded
 * [ ] Balance participant gender via Prolific
+* [ ] Add condition to postprocessing, at least one plot per condition
 
 
 ### Main updates
