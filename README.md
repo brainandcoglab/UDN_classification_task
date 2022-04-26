@@ -46,6 +46,17 @@ This branch will implement all changes required for two follow-up experiments - 
 * [ ] Balance participant gender via Prolific
 * [ ] Add condition to postprocessing, at least one plot per condition
 
+### More stuff to do:
+
+* Check out the mean accuracy for last experiment over the course of baseline (divide into 4 or so) - at what point does the inflection occur? - if that's around 32 that'd be good. 
+* Worried about difficulty, so will add lookup tables into the baseline phase - 32 lookup supported, 32 without, ideally
+* Then, can remove practice and any reference to it
+* Test brave results - try and identify browser (or at least just record useragent)
+* Send out to peeps + lab for piloting once done
+* Add instructions on how long it will take, and to find a quiet place without distractions, you'll get 2 2 minute breaks, etc... 
+* Timer on-screen for breaks?
+* Calculate LR bias trick probability afterwards?
+
 
 ### Main updates
 
