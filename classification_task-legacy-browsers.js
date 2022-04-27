@@ -212,7 +212,7 @@ async function experimentInit() {
   text = new visual.TextStim({
     win: psychoJS.window,
     name: 'text',
-    text: "In this experiement, you will be taking on the role of a SONAR operator. You will be classifying different ship types using SONAR signals which appear as vertical lines on a simulated display. This experiment will be testing different ways of supporting SONAR operators to make decisions. \n\nThere will be three sections of the experiment, in which you will recieve different types of assistance to make classifications. Please try your best to classify the vessels. The experiment will likely take around 30 minutes in total to complete.\n\nPlease press the 'space' key to continue to the tutorial.",
+    text: "In this experiement, you will be taking on the role of a SONAR operator. You will be classifying different ship types using SONAR signals which appear as vertical lines on a simulated display. This experiment will be testing different ways of supporting SONAR operators to make decisions. \n\nThere will be three sections of the experiment, in which you will recieve different types of assistance to make classifications. Please do your best to classify the vessels. Try to find a quiet place without distractions to complete this experiment. The experiment will likely take around 25 minutes in total to complete. There will also be two opportunities to take a 2 minute break.\n\nPlease press the 'space' key to continue to the tutorial.",
     font: '"Times New Roman"',
     units: undefined, 
     pos: [0, 0], height: 0.04,  wrapWidth: undefined, ori: 0.0,
@@ -1786,7 +1786,7 @@ function debriefRoutineEachFrame() {
         button_2.fillColor = 'darkgrey';
     }
     
-    var time = routineTimer.getTime();
+    var time = routineTimer.getTime() + 1;
     var minutes = Math.floor(time / 60);
     var seconds = Math.floor(time % 60);
     var timecode = minutes+':'+('0' + seconds).slice(-2)
@@ -1794,8 +1794,8 @@ function debriefRoutineEachFrame() {
     
     debrief_text.text = `Great work, this phase is now complete!
     
-    Please select along each scale below to indicate your assessment of where the task you just performed falls along the continuum between the two descriptions.` +
-        'You will have to continue after 2 minutes (' + timecode + ' remaining)';
+    Select along each scale below to indicate your assessment of where the task you just performed falls along the continuum between the two descriptions.` +
+        'You may take a break for 2 minutes before continuing (' + timecode + ' remaining)';
     
     // *debrief_text* updates
     if (t >= 0.0 && debrief_text.status === PsychoJS.Status.NOT_STARTED) {
