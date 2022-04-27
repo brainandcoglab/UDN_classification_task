@@ -73,8 +73,8 @@ psychoJS.start({
   expName: expName,
   expInfo: expInfo,
   resources: [
-    {'name': 'data/SWAT.csv', 'path': 'data/SWAT.csv'},
     {'name': 'data/initial_qs.csv', 'path': 'data/initial_qs.csv'},
+    {'name': 'data/SWAT.csv', 'path': 'data/SWAT.csv'},
     {'name': 'data/bg.png', 'path': 'data/bg.png'},
     {'name': 'data/trust.csv', 'path': 'data/trust.csv'}
   ]
@@ -99,7 +99,7 @@ async function updateInfo() {
 
   // add info from the URL:
   util.addInfoFromUrl(expInfo);
-  psychoJS.setRedirectUrls('https://app.prolific.co/submissions/complete?cc=72A96484', '');
+  psychoJS.setRedirectUrls('https://app.prolific.co/submissions/complete?cc=90A59712', '');
 
   return Scheduler.Event.NEXT;
 }
@@ -180,6 +180,13 @@ async function experimentInit() {
   
   form._visual.responseStims[1].autofocus = true;
   form._visual.responseStims[2].autofocus = false;
+  
+  
+  // Check if we're using WebGL
+  if(psychoJS.window._renderer.type != PIXI.RENDERER_TYPE.WEBGL) {
+    throw "WebGL must be enabled to run this task. Please enable WebGL and try again."
+  }
+  
   button = new visual.ButtonStim({
     win: psychoJS.window,
     name: 'button',
@@ -205,7 +212,7 @@ async function experimentInit() {
   text = new visual.TextStim({
     win: psychoJS.window,
     name: 'text',
-    text: "In this experiement, you will be taking on the role of a SONAR operator. You will be classifying different ship types using SONAR signals which appear as vertical lines on a simulated display. This experiment will be testing different ways of supporting SONAR operators to make decisions. \n\nThere will be four sections of the experiment, in which you will recieve different types of assistance to make classifications. Please try your best to classify the vessels. The experiment will likely take around 30 minutes in total to complete.\n\nPlease press the 'space' key to continue to the tutorial.",
+    text: "In this experiement, you will be taking on the role of a SONAR operator. You will be classifying different ship types using SONAR signals which appear as vertical lines on a simulated display. This experiment will be testing different ways of supporting SONAR operators to make decisions. \n\nThere will be three sections of the experiment, in which you will recieve different types of assistance to make classifications. Please do your best to classify the vessels. Try to find a quiet place without distractions to complete this experiment. The experiment will likely take around 25 minutes in total to complete. There will also be two opportunities to take a 2 minute break.\n\nPlease press the 'space' key to continue to the tutorial.",
     font: '"Times New Roman"',
     units: undefined, 
     pos: [0, 0], height: 0.04,  wrapWidth: undefined, ori: 0.0,
@@ -380,9 +387,6 @@ async function experimentInit() {
           para.BAND_RANGES[1],
       )
   ];
-  
-  psychoJS.experiment.addData('practice_signatures_friend', para.PRACTICE_SIGNATURES[0]); 
-  psychoJS.experiment.addData('practice_signatures_foe', para.PRACTICE_SIGNATURES[1]); 
   
   psychoJS.experiment.addData('signatures_friend', para.VESSEL_SIGNATURES[0]);
   psychoJS.experiment.addData('signatures_foe', para.VESSEL_SIGNATURES[1]);
@@ -1278,7 +1282,6 @@ function instructionsRoutineBegin(snapshot) {
     key_resp_4.rt = undefined;
     _key_resp_4_allKeys = [];
     instructions_text.text = para.instructions[phase];
-    debrief_text.text = para.debrief[phase];
     
     // keep track of which components have finished
     instructionsComponents = [];
@@ -1407,13 +1410,14 @@ function trialRoutineBegin(snapshot) {
     var lookup_left = para.LOOKUP_TEXT[0][active_band];
     var lookup_right = para.LOOKUP_TEXT[1][active_band];
     switch(phase) {
-        case 0: // PRACTICE PHASE
-            lookup_left = para.PRACTICE_LOOKUP_TEXT[0][active_band];
-            lookup_right = para.PRACTICE_LOOKUP_TEXT[1][active_band];
-            break;
         case 1: // BASELINE PHASE
-            lookup_left = "Friend\n(Press A)";
-            lookup_right = "Foe\n(Press L)";
+            if(trials.thisN < para.LOOKUP_REMOVAL_TRIAL) {
+                lookup_left = para.LOOKUP_TEXT[0][active_band];
+                lookup_right = para.LOOKUP_TEXT[1][active_band];
+            } else {
+                lookup_left = "Friend\n(Press A)";
+                lookup_right = "Foe\n(Press L)";
+            }
             break;
         case 2: // TRAINING PHASE
             lookup_left = "Friend\n(Press A)";
@@ -1422,8 +1426,10 @@ function trialRoutineBegin(snapshot) {
                 if (!catch_trial)  { // Don't increment on catch trials
                     supported_count++; // increment supported counter
                 }
-                lookup_left = "Friend\n(Blue)\n(Press A)";
-                lookup_right = "Foe\n(Red)\n(Press L)";  
+                if(para.CONDITION != "LOWLIGHT") {
+                    lookup_left = "Friend\n(Blue)\n(Press A)";
+                    lookup_right = "Foe\n(Red)\n(Press L)";  
+                }
             }
             // get proportion for fading support
             let proportion = (supported_count-1) / para.N_SUPPORTED_TRIALS;
@@ -1554,6 +1560,7 @@ function trialRoutineEachFrame() {
         var band = bands[i];
         band.uniforms.frameN = frameN;
     }
+    
     // check for quit (typically the Esc key)
     if (psychoJS.experiment.experimentEnded || psychoJS.eventManager.getKeys({keyList:['escape']}).length > 0) {
       return quitPsychoJS('The [Escape] key was pressed. Goodbye!', false);
@@ -1619,8 +1626,6 @@ function trialRoutineEnd() {
     }
     
     switch(phase) {
-        case 0: // PRACTICE PHASE
-            break;
         case 1: // BASELINE PHASE
             break;
         case 2: // TRAINING PHASE
@@ -1780,6 +1785,17 @@ function debriefRoutineEachFrame() {
     } else {
         button_2.fillColor = 'darkgrey';
     }
+    
+    var time = routineTimer.getTime() + 1;
+    var minutes = Math.floor(time / 60);
+    var seconds = Math.floor(time % 60);
+    var timecode = minutes+':'+('0' + seconds).slice(-2)
+    
+    
+    debrief_text.text = `Great work, this phase is now complete!
+    
+    Select along each scale below to indicate your assessment of where the task you just performed falls along the continuum between the two descriptions.` +
+        'You may take a break for 2 minutes before continuing (' + timecode + ' remaining)';
     
     // *debrief_text* updates
     if (t >= 0.0 && debrief_text.status === PsychoJS.Status.NOT_STARTED) {
@@ -2267,6 +2283,7 @@ function outroRoutineBegin(snapshot) {
     outroClock.reset(); // clock
     frameN = -1;
     continueRoutine = true; // until we're told otherwise
+    routineTimer.add(120.000000);
     // update component parameters for each repeat
     key_resp_5.keys = undefined;
     key_resp_5.rt = undefined;
@@ -2311,6 +2328,10 @@ function outroRoutineEachFrame() {
       outro_text.setAutoDraw(true);
     }
 
+    frameRemains = 0.0 + 120 - psychoJS.window.monitorFramePeriod * 0.75;  // most of one frame period left
+    if (outro_text.status === PsychoJS.Status.STARTED && t >= frameRemains) {
+      outro_text.setAutoDraw(false);
+    }
     
     // *key_resp_5* updates
     if (t >= 0.0 && key_resp_5.status === PsychoJS.Status.NOT_STARTED) {
@@ -2323,6 +2344,11 @@ function outroRoutineEachFrame() {
       psychoJS.window.callOnFlip(function() { key_resp_5.start(); }); // start on screen flip
       psychoJS.window.callOnFlip(function() { key_resp_5.clearEvents(); });
     }
+
+    frameRemains = 0.0 + 120 - psychoJS.window.monitorFramePeriod * 0.75;  // most of one frame period left
+    if (key_resp_5.status === PsychoJS.Status.STARTED && t >= frameRemains) {
+      key_resp_5.status = PsychoJS.Status.FINISHED;
+  }
 
     if (key_resp_5.status === PsychoJS.Status.STARTED) {
       let theseKeys = key_resp_5.getKeys({keyList: [], waitRelease: false});
@@ -2353,7 +2379,7 @@ function outroRoutineEachFrame() {
     });
     
     // refresh the screen if continuing
-    if (continueRoutine) {
+    if (continueRoutine && routineTimer.getTime() > 0) {
       return Scheduler.Event.FLIP_REPEAT;
     } else {
       return Scheduler.Event.NEXT;
@@ -2379,8 +2405,10 @@ function outroRoutineEnd() {
     key_resp_5.stop();
     psychoJS.experiment.addData('globalClockTime', globalClock.getTime());
     psychoJS.experiment.nextEntry();
-    // the Routine "outro" was not non-slip safe, so reset the non-slip timer
-    routineTimer.reset();
+    
+    
+    psychoJS.experiment.addData('userAgent', navigator.userAgent);
+    psychoJS.experiment.nextEntry();
     
     return Scheduler.Event.NEXT;
   };

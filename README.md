@@ -22,12 +22,53 @@ This branch will implement all changes required for two follow-up experiments - 
 * [X] Ensure text makes sense
 * [X] Ensure fading cue works correctly, integrate results from calibration study
 
+### Piloting issues
+
+* [X] A or L key press instructions in lowlight refer to blue and red
+* [X] Instructions for each condition and generally can be confusing
+* [X] Canvas fallback if WebGL fails is not working correctly - actually it works, but the lines are visible beyond their border... I just set webgl as a requirement, too much work to ensure fallback works.
+* [X] Lowlighting cue confusing / hard to see
+* [X] Not everyone clicked through to the end? Make sure instructions exist - should be okay, added timer to final screen
+
+### Possible other issues:
+
+* [ ] Things don't all update correctly on resize
+* [ ] People could still potentially wait during the "press space to continue" bits...
+* [ ] Some people found it excessively difficult 
+
+### Prelaunch checklist
+
+* [ ] Ensure automatic fullscreen
+* [ ] Sync hons2022 repository with Pavlovia
+* [ ] Ensure 8/64 trials, 65-80 per group
+* [ ] Ensure condition parameters are set up correctly
+* [ ] Ensure updated information sheet uploaded
+* [ ] Balance participant gender via Prolific
+* [ ] Add condition to postprocessing, at least one plot per condition
+
+### More stuff to do:
+
+* [X] Check out the mean accuracy for last experiment over the course of baseline (divide into 4 or so) - at what point does the inflection occur? - if that's around 32 that'd be good. 
+    * So - seemed like actually they performed pretty much great from the get-go... So honestly it probably won't matter too much. But they do actually reach the peak around 32 trials (on average)
+* [X] Worried about difficulty, so will add lookup tables into the baseline phase - 32 lookup supported, 32 without, ideally
+* [X] Then, can remove practice and any reference to it <- have removed it all
+* [X] Test brave results - worked fine? I wonder if it was a font issue? Doesn't appear to be.. things are somehow just the wrong scale...
+* [X] try and identify browser - record user agent
+* [X] Timer on-screen for breaks?
+* [X] Add instructions on how long it will take, and to find a quiet place without distractions, you'll get 2 2 minute breaks, etc... 
+* [ ] Send out to peeps + lab for piloting once done
+
+* Calculate LR bias trick probability afterwards?
+* Addition of ~6 catch trials made previous slightly easier...
+
+
 ### Main updates
 
 * Fixed an issue in which overlay outline would not properly align with edges of other shapes
 * Changed number of trials per phase to 64, i.e., 4 blocks of 16 in which each possible configuration is seen
 * Confined area in which random line generation occurs
 * Allowed passing of condition as URL parameter (e.g. ?condition=[0|1|2])
+* Updated initial questions to include colour temp. software question
 
 ### Desired (kept from main branch)
 

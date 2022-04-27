@@ -4,3 +4,4 @@ Approximately how many hours did you spend playing video games in the last week?
 "Which game did you play the most this year? (Enter ""None"" if you didn't play any)",free_text,enter response here,,,
 Visual perception,description,,,,
 Do you have any form of color blindness?,choice,"Yes,No",,,
+Do you use software to change the colour temperature of your screen (e.g. f.lux)?,choice,"Yes,No",,,

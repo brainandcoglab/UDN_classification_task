@@ -235,7 +235,7 @@ function Band(window, pos, size=[1.0, 0.2], lines, is_signal, nticks, range) {
     this.setLowlight = function(b) {
         for(var i = 0; i < this.lines.is_signal.length; i++) {
             if (b && !this.lines.is_signal[i]) {
-                this.lines.rects[i].fillColor = [-1,-0.5,-1];
+                this.lines.rects[i].fillColor = [-1,-0.6,-1];
             } else {
                 this.lines.rects[i].fillColor = "green";
             }
