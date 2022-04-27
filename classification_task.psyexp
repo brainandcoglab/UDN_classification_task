@@ -295,7 +295,7 @@
         <Param name="Each JS Frame" updates="constant" val="" valType="extendedCode"/>
         <Param name="End Experiment" updates="constant" val="" valType="extendedCode"/>
         <Param name="End JS Experiment" updates="constant" val="" valType="extendedCode"/>
-        <Param name="End JS Routine" updates="constant" val="psychoJS.experiment.addData('globalClockTime', globalClock.getTime());&amp;#10;psychoJS.experiment.nextEntry();" valType="extendedCode"/>
+        <Param name="End JS Routine" updates="constant" val="psychoJS.experiment.addData('globalClockTime', globalClock.getTime());&amp;#10;psychoJS.experiment.nextEntry();&amp;#10;&amp;#10;&amp;#10;psychoJS.experiment.addData('userAgent', navigator.userAgent);&amp;#10;psychoJS.experiment.nextEntry();&amp;#10;" valType="extendedCode"/>
         <Param name="End Routine" updates="constant" val="" valType="extendedCode"/>
         <Param name="disabled" updates="None" val="False" valType="bool"/>
         <Param name="name" updates="None" val="completion" valType="code"/>

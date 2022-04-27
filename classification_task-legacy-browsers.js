@@ -2394,6 +2394,11 @@ function outroRoutineEnd() {
     key_resp_5.stop();
     psychoJS.experiment.addData('globalClockTime', globalClock.getTime());
     psychoJS.experiment.nextEntry();
+    
+    
+    psychoJS.experiment.addData('userAgent', navigator.userAgent);
+    psychoJS.experiment.nextEntry();
+    
     return Scheduler.Event.NEXT;
   };
 }

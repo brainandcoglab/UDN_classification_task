@@ -52,10 +52,12 @@ This branch will implement all changes required for two follow-up experiments - 
     * So - seemed like actually they performed pretty much great from the get-go... So honestly it probably won't matter too much. But they do actually reach the peak around 32 trials (on average)
 * [X] Worried about difficulty, so will add lookup tables into the baseline phase - 32 lookup supported, 32 without, ideally
 * [X] Then, can remove practice and any reference to it <- have removed it all
-* [ ] Test brave results - try and identify browser (or at least just record useragent)
-* [ ] Send out to peeps + lab for piloting once done
+* [X] Test brave results - worked fine? I wonder if it was a font issue? Doesn't appear to be.. things are somehow just the wrong scale...
+* [X] try and identify browser - record user agent
 * [ ] Add instructions on how long it will take, and to find a quiet place without distractions, you'll get 2 2 minute breaks, etc... 
 * [ ] Timer on-screen for breaks?
+* [ ] Send out to peeps + lab for piloting once done
+
 * Calculate LR bias trick probability afterwards?
 * Addition of ~6 catch trials made previous slightly easier...
 
