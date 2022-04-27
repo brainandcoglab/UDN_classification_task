@@ -16,7 +16,7 @@ import * as band from "./band.js"
 export const N_LINES = 4; // How many lines/band define a ship
 export const N_NOISE = 1; // How many lines/band will be random noise on normal trials
 export const P_CATCH = 0.0; // Proportion of catch trials
-export const N_TRIALS = 64; // How many trials total of high/lowlight (not including catch trials)
+export const N_TRIALS = 4; // How many trials total of high/lowlight (not including catch trials)
 
 export const N_SUPPORTED_TRIALS = N_TRIALS / 2; // how many trials per support
 
@@ -129,20 +129,12 @@ Use the 'A' key to respond friend,
 Use the 'L' key to respond foe.
 `;
 
-const debrief_text = 'Please select along each scale below to indicate your assessment of where the task you just performed falls along the continuum between the two descriptions. You will automatically have to continue in 2 minutes.';
-
-
 export const baseline_instructions = `
 You're now ready to begin the first phase. You will be asked to classify an unknown vessel with the assistance of lookup tables to the left and right of the console. Eventually, these lookup tables will be removed.
 Some signals may not be associated with any ship classification, so be careful.
 Feedback will be provided on whether your classification was correct.
 
 ` + keypress_text + `Press the 'space' key to begin.`;
-
-
-export const baseline_debrief = `Great work, this phase is now complete!
-
-` + debrief_text;
 
 
 let assistance_text;
@@ -164,11 +156,6 @@ export const training_instructions = `
 In the next phase, you will again be asked to classify an unknown vessel. On the ` + which + ` band, you will be given a tool which will assist you in classifying the vessel.
 ` + assistance_text + keypress_text + `Press the 'space' key to begin.`;
 
-
-export const training_debrief = `Great work, this phase is now complete!
-
-` + debrief_text;
-
 export const test_instructions = `
 Well done, there is now only one final phase remaining. In this phase, you will not be given any assistance to classify vessels, or any feedback as to whether you were correct.
 Please try your best.
@@ -176,18 +163,8 @@ Please try your best.
 ` + keypress_text + `Press the 'space' key to begin.`;
 
 
-export const test_debrief = `Great work, this phase is now complete!
-
-` + debrief_text;
-
 export const instructions = {
     '1': baseline_instructions,
     '2': training_instructions,
     '3': test_instructions
-};
-
-export const debrief = {
-    '1': baseline_debrief,
-    '2': training_debrief,
-    '3': test_debrief
 };

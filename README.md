@@ -54,8 +54,8 @@ This branch will implement all changes required for two follow-up experiments - 
 * [X] Then, can remove practice and any reference to it <- have removed it all
 * [X] Test brave results - worked fine? I wonder if it was a font issue? Doesn't appear to be.. things are somehow just the wrong scale...
 * [X] try and identify browser - record user agent
+* [X] Timer on-screen for breaks?
 * [ ] Add instructions on how long it will take, and to find a quiet place without distractions, you'll get 2 2 minute breaks, etc... 
-* [ ] Timer on-screen for breaks?
 * [ ] Send out to peeps + lab for piloting once done
 
 * Calculate LR bias trick probability afterwards?

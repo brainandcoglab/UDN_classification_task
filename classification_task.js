@@ -1283,7 +1283,6 @@ function instructionsRoutineBegin(snapshot) {
     key_resp_4.rt = undefined;
     _key_resp_4_allKeys = [];
     instructions_text.text = para.instructions[phase];
-    debrief_text.text = para.debrief[phase];
     
     // keep track of which components have finished
     instructionsComponents = [];
@@ -1560,6 +1559,7 @@ function trialRoutineEachFrame() {
         var band = bands[i];
         band.uniforms.frameN = frameN;
     }
+    
     // check for quit (typically the Esc key)
     if (psychoJS.experiment.experimentEnded || psychoJS.eventManager.getKeys({keyList:['escape']}).length > 0) {
       return quitPsychoJS('The [Escape] key was pressed. Goodbye!', false);
@@ -1782,6 +1782,17 @@ function debriefRoutineEachFrame() {
     } else {
         button_2.fillColor = 'darkgrey';
     }
+    
+    var time = routineTimer.getTime();
+    var minutes = Math.floor(time / 60);
+    var seconds = Math.floor(time % 60);
+    var timecode = minutes+':'+('0' + seconds).slice(-2)
+    
+    
+    debrief_text.text = `Great work, this phase is now complete!
+    
+    Please select along each scale below to indicate your assessment of where the task you just performed falls along the continuum between the two descriptions.` +
+        'You will have to continue after 2 minutes (' + timecode + ' remaining)';
     
     // *debrief_text* updates
     if (t >= 0.0 && debrief_text.status === PsychoJS.Status.NOT_STARTED) {
