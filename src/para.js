@@ -16,7 +16,6 @@ import * as band from "./band.js"
 export const N_LINES = 4; // How many lines/band define a ship
 export const N_NOISE = 1; // How many lines/band will be random noise on normal trials
 export const P_CATCH = 0.0; // Proportion of catch trials
-export const N_PRACTICE_TRIALS = 8; // How many trials total of friend + foe
 export const N_TRIALS = 64; // How many trials total of high/lowlight (not including catch trials)
 
 export const N_SUPPORTED_TRIALS = N_TRIALS / 2; // how many trials per support
@@ -30,7 +29,7 @@ var exp = Math.floor(0.95 / MIN_DISTANCE) + 1;
 var req = ((N_LINES * 4) + 10) * 2;
 if (exp < req) console.log('Signature generation failure likely: suggest you decrease mindist');
 
-export const DEBUG_ENABLED = false; // Show condition in practice at start
+export const DEBUG_ENABLED = false; // Show condition at start
 
 // Which keypress should respond to which vessel
 export const VESSEL_MAP = {
@@ -51,7 +50,6 @@ export const SUPPORTED = Math.round(Math.random());
 export const UNSUPPORTED = 1 - SUPPORTED;
 
 export const PHASES = [
-    {phase: 0}, // Practice
     {phase: 1}, // Baseline
     {phase: 2}, // Training
     {phase: 3}  // Test
@@ -77,22 +75,6 @@ export const SUPPORT_STATUS = [
 ]
 
 const errstring = 'Experiment run order generation failed, please contact experimenter!';
-let practice_signatures;
-let practice_run_order = false;
-for (var canary = 0; !practice_run_order; canary++) {
-    if (canary > 10000) {
-        alert(errstring)
-        throw errstring;
-    }
-    let practice_lines = gen.signatures(N_LINES, MIN_DISTANCE);
-    if (!practice_lines) {
-        continue;
-    }
-    let practice_noise = practice_lines[0];
-    practice_signatures = practice_lines[1];
-    practice_run_order = gen.run_order(N_PRACTICE_TRIALS, N_LINES, N_NOISE, P_CATCH, practice_signatures, practice_noise, SUPPORTED);
-}
-export const PRACTICE_SIGNATURES = practice_signatures;
 
 let signatures;
 let baseline_run_order = false;
@@ -116,12 +98,11 @@ for (var canary = 0; !baseline_run_order || !training_run_order || !test_run_ord
     test_run_order = gen.run_order(N_TRIALS, N_LINES, N_NOISE, P_CATCH, signatures, noise, SUPPORTED);
 }
 export const VESSEL_SIGNATURES = signatures;
-export const RUN_ORDER = [
-    practice_run_order,
-    baseline_run_order,
-    training_run_order,
-    test_run_order
-];
+export const RUN_ORDER = {
+    '1': baseline_run_order,
+    '2': training_run_order,
+    '3': test_run_order
+};
 
 // Set apparent range on bands
 export const BAND_RANGES = [
@@ -138,8 +119,10 @@ export const NTICKS_BOTTOM = 10;
 export const WIDTH = 1.0;
 
 // Generate text to be shown on lookup table
-export const PRACTICE_LOOKUP_TEXT = gen.lookup_text(PRACTICE_SIGNATURES, BAND_RANGES);
 export const LOOKUP_TEXT = gen.lookup_text(VESSEL_SIGNATURES, BAND_RANGES);
+
+// What trial number in baseline will the lookup be removed
+export const LOOKUP_REMOVAL_TRIAL = N_TRIALS / 2; // halfway point
 
 const keypress_text = `
 Use the 'A' key to respond friend,
@@ -149,21 +132,10 @@ Use the 'L' key to respond foe.
 const debrief_text = 'Please select along each scale below to indicate your assessment of where the task you just performed falls along the continuum between the two descriptions. You will automatically have to continue in 2 minutes.';
 
 
-export const practice_instructions = `
-You're now ready to begin the practice phase. You will be asked to classify an unknown vessel with the assistance of lookup tables to the left and right of the console.
+export const baseline_instructions = `
+You're now ready to begin the first phase. You will be asked to classify an unknown vessel with the assistance of lookup tables to the left and right of the console. Eventually, these lookup tables will be removed.
 Some signals may not be associated with any ship classification, so be careful.
 Feedback will be provided on whether your classification was correct.
-
-` + keypress_text + `Press the 'space' key to begin.`;
-
-export const practice_debrief = `Great work, the practice phase is now complete!
-
-` + debrief_text;
-
-export const baseline_instructions = `
-In the next phase, you will again be asked to classify an unknown vessel, but without the assistance of lookup tables.
-The friend and foe signals in this phase are different from the practice phase.
-Feedback will be provided on whether your classification was correct. 
 
 ` + keypress_text + `Press the 'space' key to begin.`;
 
@@ -189,7 +161,7 @@ switch(c) {
 var which = SUPPORTED ? "lower" : "upper";
 
 export const training_instructions = `
-In the next phase, on the ` + which + ` band, you will be given a tool which will assist you in classifying the vessel.
+In the next phase, you will again be asked to classify an unknown vessel. On the ` + which + ` band, you will be given a tool which will assist you in classifying the vessel.
 ` + assistance_text + keypress_text + `Press the 'space' key to begin.`;
 
 
@@ -208,16 +180,14 @@ export const test_debrief = `Great work, this phase is now complete!
 
 ` + debrief_text;
 
-export const instructions = [
-    practice_instructions,
-    baseline_instructions,
-    training_instructions,
-    test_instructions
-];
+export const instructions = {
+    '1': baseline_instructions,
+    '2': training_instructions,
+    '3': test_instructions
+};
 
-export const debrief = [
-    practice_debrief,
-    baseline_debrief,
-    training_debrief,
-    test_debrief
-];
+export const debrief = {
+    '1': baseline_debrief,
+    '2': training_debrief,
+    '3': test_debrief
+};

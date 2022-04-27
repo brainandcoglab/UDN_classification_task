@@ -82,9 +82,9 @@ psychoJS.start({
   expInfo: expInfo,
   resources: [
     {'name': 'data/initial_qs.csv', 'path': 'data/initial_qs.csv'},
+    {'name': 'data/SWAT.csv', 'path': 'data/SWAT.csv'},
     {'name': 'data/bg.png', 'path': 'data/bg.png'},
-    {'name': 'data/trust.csv', 'path': 'data/trust.csv'},
-    {'name': 'data/SWAT.csv', 'path': 'data/SWAT.csv'}
+    {'name': 'data/trust.csv', 'path': 'data/trust.csv'}
   ]
 });
 
@@ -220,7 +220,7 @@ async function experimentInit() {
   text = new visual.TextStim({
     win: psychoJS.window,
     name: 'text',
-    text: "In this experiement, you will be taking on the role of a SONAR operator. You will be classifying different ship types using SONAR signals which appear as vertical lines on a simulated display. This experiment will be testing different ways of supporting SONAR operators to make decisions. \n\nThere will be four sections of the experiment, in which you will recieve different types of assistance to make classifications. Please try your best to classify the vessels. The experiment will likely take around 30 minutes in total to complete.\n\nPlease press the 'space' key to continue to the tutorial.",
+    text: "In this experiement, you will be taking on the role of a SONAR operator. You will be classifying different ship types using SONAR signals which appear as vertical lines on a simulated display. This experiment will be testing different ways of supporting SONAR operators to make decisions. \n\nThere will be three sections of the experiment, in which you will recieve different types of assistance to make classifications. Please try your best to classify the vessels. The experiment will likely take around 30 minutes in total to complete.\n\nPlease press the 'space' key to continue to the tutorial.",
     font: '"Times New Roman"',
     units: undefined, 
     pos: [0, 0], height: 0.04,  wrapWidth: undefined, ori: 0.0,
@@ -395,9 +395,6 @@ async function experimentInit() {
           para.BAND_RANGES[1],
       )
   ];
-  
-  psychoJS.experiment.addData('practice_signatures_friend', para.PRACTICE_SIGNATURES[0]); 
-  psychoJS.experiment.addData('practice_signatures_foe', para.PRACTICE_SIGNATURES[1]); 
   
   psychoJS.experiment.addData('signatures_friend', para.VESSEL_SIGNATURES[0]);
   psychoJS.experiment.addData('signatures_foe', para.VESSEL_SIGNATURES[1]);
@@ -1414,13 +1411,14 @@ function trialRoutineBegin(snapshot) {
     var lookup_left = para.LOOKUP_TEXT[0][active_band];
     var lookup_right = para.LOOKUP_TEXT[1][active_band];
     switch(phase) {
-        case 0: // PRACTICE PHASE
-            lookup_left = para.PRACTICE_LOOKUP_TEXT[0][active_band];
-            lookup_right = para.PRACTICE_LOOKUP_TEXT[1][active_band];
-            break;
         case 1: // BASELINE PHASE
-            lookup_left = "Friend\n(Press A)";
-            lookup_right = "Foe\n(Press L)";
+            if(trials.thisN < para.LOOKUP_REMOVAL_TRIAL) {
+                lookup_left = para.LOOKUP_TEXT[0][active_band];
+                lookup_right = para.LOOKUP_TEXT[1][active_band];
+            } else {
+                lookup_left = "Friend\n(Press A)";
+                lookup_right = "Foe\n(Press L)";
+            }
             break;
         case 2: // TRAINING PHASE
             lookup_left = "Friend\n(Press A)";
@@ -1627,8 +1625,6 @@ function trialRoutineEnd() {
     }
     
     switch(phase) {
-        case 0: // PRACTICE PHASE
-            break;
         case 1: // BASELINE PHASE
             break;
         case 2: // TRAINING PHASE
