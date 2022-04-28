@@ -1,5 +1,5 @@
 import * as jl from "./johnlib.js"
-import { util } from "../lib/psychojs-2021.2.3.js";
+import { util } from "../nolib/psychojs-2021.2.3.js";
 
 // Returns a fn which may be used by binary search to tell whether lines are too close
 function float_compare_mindistance(min = 0.1/3) {

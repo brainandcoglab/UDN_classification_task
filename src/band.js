@@ -1,5 +1,5 @@
-import * as PIXI from "../lib/pixi-legacy.min.js"
-import { util, visual } from '../lib/psychojs-2021.2.3.js';
+import * as PIXI from "../nolib/pixi-legacy.min.js"
+import { util, visual } from '../nolib/psychojs-2021.2.3.js';
 import * as jl from "./johnlib.js"
 // Shaders
 import * as shaders from "./shaders.js"

@@ -1,4 +1,4 @@
-import * as PIXI from "../lib/pixi-legacy.min.js"
+import * as PIXI from "../nolib/pixi-legacy.min.js"
 
 // Modified from https://github.com/pixijs/pixijs/wiki/v5-Creating-filters
 // default available: PIXI.Filter.defaultVertexSrc;

@@ -2,7 +2,7 @@
  * Classification_Task Test *
  ****************************/
 
-import { core, data, sound, util, visual } from './lib/psychojs-2021.2.3.js';
+import { core, data, sound, util, visual } from './nolib/psychojs-2021.2.3.js';
 const { PsychoJS } = core;
 const { TrialHandler } = data;
 const { Scheduler } = util;
@@ -25,7 +25,7 @@ import * as band from "./src/band.js"
 // Inital parameters
 import * as para from "./src/para.js"
 // PIXI
-import * as PIXI from "./lib/pixi-legacy.min.js"
+import * as PIXI from "./nolib/pixi-legacy.min.js"
 // init psychoJS:
 const psychoJS = new PsychoJS({
   debug: true
