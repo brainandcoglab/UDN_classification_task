@@ -81,10 +81,10 @@ psychoJS.start({
   expName: expName,
   expInfo: expInfo,
   resources: [
-    {'name': 'data/initial_qs.csv', 'path': 'data/initial_qs.csv'},
-    {'name': 'data/trust.csv', 'path': 'data/trust.csv'},
-    {'name': 'data/SWAT.csv', 'path': 'data/SWAT.csv'},
-    {'name': 'data/bg.png', 'path': 'data/bg.png'}
+    {'name': 'res/initial_qs.csv', 'path': 'res/initial_qs.csv'},
+    {'name': 'res/SWAT.csv', 'path': 'res/SWAT.csv'},
+    {'name': 'res/bg.png', 'path': 'res/bg.png'},
+    {'name': 'res/trust.csv', 'path': 'res/trust.csv'}
   ]
 });
 
@@ -165,7 +165,7 @@ async function experimentInit() {
   init_qsClock = new util.Clock();
   form = new visual.Form({
       win : psychoJS.window, name:'form',
-      items : 'data/initial_qs.csv',
+      items : 'res/initial_qs.csv',
       textHeight : 0.03,
       font : '"Times New Roman"',
       randomize : false,
@@ -328,7 +328,7 @@ async function experimentInit() {
   image = new visual.ImageStim({
     win : psychoJS.window,
     name : 'image', units : undefined, 
-    image : 'data/bg.png', mask : undefined,
+    image : 'res/bg.png', mask : undefined,
     ori : 0.0, pos : [0, 0], size : [1.25, 0.9],
     color : new util.Color([1, 1, 1]), opacity : undefined,
     flipHoriz : false, flipVert : false,
@@ -418,7 +418,7 @@ async function experimentInit() {
   debriefClock = new util.Clock();
   debrief_form = new visual.Form({
       win : psychoJS.window, name:'debrief_form',
-      items : 'data/SWAT.csv',
+      items : 'res/SWAT.csv',
       textHeight : 0.03,
       font : '"Times New Roman"',
       randomize : false,
@@ -517,7 +517,7 @@ async function experimentInit() {
   trust_qsClock = new util.Clock();
   trust = new visual.Form({
       win : psychoJS.window, name:'trust',
-      items : 'data/trust.csv',
+      items : 'res/trust.csv',
       fontSize : 0.025,
       font : '"Times New Roman"',
       randomize : false,
