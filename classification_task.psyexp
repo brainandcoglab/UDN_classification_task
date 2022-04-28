@@ -24,7 +24,7 @@
     <Param name="Show info dlg" updates="None" val="True" valType="bool"/>
     <Param name="Show mouse" updates="None" val="False" valType="bool"/>
     <Param name="Units" updates="None" val="height" valType="str"/>
-    <Param name="Use version" updates="None" val="" valType="str"/>
+    <Param name="Use version" updates="None" val="2021.2.3" valType="str"/>
     <Param name="Window size (pixels)" updates="None" val="[1080, 1920]" valType="list"/>
     <Param name="blendMode" updates="None" val="avg" valType="str"/>
     <Param name="color" updates="None" val="black" valType="color"/>
@@ -40,7 +40,7 @@
     <Param name="elTrackEyes" updates="None" val="RIGHT_EYE" valType="str"/>
     <Param name="elTrackingMode" updates="None" val="PUPIL_CR_TRACKING" valType="str"/>
     <Param name="expName" updates="None" val="classification_task" valType="str"/>
-    <Param name="exportHTML" updates="None" val="on Sync" valType="str"/>
+    <Param name="exportHTML" updates="None" val="on Save" valType="str"/>
     <Param name="eyetracker" updates="None" val="None" valType="str"/>
     <Param name="gpAddress" updates="None" val="127.0.0.1" valType="str"/>
     <Param name="gpPort" updates="None" val="4242" valType="num"/>

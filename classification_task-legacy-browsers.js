@@ -74,9 +74,9 @@ psychoJS.start({
   expInfo: expInfo,
   resources: [
     {'name': 'data/initial_qs.csv', 'path': 'data/initial_qs.csv'},
+    {'name': 'data/trust.csv', 'path': 'data/trust.csv'},
     {'name': 'data/SWAT.csv', 'path': 'data/SWAT.csv'},
-    {'name': 'data/bg.png', 'path': 'data/bg.png'},
-    {'name': 'data/trust.csv', 'path': 'data/trust.csv'}
+    {'name': 'data/bg.png', 'path': 'data/bg.png'}
   ]
 });
 
