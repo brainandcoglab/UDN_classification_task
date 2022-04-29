@@ -1,0 +1,3 @@
+﻿usingWebGL,participant,session,date,expName,psychopyVersion,OS,frameRate,PROLIFIC_PID,STUDY_ID,SESSION_ID,signatures_friend,signatures_foe,band_ranges_top,band_ranges_bottom
+TRUE,607b6943b02ad525b94b458b,001,2022-04-29_02h03.56.280,classification_task,2021.2.3,Win32,144.4460494,607b6943b02ad525b94b458b,626b377229c10585ec392f89,626b394432a306a23d9b7ee8,,,,
+,607b6943b02ad525b94b458b,001,2022-04-29_02h03.56.280,classification_task,2021.2.3,Win32,144.4460494,607b6943b02ad525b94b458b,626b377229c10585ec392f89,626b394432a306a23d9b7ee8,"[[""0.282"",""0.424"",""0.863"",""0.900""],[""0.201"",""0.358"",""0.607"",""0.970""]]","[[""0.025"",""0.102"",""0.520"",""0.702""],[""0.060"",""0.158"",""0.665"",""0.829""]]","[1,10]","[100,1000]"
