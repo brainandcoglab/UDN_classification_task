@@ -73,6 +73,8 @@ export const CONDITIONS = [
 ]
 export const CONDITION = CONDITIONS[c];
 
+console.log(CONDITION);
+
 // This was previously used as within-subjects conditions, now it is support/unsupport
 export const SUPPORT_STATUS = [
     {supported: 0},
