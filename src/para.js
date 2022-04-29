@@ -58,7 +58,12 @@ export const PHASES = [
 // This script is initialized before expInfo object anyway,
 // So will have to get URL parameters directly like so
 var url = new URL(window.location.href);
-var c = url.searchParams.get("condition"); // integer from 0 to 2
+
+//var c = url.searchParams.get("condition"); // integer from 0 to 2
+
+// Randomise condition
+var c = Math.floor((Math.random()*3));
+
 
 // Need to ensure that this works too
 export const CONDITIONS = [
