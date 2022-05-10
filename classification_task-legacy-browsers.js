@@ -2409,6 +2409,9 @@ function outroRoutineEnd() {
     
     psychoJS.experiment.addData('userAgent', navigator.userAgent);
     psychoJS.experiment.nextEntry();
+
+    psychoJS.experiment.addData('manualCondition', para.CONDITION);
+    psychoJS.experiment.nextEntry();
     
     return Scheduler.Event.NEXT;
   };
