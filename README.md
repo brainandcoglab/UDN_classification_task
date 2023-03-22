@@ -1,6 +1,6 @@
-# UDN Submarine Study 1: Honours 2022 Edition
+# UDN Submarine Study 1: Honours 2023 Edition
 
-This branch will implement all changes required for two follow-up experiments - fading/TAC and the controls.
+This branch will implement the monochromatic highlight and variable noise levels.
 
 ## Notes
 
