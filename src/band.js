@@ -206,7 +206,7 @@ function Band(window, pos, size=[1.0, 0.2], lines, is_signal, nticks, range) {
     this.setHighlight = function(b, v) {
         for(var i = 0; i < this.lines.is_signal.length; i++) {
             if (b && this.lines.is_signal[i]) {
-                this.lines.overlays[i].opacity = 1.0;
+                this.lines.overlays[i].opacity = 0.0;
                 this.lines.rects[i].fillColor = "yellow";
                 this.lines.overlays[i].lineColor = "yellow";
             } else {

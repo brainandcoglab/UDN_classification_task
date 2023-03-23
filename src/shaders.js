@@ -75,7 +75,7 @@ void main() {
     vec4 colour = texture2D(uSampler, vTextureCoord);
     
     float intensity = (0.5 - abs(filterCoord.x - 0.5)) * 3.0;
-    gl_FragColor = vec4(colour.xyz * intensity, 1.0);
+    gl_FragColor = vec4(colour.xyz * intensity, 1.0 * intensity);
 }
 `;
 
