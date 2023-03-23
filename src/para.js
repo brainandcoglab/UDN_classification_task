@@ -13,14 +13,14 @@ import * as band from "./band.js"
 // Top = 0, Bottom = 1
 // Friend = 0, Foe = 1, Neither = -1
 
-export const N_LINES = 4; // How many lines/band define a ship
+export const N_LINES = 8; // How many lines/band define a ship
 export const N_NOISE = 1; // How many lines/band will be random noise on normal trials
 export const P_CATCH = 0.0; // Proportion of catch trials
 export const N_TRIALS = 64; // How many trials total of high/lowlight (not including catch trials)
 
 export const N_SUPPORTED_TRIALS = N_TRIALS / 2; // how many trials per support
 
-export const MIN_DISTANCE = 0.1/3; // Minimum distance between lines
+export const MIN_DISTANCE = 0.1/5; // Minimum distance between lines
 
 export const FADING_LEVELS = [1.0, 0.7, 0.4, 0.134];
 
