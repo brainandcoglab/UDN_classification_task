@@ -62,14 +62,14 @@ var url = new URL(window.location.href);
 //var c = url.searchParams.get("condition"); // integer from 0 to 2
 
 // Randomise condition
-var c = Math.floor((Math.random()*3));
+var c = Math.floor((Math.random()*2));
 
 
 // Need to ensure that this works too
 export const CONDITIONS = [
     "HIGHLIGHT",
     "LOWLIGHT",
-    "FADING",
+    //"FADING",
 ]
 export const CONDITION = CONDITIONS[c];
 
