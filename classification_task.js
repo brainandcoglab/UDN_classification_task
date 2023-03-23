@@ -1427,8 +1427,8 @@ function trialRoutineBegin(snapshot) {
                     supported_count++; // increment supported counter
                 }
                 if(para.CONDITION != "LOWLIGHT") {
-                    lookup_left = "Friend\n(Blue)\n(Press A)";
-                    lookup_right = "Foe\n(Red)\n(Press L)";  
+                    //lookup_left = "Friend\n(Blue)\n(Press A)";
+                    //lookup_right = "Foe\n(Red)\n(Press L)";  
                 }
             }
             // get proportion for fading support
