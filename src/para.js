@@ -13,8 +13,10 @@ import * as band from "./band.js"
 // Top = 0, Bottom = 1
 // Friend = 0, Foe = 1, Neither = -1
 
-export const N_LINES = 8; // How many lines/band define a ship
-export const N_NOISE = 1; // How many lines/band will be random noise on normal trials
+// Need to randomise here both N_LINES and N_NOISE.
+
+export const N_LINES = 6; // How many lines/band define a ship
+export const N_NOISE = 3; // How many lines/band will be random noise on normal trials
 export const P_CATCH = 0.0; // Proportion of catch trials
 export const N_TRIALS = 64; // How many trials total of high/lowlight (not including catch trials)
 
@@ -62,7 +64,9 @@ var url = new URL(window.location.href);
 //var c = url.searchParams.get("condition"); // integer from 0 to 2
 
 // Randomise condition
-var c = Math.floor((Math.random()*2));
+// TODO: REMOVE FOR ACTUAL EXP
+var c = 1;
+//var c = Math.floor((Math.random()*2));
 
 
 // Need to ensure that this works too
@@ -74,7 +78,7 @@ export const CONDITIONS = [
 export const CONDITION = CONDITIONS[c];
 
 console.log(CONDITION);
-
+console.log("TEST");
 // This was previously used as within-subjects conditions, now it is support/unsupport
 export const SUPPORT_STATUS = [
     {supported: 0},
