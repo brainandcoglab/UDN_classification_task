@@ -27,6 +27,8 @@ var url = new URL(window.location.href);
 
 var c = url.searchParams.get("condition"); // integer from 0 to 2
 var n_i = url.searchParams.get("noise"); // integer from 0 to 1
+var n_t = url.searchParams.get("ntrials");
+
 
 export const NOISE_ARRAY = [
     1,
@@ -46,11 +48,18 @@ export const LINES_ARRAY = [
 
 // Need to randomise here both N_LINES and N_NOISE.
 
+// TODO: REMOVE AFTER DEBUG
+if((n_t === undefined)) {
+    n_t = 64;
+}
+
 export const N_SIGNAL = 4; // keeping this constant
 export const N_LINES = LINES_ARRAY[n_i]; // How many lines/band define a ship
 export const N_NOISE = NOISE_ARRAY[n_i]; // How many lines/band will be random noise on normal trials
 export const P_CATCH = 0.0; // Proportion of catch trials
-export const N_TRIALS = 64; // How many trials total of high/lowlight (not including catch trials)
+export const N_TRIALS = n_t; // How many trials total of high/lowlight (not including catch trials)
+
+
 
 console.log(N_NOISE)
 console.log(N_LINES)
