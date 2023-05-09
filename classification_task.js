@@ -2406,6 +2406,9 @@ function outroRoutineEnd() {
 
     psychoJS.experiment.addData('manualCondition', para.CONDITION);
     psychoJS.experiment.nextEntry();
+
+    psychoJS.experiment.addData('manualNoise', para.N_NOISE);
+    psychoJS.experiment.nextEntry();
     
     return Scheduler.Event.NEXT;
   };

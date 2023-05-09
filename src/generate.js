@@ -16,7 +16,7 @@ function float_compare_mindistance(min = 0.1/3) {
 // Choose lines to be vessel signatures at top and bottom
 // Ensure one line for each quadrant
 // TODO: Ensure set distance from other lines
-function signatures(n_lines, mindist) {
+function signatures(n_signal, n_lines, mindist) {
     let sorted = []; // sorted list of all lines
     let vessel_signatures = [
         // T    B
@@ -24,11 +24,11 @@ function signatures(n_lines, mindist) {
         [ [ ], [ ] ]  // foe lines
     ];
     let distfn = float_compare_mindistance(mindist);
-    for (var i = 0; i < n_lines; i++) {
+    for (var i = 0; i < n_signal; i++) {
         for (var sig = 0; sig < 2; sig++) {
             // friend or foe...
-            var left = (sig ? jl.getvalright(i, n_lines) : jl.getvalleft(i, n_lines))  * 0.95 + 0.025;
-            var right = (sig ? jl.getvalright(i+1, n_lines) : jl.getvalleft(i+1, n_lines))  * 0.95 + 0.025;
+            var left = (sig ? jl.getvalright(i, n_signal) : jl.getvalleft(i, n_signal))  * 0.95 + 0.025;
+            var right = (sig ? jl.getvalright(i+1, n_signal) : jl.getvalleft(i+1, n_signal))  * 0.95 + 0.025;
             var spacing = right - left;
             for (var band = 0; band < 2; band++) {
                 let canary = 0;
@@ -57,8 +57,8 @@ function signatures(n_lines, mindist) {
     // Perform swap of the most extreme values, trying to make it harder
     for (var i = 0; i < 2; i++) {
         let tmp = vessel_signatures[0][i][0];
-        vessel_signatures[0][i][0] = vessel_signatures[1][i][n_lines - 1];
-        vessel_signatures[1][i][n_lines - 1] = tmp;
+        vessel_signatures[0][i][0] = vessel_signatures[1][i][n_signal - 1];
+        vessel_signatures[1][i][n_signal - 1] = tmp;
         vessel_signatures[0][i] = vessel_signatures[0][i].sort(function(a, b){return a-b});
         vessel_signatures[1][i] = vessel_signatures[1][i].sort(function(a, b){return a-b});
     }
@@ -134,13 +134,15 @@ function run_order(n_trials, n_lines, n_noise, p_catch, signatures, noise, suppo
             // Push both vessel types and bands
             for(var band = 0; band < 2; band++) {
                 for(var vessel = 0; vessel < 2; vessel++) {
-                    var lines = Array.from(signatures[vessel][band]);
+                    var lines_shuffle = util.shuffle(Array.from(signatures[vessel][band]));
+                    var lines = Array.from(is_signal);
+                    // We need to append to this to fill...
+
                     // Overkill for one line but if we scale beyond one this'll still work
                     var noise_shuffle = util.shuffle(noise);
+                    var z = 0;
                     for(var j = 0; j < is_signal.length; j++) {
-                        if (is_signal[j] == 0) {
-                            lines[j] = noise_shuffle[j];
-                        }
+                        lines[j] = (is_signal[j] == 0) ? noise_shuffle[j] : lines_shuffle[z++];
                     }
                     run_order.push({vessel: vessel, active_band: band, lines: lines, is_signal: is_signal, supported_pos: supported, catch_trial: false}); // friend
                 }

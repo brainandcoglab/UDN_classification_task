@@ -77,8 +77,8 @@ function Lines(window, pos, size, lines, is_signal) {
     }
     this.filter = new PIXI.Filter(shaders.vertex_custom, shaders.fragment_line);
     this.alpha_filter = new PIXI.filters.AlphaFilter(0.5);
-    for (var i = 0; i < this.lines.length; i++) {
-        let x = this.lines[i] / size[0];
+    for (var i = 0; i < this.is_signal.length; i++) {
+        let x = -1.1;//this.lines[i] / size[0]; // keep uninitialized values way out
         let line = new visual.ShapeStim({
             "win": window,
             "name": "line",

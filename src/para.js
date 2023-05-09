@@ -46,17 +46,18 @@ export const LINES_ARRAY = [
 
 // Need to randomise here both N_LINES and N_NOISE.
 
+export const N_SIGNAL = 4; // keeping this constant
 export const N_LINES = LINES_ARRAY[n_i]; // How many lines/band define a ship
 export const N_NOISE = NOISE_ARRAY[n_i]; // How many lines/band will be random noise on normal trials
 export const P_CATCH = 0.0; // Proportion of catch trials
-export const N_TRIALS = 5; // How many trials total of high/lowlight (not including catch trials)
+export const N_TRIALS = 64; // How many trials total of high/lowlight (not including catch trials)
 
 console.log(N_NOISE)
 console.log(N_LINES)
 
 export const N_SUPPORTED_TRIALS = N_TRIALS / 2; // how many trials per support
 
-export const MIN_DISTANCE = 0.1/5; // Minimum distance between lines
+export const MIN_DISTANCE = 0.1/3; // Minimum distance between lines
 
 export const FADING_LEVELS = [1.0, 0.7, 0.4, 0.134];
 
@@ -118,13 +119,13 @@ for (var canary = 0; !baseline_run_order || !training_run_order || !test_run_ord
         alert(errstring)
         throw errstring;
     }
-    let lines = gen.signatures(N_LINES, MIN_DISTANCE);
+    let lines = gen.signatures(N_SIGNAL, N_LINES, MIN_DISTANCE);
     if (!lines) {
         continue;
     }
     signatures = lines[1];
     let noise = lines[0];
-    console.log(noise)
+
 
     baseline_run_order = gen.run_order(N_TRIALS, N_LINES, N_NOISE, P_CATCH, signatures, noise, SUPPORTED);
     training_run_order = gen.run_order(N_TRIALS, N_LINES, N_NOISE, P_CATCH, signatures, noise, SUPPORTED);

@@ -2,6 +2,10 @@
 
 This branch will implement the monochromatic highlight and variable noise levels.
 
+- TUTE LINES - set that dynamically? or just don't worry?
+- also - main issue with generation - rect not set?
+- MINDIST
+
 ## Notes
 
 - Need to do some config to ensure this branch is the ["default" on Pavlovia](https://discourse.psychopy.org/t/ability-to-choose-a-different-branch-for-piloting-on-pavlovia/16202/4)
