@@ -13,12 +13,46 @@ import * as band from "./band.js"
 // Top = 0, Bottom = 1
 // Friend = 0, Foe = 1, Neither = -1
 
+
+
+/*
+ *  Temporarily set details via URL parameters
+ *  Basically, I can take group externally, or randomise internally.
+ *  JS randomisation might not end up being that random, though.
+ */
+
+// This script is initialized before expInfo object anyway,
+// So will have to get URL parameters directly like so
+var url = new URL(window.location.href);
+
+var c = url.searchParams.get("condition"); // integer from 0 to 2
+var n_i = url.searchParams.get("noise"); // integer from 0 to 1
+
+export const NOISE_ARRAY = [
+    1,
+    3,
+]
+export const LINES_ARRAY = [
+    4,
+    6,
+]
+
+// NOISE = 3
+
+// Randomise condition
+// TODO: REMOVE FOR ACTUAL EXP
+// var c = 1;
+//var c = Math.floor((Math.random()*2));
+
 // Need to randomise here both N_LINES and N_NOISE.
 
-export const N_LINES = 6; // How many lines/band define a ship
-export const N_NOISE = 3; // How many lines/band will be random noise on normal trials
+export const N_LINES = LINES_ARRAY[n_i]; // How many lines/band define a ship
+export const N_NOISE = NOISE_ARRAY[n_i]; // How many lines/band will be random noise on normal trials
 export const P_CATCH = 0.0; // Proportion of catch trials
-export const N_TRIALS = 64; // How many trials total of high/lowlight (not including catch trials)
+export const N_TRIALS = 5; // How many trials total of high/lowlight (not including catch trials)
+
+console.log(N_NOISE)
+console.log(N_LINES)
 
 export const N_SUPPORTED_TRIALS = N_TRIALS / 2; // how many trials per support
 
@@ -57,23 +91,11 @@ export const PHASES = [
     {phase: 3}  // Test
 ];
 
-// This script is initialized before expInfo object anyway,
-// So will have to get URL parameters directly like so
-var url = new URL(window.location.href);
-
-//var c = url.searchParams.get("condition"); // integer from 0 to 2
-
-// Randomise condition
-// TODO: REMOVE FOR ACTUAL EXP
-var c = 1;
-//var c = Math.floor((Math.random()*2));
-
-
 // Need to ensure that this works too
 export const CONDITIONS = [
     "HIGHLIGHT",
     "LOWLIGHT",
-    //"FADING",
+    "MONOCHROME",
 ]
 export const CONDITION = CONDITIONS[c];
 

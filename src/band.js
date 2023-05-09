@@ -203,12 +203,24 @@ function Band(window, pos, size=[1.0, 0.2], lines, is_signal, nticks, range) {
     
     this.xaxis = new Axis(window, [pos[0], pos[1]-size[1]/2], [size[0], 1.0], nticks, range);
     
-    this.setHighlight = function(b, v) {
+    this.setMonochrome = function(b, col) {
         for(var i = 0; i < this.lines.is_signal.length; i++) {
             if (b && this.lines.is_signal[i]) {
                 this.lines.overlays[i].opacity = 0.0;
-                this.lines.rects[i].fillColor = "yellow";
-                this.lines.overlays[i].lineColor = "yellow";
+                this.lines.rects[i].fillColor = col;
+                this.lines.overlays[i].lineColor = col;
+            } else {
+                this.lines.overlays[i].opacity = 0.0;
+                this.lines.rects[i].fillColor = "green";
+            }
+        }
+    };
+    this.setHighlight = function(b, v) {
+        for(var i = 0; i < this.lines.is_signal.length; i++) {
+            if (b && this.lines.is_signal[i]) {
+                this.lines.overlays[i].opacity = 1.0;
+                this.lines.rects[i].fillColor = v ? "red" : "blue";
+                this.lines.overlays[i].lineColor = v ? new util.Color('#ff6969') : new util.Color('#4b7ccc');
             } else {
                 this.lines.overlays[i].opacity = 0.0;
                 this.lines.rects[i].fillColor = "green";
@@ -248,13 +260,13 @@ function Band(window, pos, size=[1.0, 0.2], lines, is_signal, nticks, range) {
         // Because each condition has its own toggle we have to pass it on
         switch(condition) {
             case "HIGHLIGHT":
-                this.setHighlight(binary, vessel)
+                this.setHighlight(binary, vessel);
                 break;
             case "LOWLIGHT":
-                this.setLowlight(binary)
+                this.setLowlight(binary);
                 break;
-            case "FADING":
-                this.setFade(binary, vessel, alpha)
+            case "MONOCHROME":
+                this.setMonochrome(binary, "orange");
                 break;
         }
     }
