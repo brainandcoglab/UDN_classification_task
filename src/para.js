@@ -181,15 +181,15 @@ Feedback will be provided on whether your classification was correct.
 
 
 let assistance_text;
-switch(c) {
+switch(parseInt(c)) {
     case 0:
-        assistance_text = "This tool will highlight signals associated with with ships in yellow."
+        assistance_text = "This tool will highlight signals associated with foe ships in red, and friend ships in blue"
         break;
     case 1:
         assistance_text = "This tool will dim any signals that are not associated with friend or foe ships."
         break;
     case 2:
-        assistance_text = "This tool will highlight signals associated with foe ships in red, and friend ships in blue, but these colours will fade out over time."
+        assistance_text = "This tool will highlight signals associated with ships in purple."
         break;
 }
 

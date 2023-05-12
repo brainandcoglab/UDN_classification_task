@@ -206,9 +206,9 @@ function Band(window, pos, size=[1.0, 0.2], lines, is_signal, nticks, range) {
     this.setMonochrome = function(b, col) {
         for(var i = 0; i < this.lines.is_signal.length; i++) {
             if (b && this.lines.is_signal[i]) {
-                this.lines.overlays[i].opacity = 0.0;
+                this.lines.overlays[i].opacity = 1.0;
                 this.lines.rects[i].fillColor = col;
-                this.lines.overlays[i].lineColor = col;
+                this.lines.overlays[i].lineColor = new util.Color('#C700C7');
             } else {
                 this.lines.overlays[i].opacity = 0.0;
                 this.lines.rects[i].fillColor = "green";
@@ -266,7 +266,7 @@ function Band(window, pos, size=[1.0, 0.2], lines, is_signal, nticks, range) {
                 this.setLowlight(binary);
                 break;
             case "MONOCHROME":
-                this.setMonochrome(binary, "orange");
+                this.setMonochrome(binary, new util.Color('#C200C2'));
                 break;
         }
     }
