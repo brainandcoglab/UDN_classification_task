@@ -49,7 +49,7 @@ export const LINES_ARRAY = [
 // Need to randomise here both N_LINES and N_NOISE.
 
 // TODO: REMOVE AFTER DEBUG
-if((n_t === undefined)) {
+if(n_t == null) {
     n_t = 64;
 }
 
